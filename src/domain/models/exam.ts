@@ -1,21 +1,21 @@
-export interface Option {
+export interface OptionModel {
   id: string
   key: string
   value: string
   correct: boolean
 }
 
-export interface Question {
+export interface QuestionModel {
   id: string
   statement: string
-  options: Option[]
+  options: OptionModel[]
 }
 
 export type ExamType = 'ONLINE' | 'OFFLINE'
 
-export interface Exam {
+export interface ExamModel {
   name: string
   description: string
   type: ExamType
-  questions?: Question[]
+  questions?: QuestionModel[]
 }

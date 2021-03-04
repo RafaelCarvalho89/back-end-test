@@ -1,4 +1,4 @@
-import { Exam } from '../../domain/models/exam'
+import { ExamModel } from '../../domain/models/exam'
 import { MissingParamError } from '../errors/missing-param-error'
 import { badRequest } from '../helpers/http-helper'
 import { HttpRequest } from '../protocols/http'
@@ -13,7 +13,7 @@ const makeSut = (): SutTypes => {
   return { sut }
 }
 
-const makeFakeExam = (): Exam => ({
+const makeFakeExam = (): ExamModel => ({
   name: 'name',
   description: 'description',
   type: 'ONLINE',
