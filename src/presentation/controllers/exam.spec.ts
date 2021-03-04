@@ -40,4 +40,12 @@ describe('Exam Controller', () => {
     const httpResponse = await sut.handle(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('description')))
   })
+
+  test('Should return 400 if no type is provided', async () => {
+    const { sut } = makeSut()
+    const { type, ...fakeExamWithoutType } = makeFakeExam()
+    const fakeRequest = makeFakeRequest(fakeExamWithoutType)
+    const httpResponse = await sut.handle(fakeRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('type')))
+  })
 })
