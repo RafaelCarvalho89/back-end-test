@@ -16,5 +16,12 @@ export class ExamController {
         body: new MissingParamError('description')
       }
     }
+
+    if (!httpRequest.body.type) {
+      return {
+        statusCode: 400,
+        body: new MissingParamError('type')
+      }
+    }
   }
 }
