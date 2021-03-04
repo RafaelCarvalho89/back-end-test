@@ -32,4 +32,12 @@ describe('Exam Controller', () => {
     const httpResponse = await sut.handle(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
   })
+
+  test('Should return 400 if no description is provided', async () => {
+    const { sut } = makeSut()
+    const { description, ...fakeExamWithoutDescription } = makeFakeExam()
+    const fakeRequest = makeFakeRequest(fakeExamWithoutDescription)
+    const httpResponse = await sut.handle(fakeRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('description')))
+  })
 })
