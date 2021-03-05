@@ -21,7 +21,7 @@ export class ExamController implements Controller {
 
     const { name, description, type, questions } = httpRequest.body
 
-    const exam = this.addExam.add({
+    const exam = await this.addExam.add({
       name: name,
       description: description,
       type: type,
