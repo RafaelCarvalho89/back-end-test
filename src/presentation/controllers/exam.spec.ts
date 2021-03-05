@@ -1,16 +1,28 @@
 import { ExamModel } from '../../domain/models/exam'
+import { AddExam, AddExamModel } from '../../domain/usecases/add-exam'
 import { MissingParamError } from '../errors/missing-param-error'
 import { badRequest } from '../helpers/http-helper'
 import { HttpRequest } from '../protocols/http'
 import { ExamController } from './exam'
 
+const makeAddExam = (): AddExam => {
+  class AddExamStub implements AddExam {
+    async add (exam: AddExamModel): Promise<ExamModel> {
+      return await new Promise((resolve) => resolve(makeFakeExam()))
+    }
+  }
+  return new AddExamStub()
+}
+
 interface SutTypes {
   sut: ExamController
+  addExamStub: AddExam
 }
 
 const makeSut = (): SutTypes => {
-  const sut = new ExamController()
-  return { sut }
+  const addExamStub = makeAddExam()
+  const sut = new ExamController(addExamStub)
+  return { sut, addExamStub }
 }
 
 const makeFakeExam = (): ExamModel => ({

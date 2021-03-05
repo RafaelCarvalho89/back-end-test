@@ -1,27 +1,33 @@
+import { AddExam } from '../../domain/usecases/add-exam'
 import { MissingParamError } from '../errors/missing-param-error'
+import { badRequest, ok } from '../helpers/http-helper'
+import { Controller } from '../protocols/controller'
 import { HttpRequest, HttpResponse } from '../protocols/http'
 
-export class ExamController {
+export class ExamController implements Controller {
+  private readonly addExam: AddExam
+
+  constructor (addExam: AddExam) {
+    this.addExam = addExam
+  }
+
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    if (!httpRequest.body.name) {
-      return {
-        statusCode: 400,
-        body: new MissingParamError('name')
+    const requiredFields = ['name', 'description', 'type']
+    for (const field of requiredFields) {
+      if (!httpRequest.body[field]) {
+        return badRequest(new MissingParamError(field))
       }
     }
 
-    if (!httpRequest.body.description) {
-      return {
-        statusCode: 400,
-        body: new MissingParamError('description')
-      }
-    }
+    const { name, description, type, questions } = httpRequest.body
 
-    if (!httpRequest.body.type) {
-      return {
-        statusCode: 400,
-        body: new MissingParamError('type')
-      }
-    }
+    const exam = this.addExam.add({
+      name: name,
+      description: description,
+      type: type,
+      questions: questions
+    })
+
+    return ok(exam)
   }
 }
