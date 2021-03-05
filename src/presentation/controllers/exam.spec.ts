@@ -1,7 +1,7 @@
 import { ExamModel } from '../../domain/models/exam'
 import { AddExam, AddExamModel } from '../../domain/usecases/add-exam'
 import { MissingParamError } from '../errors/missing-param-error'
-import { badRequest } from '../helpers/http-helper'
+import { badRequest, ok } from '../helpers/http-helper'
 import { HttpRequest } from '../protocols/http'
 import { ExamController } from './exam'
 
@@ -60,4 +60,12 @@ describe('Exam Controller', () => {
     const httpResponse = await sut.handle(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('type')))
   })
-})
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const fakeExam = makeFakeExam()
+    const fakeRequest = makeFakeRequest(fakeExam)
+    const httpResponse = await sut.handle(fakeRequest)    
+    expect(httpResponse).toEqual(ok(fakeExam))
+  })
+})    
