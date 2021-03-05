@@ -4,6 +4,7 @@ import { AddExamRepository } from '../../protocols/add-exam-repository'
 import { DbAddExam } from './db-add-exam'
 
 const makeFakeExam = (): ExamModel => ({
+  id: 'id',
   name: 'name',
   description: 'description',
   type: 'ONLINE',
@@ -59,5 +60,11 @@ describe('DbAddExam Use case', () => {
       )
     const promise = sut.add(makeFakeExamData())
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return and Exam on success', async () => {
+    const { sut } = makeSut()
+    const exam = await sut.add(makeFakeExamData())
+    expect(exam).toEqual(makeFakeExam())
   })
 })
