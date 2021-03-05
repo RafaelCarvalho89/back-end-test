@@ -1,6 +1,7 @@
 import { ExamModel } from '../../domain/models/exam'
 import { AddExam, AddExamModel } from '../../domain/usecases/add-exam'
 import { MissingParamError } from '../errors/missing-param-error'
+import { ServerError } from '../errors/server-error'
 import { badRequest, ok, serverError } from '../helpers/http-helper'
 import { HttpRequest } from '../protocols/http'
 import { ExamController } from './exam'
@@ -71,7 +72,8 @@ describe('Exam Controller', () => {
     })
     const { id, ...fakeExam } = makeFakeExam()
     const httpResponse = await sut.handle(makeFakeRequest(fakeExam))
-    expect(httpResponse).toEqual(serverError(new Error('Internal Server Error')))
+    expect(httpResponse).toEqual(serverError(new ServerError(null))
+    )
   })
 
   test('Should return 200 if valid data is provided', async () => {

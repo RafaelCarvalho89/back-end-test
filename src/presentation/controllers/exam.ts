@@ -31,7 +31,7 @@ export class ExamController implements Controller {
 
       return ok(exam)
     } catch (error) {
-      return serverError(new Error('Internal Server Error'))
+      return serverError(error)
     }
   }
 }
