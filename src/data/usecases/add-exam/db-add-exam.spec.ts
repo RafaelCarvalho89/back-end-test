@@ -49,4 +49,15 @@ describe('DbAddExam Use case', () => {
       questions: []
     })
   })
+
+  test('Should throw if AddExamRepository throws', async () => {
+    const { sut, addExamRepositoryStub } = makeSut()
+    jest
+      .spyOn(addExamRepositoryStub, 'add')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      )
+    const promise = sut.add(makeFakeExamData())
+    await expect(promise).rejects.toThrow()
+  })
 })
