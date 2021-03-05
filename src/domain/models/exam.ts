@@ -14,6 +14,7 @@ export interface QuestionModel {
 export type ExamType = 'ONLINE' | 'OFFLINE'
 
 export interface ExamModel {
+  id: string
   name: string
   description: string
   type: ExamType
