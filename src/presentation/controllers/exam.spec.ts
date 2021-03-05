@@ -76,6 +76,16 @@ describe('Exam Controller', () => {
     )
   })
 
+  test('Should call AddExam with correct values', async () => {
+    const { sut, addExamStub } = makeSut()
+    const addSpy = jest.spyOn(addExamStub, 'add')
+    const fakeExam = makeFakeExam()
+    const { id, ...fakeExamData } = fakeExam
+    const httpRequest = makeFakeRequest(fakeExamData)
+    await sut.handle(httpRequest)
+    expect(addSpy).toHaveBeenCalledWith(fakeExamData)
+  })
+
   test('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const { id, ...fakeExam } = makeFakeExam()
