@@ -1,6 +1,6 @@
 import { AddExam } from '../../domain/usecases/add-exam'
 import { MissingParamError } from '../errors/missing-param-error'
-import { badRequest, ok } from '../helpers/http-helper'
+import { badRequest, ok, serverError } from '../helpers/http-helper'
 import { Controller } from '../protocols/controller'
 import { HttpRequest, HttpResponse } from '../protocols/http'
 
@@ -12,22 +12,26 @@ export class ExamController implements Controller {
   }
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const requiredFields = ['name', 'description', 'type']
-    for (const field of requiredFields) {
-      if (!httpRequest.body[field]) {
-        return badRequest(new MissingParamError(field))
+    try {
+      const requiredFields = ['name', 'description', 'type']
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field))
+        }
       }
+
+      const { name, description, type, questions } = httpRequest.body
+
+      const exam = await this.addExam.add({
+        name: name,
+        description: description,
+        type: type,
+        questions: questions
+      })
+
+      return ok(exam)
+    } catch (error) {
+      return serverError(new Error('Internal Server Error'))
     }
-
-    const { name, description, type, questions } = httpRequest.body
-
-    const exam = await this.addExam.add({
-      name: name,
-      description: description,
-      type: type,
-      questions: questions
-    })
-
-    return ok(exam)
   }
 }
