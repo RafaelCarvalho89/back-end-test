@@ -1,7 +1,7 @@
 import { ExamModel } from '../../domain/models/exam'
 import { AddExam, AddExamModel } from '../../domain/usecases/add-exam'
 import { MissingParamError } from '../errors/missing-param-error'
-import { badRequest, ok } from '../helpers/http-helper'
+import { badRequest, ok, serverError } from '../helpers/http-helper'
 import { HttpRequest } from '../protocols/http'
 import { ExamController } from './exam'
 
@@ -26,6 +26,7 @@ const makeSut = (): SutTypes => {
 }
 
 const makeFakeExam = (): ExamModel => ({
+  id: 'id',
   name: 'name',
   description: 'description',
   type: 'ONLINE',
@@ -39,7 +40,7 @@ const makeFakeRequest = (body: any): HttpRequest => ({
 describe('Exam Controller', () => {
   test('Should return 400 if no name is provided', async () => {
     const { sut } = makeSut()
-    const { name, ...fakeExamWithoutName } = makeFakeExam()
+    const { id, name, ...fakeExamWithoutName } = makeFakeExam()
     const fakeRequest = makeFakeRequest(fakeExamWithoutName)
     const httpResponse = await sut.handle(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
@@ -47,25 +48,38 @@ describe('Exam Controller', () => {
 
   test('Should return 400 if no description is provided', async () => {
     const { sut } = makeSut()
-    const { description, ...fakeExamWithoutDescription } = makeFakeExam()
+    const { id, description, ...fakeExamWithoutDescription } = makeFakeExam()
     const fakeRequest = makeFakeRequest(fakeExamWithoutDescription)
     const httpResponse = await sut.handle(fakeRequest)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('description')))
+    expect(httpResponse).toEqual(
+      badRequest(new MissingParamError('description'))
+    )
   })
 
   test('Should return 400 if no type is provided', async () => {
     const { sut } = makeSut()
-    const { type, ...fakeExamWithoutType } = makeFakeExam()
+    const { id, type, ...fakeExamWithoutType } = makeFakeExam()
     const fakeRequest = makeFakeRequest(fakeExamWithoutType)
     const httpResponse = await sut.handle(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('type')))
   })
 
+  test('Should return 500 if AddExam throws', async () => {
+    const { sut, addExamStub } = makeSut()
+    jest.spyOn(addExamStub, 'add').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const { id, ...fakeExam } = makeFakeExam()
+    const httpResponse = await sut.handle(makeFakeRequest(fakeExam))
+    expect(httpResponse).toEqual(serverError(new Error('Internal Server Error')))
+  })
+
   test('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
-    const fakeExam = makeFakeExam()
+    const { id, ...fakeExam } = makeFakeExam()
     const fakeRequest = makeFakeRequest(fakeExam)
     const httpResponse = await sut.handle(fakeRequest)
-    expect(httpResponse).toEqual(ok(fakeExam))
+    const fakeResponseBody = makeFakeExam()
+    expect(httpResponse).toEqual(ok(fakeResponseBody))
   })
 })
