@@ -1,8 +1,10 @@
 import { ExamModel } from '../../../domain/models/exam'
 import { AddExam, AddExamModel } from '../../../domain/usecases/add-exam'
+import { InvalidParamError } from '../../errors/invalid-param-error'
 import { MissingParamError } from '../../errors/missing-param-error'
 import { ServerError } from '../../errors/server-error'
 import { badRequest, ok, serverError } from '../../helpers/http-helper'
+import { ExamTypeValidator } from '../../protocols/exam-type-validator'
 import { HttpRequest } from '../../protocols/http'
 import { ExamController } from './exam'
 
@@ -15,18 +17,29 @@ const makeAddExam = (): AddExam => {
   return new AddExamStub()
 }
 
+const makeExamTypeValidator = (): ExamTypeValidator => {
+  class ExamTypeValidatorStub {
+    isExamType (type: string): boolean {
+      return true
+    }
+  }
+  return new ExamTypeValidatorStub()
+}
+
 interface SutTypes {
   sut: ExamController
   addExamStub: AddExam
+  examTypeValidatorStub: ExamTypeValidator
 }
 
 const makeSut = (): SutTypes => {
   const addExamStub = makeAddExam()
-  const sut = new ExamController(addExamStub)
-  return { sut, addExamStub }
+  const examTypeValidatorStub = makeExamTypeValidator()
+  const sut = new ExamController(addExamStub, examTypeValidatorStub)
+  return { sut, addExamStub, examTypeValidatorStub }
 }
 
-const makeFakeExam = (): ExamModel => ({
+const makeFakeExam = (): any => ({
   id: 'id',
   name: 'name',
   description: 'description',
@@ -63,6 +76,14 @@ describe('Exam Controller', () => {
     const fakeRequest = makeFakeRequest(fakeExamWithoutType)
     const httpResponse = await sut.handle(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('type')))
+  })
+
+  test('Should return 400 if an invalid type is provided', async () => {
+    const { sut, examTypeValidatorStub } = makeSut()
+    jest.spyOn(examTypeValidatorStub, 'isExamType').mockReturnValueOnce(false)
+    const fakeRequest = makeFakeRequest(makeFakeExam())
+    const httpResponse = await sut.handle(fakeRequest)
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('type')))
   })
 
   test('Should return 500 if AddExam throws', async () => {
