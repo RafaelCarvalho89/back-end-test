@@ -86,6 +86,14 @@ describe('Exam Controller', () => {
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('type')))
   })
 
+  test('Should call ExamTypeValidator with correct type', async () => {
+    const { sut, examTypeValidatorStub } = makeSut()
+    const isExamTypeSpy = jest.spyOn(examTypeValidatorStub, 'isExamType')
+    const fakeRequest = makeFakeRequest(makeFakeExam())
+    await sut.handle(fakeRequest)
+    expect(isExamTypeSpy).toHaveBeenCalledWith('ONLINE')
+  })
+
   test('Should return 500 if AddExam throws', async () => {
     const { sut, addExamStub } = makeSut()
     jest.spyOn(addExamStub, 'add').mockImplementationOnce(async () => {
