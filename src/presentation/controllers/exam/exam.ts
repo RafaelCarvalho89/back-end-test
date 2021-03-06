@@ -1,8 +1,8 @@
-import { AddExam } from '../../domain/usecases/add-exam'
-import { MissingParamError } from '../errors/missing-param-error'
-import { badRequest, ok, serverError } from '../helpers/http-helper'
-import { Controller } from '../protocols/controller'
-import { HttpRequest, HttpResponse } from '../protocols/http'
+import { AddExam } from '../../../domain/usecases/add-exam'
+import { MissingParamError } from '../../errors/missing-param-error'
+import { badRequest, ok, serverError } from '../../helpers/http-helper'
+import { Controller } from '../../protocols/controller'
+import { HttpRequest, HttpResponse } from '../../protocols/http'
 
 export class ExamController implements Controller {
   private readonly addExam: AddExam
