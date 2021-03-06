@@ -94,6 +94,16 @@ describe('Exam Controller', () => {
     expect(isExamTypeSpy).toHaveBeenCalledWith('ONLINE')
   })
 
+  test('Should return 500 if ExamTypeValidator throws', async () => {
+    const { sut, examTypeValidatorStub } = makeSut()
+    jest.spyOn(examTypeValidatorStub, 'isExamType').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const fakeRequest = makeFakeRequest(makeFakeExam())
+    const httpResponse = await sut.handle(fakeRequest)
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+
   test('Should return 500 if AddExam throws', async () => {
     const { sut, addExamStub } = makeSut()
     jest.spyOn(addExamStub, 'add').mockImplementationOnce(async () => {
