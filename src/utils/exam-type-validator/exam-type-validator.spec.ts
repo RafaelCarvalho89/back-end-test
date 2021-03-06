@@ -1,6 +1,7 @@
+import { ExamType } from '../../domain/models/exam'
 import { isExamType } from './exam-type-validator'
 
-const makeIsExamType = (examType: string): any => {
+const makeIsExamType = (examType: ExamType): any => {
   return isExamType(examType)
 }
 
@@ -13,10 +14,5 @@ describe('ExamTypeValidator', () => {
   test('Should return true if value is OFFLINE', () => {
     const isExamType = makeIsExamType('OFFLINE')
     expect(true).toBe(isExamType)
-  })
-
-  test('Should return false if value is difference of ONLINE or OFFLINE', () => {
-    const isExamType = makeIsExamType('INVALID')
-    expect(false).toBe(isExamType)
   })
 })

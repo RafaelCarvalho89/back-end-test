@@ -1,3 +1,5 @@
-export const isExamType = (examType: string): boolean => {
+import { ExamType } from '../../domain/models/exam'
+
+export const isExamType = (examType: ExamType): boolean => {
   return examType === 'ONLINE' || examType === 'OFFLINE'
 }
