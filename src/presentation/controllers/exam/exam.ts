@@ -1,10 +1,12 @@
-import { AddExam } from '../../../domain/usecases/add-exam'
-import { InvalidParamError } from '../../errors/invalid-param-error'
-import { MissingParamError } from '../../errors/missing-param-error'
+import {
+  AddExam,
+  Controller,
+  ExamTypeValidator,
+  HttpRequest,
+  HttpResponse
+} from './exam-protocols'
+import { InvalidParamError, MissingParamError } from '../../errors/errors-protocols'
 import { badRequest, ok, serverError } from '../../helpers/http-helper'
-import { Controller } from '../../protocols/controller'
-import { ExamTypeValidator } from '../../protocols/exam-type-validator'
-import { HttpRequest, HttpResponse } from '../../protocols/http'
 
 export class ExamController implements Controller {
   private readonly addExam: AddExam
