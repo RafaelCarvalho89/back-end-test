@@ -26,4 +26,10 @@ describe('ExamTypeValidatorAdapter', () => {
     const isExamType = sut.isExamType('OFFLINE')
     expect(isExamType).toBe(true)
   })
+
+  test('Should return false if validator return false', () => {
+    const sut = makeSut()
+    const isExamType = sut.isExamType('INVALID')
+    expect(isExamType).toBe(false)
+  })
 })
