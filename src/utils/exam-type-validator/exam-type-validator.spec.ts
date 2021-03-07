@@ -1,11 +1,14 @@
-import { ExamType } from '../../domain/models/exam'
-import { isExamType } from './exam-type-validator'
+import { ExamTypeValidatorAdapter, isExamType } from './exam-type-validator'
 
-const makeIsExamType = (examType: ExamType): any => {
+const makeIsExamType = (examType: string): any => {
   return isExamType(examType)
 }
 
-describe('ExamTypeValidator', () => {
+const makeSut = (): ExamTypeValidatorAdapter => {
+  return new ExamTypeValidatorAdapter()
+}
+
+describe('isExamType', () => {
   test('Should return true if value is ONLINE', () => {
     const isExamType = makeIsExamType('ONLINE')
     expect(true).toBe(isExamType)
@@ -14,5 +17,13 @@ describe('ExamTypeValidator', () => {
   test('Should return true if value is OFFLINE', () => {
     const isExamType = makeIsExamType('OFFLINE')
     expect(true).toBe(isExamType)
+  })
+})
+
+describe('ExamTypeValidatorAdapter', () => {
+  test('Should return true if validator return true', () => {
+    const sut = makeSut()
+    const isExamType = sut.isExamType('OFFLINE')
+    expect(isExamType).toBe(true)
   })
 })
