@@ -1,6 +1,9 @@
-import { ExamModel } from '../../../domain/models/exam'
-import { AddExam, AddExamModel } from '../../../domain/usecases/add-exam'
-import { AddExamRepository } from '../../protocols/add-exam-repository'
+import {
+  AddExam,
+  AddExamModel,
+  AddExamRepository,
+  ExamModel
+} from './db-add-exam-protocols'
 
 export class DbAddExam implements AddExam {
   private readonly addExamRepository: AddExamRepository
