@@ -1,7 +1,8 @@
 import { Router } from 'express'
+import { adaptRoute } from '../adapters/express.route-adapter'
+import { makeExamController } from '../factories/exam'
 
 export default (router: Router): void => {
-  router.post('/exam', (req, res) => {
-    res.json({ ok: 'ok' })
-  })
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  router.post('/exam', adaptRoute(makeExamController()))
 }
