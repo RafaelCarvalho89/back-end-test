@@ -1,3 +1,3 @@
-export * from '../../../domain/models/exam'
-export * from '../../../domain/usecases/add-exam'
-export * from '../../protocols/add-exam-repository'
+export * from '../../../domain/models/exam/exam-model'
+export * from '../../../domain/usecases/exam/add-exam'
+export * from '../../protocols/exam-repository/add-exam-repository'
