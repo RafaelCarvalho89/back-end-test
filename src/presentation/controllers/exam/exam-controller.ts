@@ -27,17 +27,14 @@ export class ExamController implements Controller {
       }
 
       const isExamType = this.examTypeValidator.isExamType(httpRequest.body.type)
-      if (!isExamType) {
-        return badRequest(new InvalidParamError('type'))
-      }
+      if (!isExamType) return badRequest(new InvalidParamError('type'))
 
       const { name, description, type, questions } = httpRequest.body
-
       const exam = await this.addExam.add({
-        name: name,
-        description: description,
-        type: type,
-        questions: questions
+        name,
+        description,
+        type,
+        questions
       })
 
       return ok(exam)

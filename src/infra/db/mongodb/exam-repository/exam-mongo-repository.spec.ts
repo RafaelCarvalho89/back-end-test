@@ -10,8 +10,17 @@ describe('Exam Mongo Repository', () => {
     await MongoHelper.disconnect()
   })
 
+  beforeEach(async () => {
+    const examCollection = MongoHelper.getCollection('exams')
+    await examCollection.deleteMany({})
+  })
+
+  const makeSut = (): ExamMongoRepository => {
+    return new ExamMongoRepository()
+  }
+
   test('Should return an exam on success', async () => {
-    const sut = new ExamMongoRepository()
+    const sut = makeSut()
     const exam = await sut.add({
       name: 'name',
       description: 'description',

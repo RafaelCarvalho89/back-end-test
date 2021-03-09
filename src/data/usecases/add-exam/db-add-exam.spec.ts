@@ -43,12 +43,7 @@ describe('DbAddExam Use case', () => {
     const { sut, addExamRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addExamRepositoryStub, 'add')
     await sut.add(makeFakeExamData())
-    expect(addSpy).toHaveBeenCalledWith({
-      name: 'name',
-      description: 'description',
-      type: 'ONLINE',
-      questions: []
-    })
+    expect(addSpy).toHaveBeenCalledWith(makeFakeExamData())
   })
 
   test('Should throw if AddExamRepository throws', async () => {
