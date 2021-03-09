@@ -1,4 +1,4 @@
-import { ExamModel, ExamType, QuestionModel } from '../models/exam'
+import { ExamModel, ExamType, QuestionModel } from '../../models/exam/exam-model'
 
 export interface AddExamModel {
   name: string
