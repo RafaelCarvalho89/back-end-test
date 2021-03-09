@@ -4,9 +4,9 @@ import {
   ExamTypeValidator,
   HttpRequest,
   HttpResponse
-} from './exam-protocols'
-import { InvalidParamError, MissingParamError } from '../../errors/errors-protocols'
-import { badRequest, ok, serverError } from '../../helpers/http-helper'
+} from './exam-controller-protocols'
+import { InvalidParamError, MissingParamError } from '../../errors'
+import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 
 export class ExamController implements Controller {
   private readonly addExam: AddExam

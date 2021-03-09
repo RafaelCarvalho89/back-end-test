@@ -1,7 +1,7 @@
-import { ExamController } from './exam'
-import { InvalidParamError, MissingParamError, ServerError } from '../../errors/errors-protocols'
-import { AddExam, AddExamModel, ExamModel, ExamTypeValidator, HttpRequest } from './exam-protocols'
-import { badRequest, ok, serverError } from '../../helpers/http-helper'
+import { ExamController } from './exam-controller'
+import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
+import { AddExam, AddExamModel, ExamModel, ExamTypeValidator, HttpRequest } from './exam-controller-protocols'
+import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 
 const makeAddExam = (): AddExam => {
   class AddExamStub implements AddExam {
