@@ -1,6 +1,6 @@
 import { ExamController } from './exam-controller'
 import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
-import { AddExam, AddExamModel, ExamModel, ExamTypeValidator, HttpRequest } from './exam-controller-protocols'
+import { AddExam, AddExamModel, ExamModel, ExamTypeValidator, HttpRequest, UpdateExam, UpdateExamModel } from './exam-controller-protocols'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 
 const makeAddExam = (): AddExam => {
@@ -10,6 +10,15 @@ const makeAddExam = (): AddExam => {
     }
   }
   return new AddExamStub()
+}
+
+const makeUpdateExam = (): UpdateExam => {
+  class UpdateExamStub implements UpdateExam {
+    async update (exam: UpdateExamModel): Promise<ExamModel> {
+      return await new Promise((resolve) => resolve(makeFakeExam()))
+    }
+  }
+  return new UpdateExamStub()
 }
 
 const makeExamTypeValidator = (): ExamTypeValidator => {
@@ -25,13 +34,19 @@ interface SutTypes {
   sut: ExamController
   addExamStub: AddExam
   examTypeValidatorStub: ExamTypeValidator
+  updateExamStub: UpdateExam
 }
 
 const makeSut = (): SutTypes => {
   const addExamStub = makeAddExam()
+  const updateExamStub = makeUpdateExam()
   const examTypeValidatorStub = makeExamTypeValidator()
-  const sut = new ExamController(addExamStub, examTypeValidatorStub)
-  return { sut, addExamStub, examTypeValidatorStub }
+  const sut = new ExamController(
+    addExamStub,
+    examTypeValidatorStub,
+    updateExamStub
+  )
+  return { sut, addExamStub, examTypeValidatorStub, updateExamStub }
 }
 
 const makeFakeExam = (): any => ({
@@ -121,11 +136,99 @@ describe('Exam Controller', () => {
     expect(addSpy).toHaveBeenCalledWith(fakeExamData)
   })
 
-  test('Should return 200 if valid data is provided', async () => {
+  test('Should return 200 if valid data is provided when update exam', async () => {
     const { sut } = makeSut()
     const { id, ...fakeExam } = makeFakeExam()
     const fakeRequest = makeFakeRequest(fakeExam)
     const httpResponse = await sut.add(fakeRequest)
+    const fakeResponseBody = makeFakeExam()
+    expect(httpResponse).toEqual(ok(fakeResponseBody))
+  })
+
+  test('Should return 400 if no id is provided when update exam', async () => {
+    const { sut } = makeSut()
+    const { id, ...fakeExamWithoutName } = makeFakeExam()
+    const fakeRequest = makeFakeRequest(fakeExamWithoutName)
+    const httpResponse = await sut.update(fakeRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
+  })
+
+  test('Should return 400 if no name is provided when update exam', async () => {
+    const { sut } = makeSut()
+    const { name, ...fakeExamWithoutName } = makeFakeExam()
+    const fakeRequest = makeFakeRequest(fakeExamWithoutName)
+    const httpResponse = await sut.update(fakeRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
+  })
+
+  test('Should return 400 if no description is provided when update exam', async () => {
+    const { sut } = makeSut()
+    const { description, ...fakeExamWithoutDescription } = makeFakeExam()
+    const fakeRequest = makeFakeRequest(fakeExamWithoutDescription)
+    const httpResponse = await sut.update(fakeRequest)
+    expect(httpResponse).toEqual(
+      badRequest(new MissingParamError('description'))
+    )
+  })
+
+  test('Should return 400 if no type is provided when update exam', async () => {
+    const { sut } = makeSut()
+    const { type, ...fakeExamWithoutType } = makeFakeExam()
+    const fakeRequest = makeFakeRequest(fakeExamWithoutType)
+    const httpResponse = await sut.update(fakeRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('type')))
+  })
+
+  test('Should return 400 if an invalid type is provided when update exam', async () => {
+    const { sut, examTypeValidatorStub } = makeSut()
+    jest.spyOn(examTypeValidatorStub, 'isExamType').mockReturnValueOnce(false)
+    const fakeRequest = makeFakeRequest(makeFakeExam())
+    const httpResponse = await sut.update(fakeRequest)
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('type')))
+  })
+
+  test('Should call ExamTypeValidator with correct type when update exam', async () => {
+    const { sut, examTypeValidatorStub } = makeSut()
+    const isExamTypeSpy = jest.spyOn(examTypeValidatorStub, 'isExamType')
+    const fakeRequest = makeFakeRequest(makeFakeExam())
+    await sut.update(fakeRequest)
+    expect(isExamTypeSpy).toHaveBeenCalledWith('ONLINE')
+  })
+
+  test('Should return 500 if ExamTypeValidator throws when update exam', async () => {
+    const { sut, examTypeValidatorStub } = makeSut()
+    jest
+      .spyOn(examTypeValidatorStub, 'isExamType')
+      .mockImplementationOnce(() => {
+        throw new Error()
+      })
+    const fakeRequest = makeFakeRequest(makeFakeExam())
+    const httpResponse = await sut.update(fakeRequest)
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+
+  test('Should return 500 if UpdateExam throws', async () => {
+    const { sut, updateExamStub } = makeSut()
+    jest.spyOn(updateExamStub, 'update').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const fakeRequest = makeFakeRequest(makeFakeExam())
+    const httpResponse = await sut.update(fakeRequest)
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+
+  test('Should call UpdateExam with correct values', async () => {
+    const { sut, updateExamStub } = makeSut()
+    const updateSpy = jest.spyOn(updateExamStub, 'update')
+    const httpRequest = makeFakeRequest(makeFakeExam())
+    await sut.update(httpRequest)
+    expect(updateSpy).toHaveBeenCalledWith(makeFakeExam())
+  })
+
+  test('Should return 200 if valid data is provided when update exam', async () => {
+    const { sut } = makeSut()
+    const fakeRequest = makeFakeRequest(makeFakeExam())
+    const httpResponse = await sut.update(fakeRequest)
     const fakeResponseBody = makeFakeExam()
     expect(httpResponse).toEqual(ok(fakeResponseBody))
   })
