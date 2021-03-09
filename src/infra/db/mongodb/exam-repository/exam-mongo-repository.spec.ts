@@ -1,5 +1,5 @@
 import { MongoHelper } from '../helpers/mongo-helper'
-import { ExamMongoRepository } from './exam'
+import { ExamMongoRepository } from './exam-mongo-repository'
 
 describe('Exam Mongo Repository', () => {
   beforeAll(async () => {
