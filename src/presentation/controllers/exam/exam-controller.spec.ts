@@ -47,55 +47,57 @@ const makeFakeRequest = (body: any): HttpRequest => ({
 })
 
 describe('Exam Controller', () => {
-  test('Should return 400 if no name is provided', async () => {
+  test('Should return 400 if no name is provided when add exam', async () => {
     const { sut } = makeSut()
     const { id, name, ...fakeExamWithoutName } = makeFakeExam()
     const fakeRequest = makeFakeRequest(fakeExamWithoutName)
-    const httpResponse = await sut.handle(fakeRequest)
+    const httpResponse = await sut.add(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
   })
 
-  test('Should return 400 if no description is provided', async () => {
+  test('Should return 400 if no description is provided when add exam', async () => {
     const { sut } = makeSut()
     const { id, description, ...fakeExamWithoutDescription } = makeFakeExam()
     const fakeRequest = makeFakeRequest(fakeExamWithoutDescription)
-    const httpResponse = await sut.handle(fakeRequest)
+    const httpResponse = await sut.add(fakeRequest)
     expect(httpResponse).toEqual(
       badRequest(new MissingParamError('description'))
     )
   })
 
-  test('Should return 400 if no type is provided', async () => {
+  test('Should return 400 if no type is provided when add exam', async () => {
     const { sut } = makeSut()
     const { id, type, ...fakeExamWithoutType } = makeFakeExam()
     const fakeRequest = makeFakeRequest(fakeExamWithoutType)
-    const httpResponse = await sut.handle(fakeRequest)
+    const httpResponse = await sut.add(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('type')))
   })
 
-  test('Should return 400 if an invalid type is provided', async () => {
+  test('Should return 400 if an invalid type is provided when add exam', async () => {
     const { sut, examTypeValidatorStub } = makeSut()
     jest.spyOn(examTypeValidatorStub, 'isExamType').mockReturnValueOnce(false)
     const fakeRequest = makeFakeRequest(makeFakeExam())
-    const httpResponse = await sut.handle(fakeRequest)
+    const httpResponse = await sut.add(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('type')))
   })
 
-  test('Should call ExamTypeValidator with correct type', async () => {
+  test('Should call ExamTypeValidator with correct type when add exam', async () => {
     const { sut, examTypeValidatorStub } = makeSut()
     const isExamTypeSpy = jest.spyOn(examTypeValidatorStub, 'isExamType')
     const fakeRequest = makeFakeRequest(makeFakeExam())
-    await sut.handle(fakeRequest)
+    await sut.add(fakeRequest)
     expect(isExamTypeSpy).toHaveBeenCalledWith('ONLINE')
   })
 
-  test('Should return 500 if ExamTypeValidator throws', async () => {
+  test('Should return 500 if ExamTypeValidator throws when add exam', async () => {
     const { sut, examTypeValidatorStub } = makeSut()
-    jest.spyOn(examTypeValidatorStub, 'isExamType').mockImplementationOnce(() => {
-      throw new Error()
-    })
+    jest
+      .spyOn(examTypeValidatorStub, 'isExamType')
+      .mockImplementationOnce(() => {
+        throw new Error()
+      })
     const fakeRequest = makeFakeRequest(makeFakeExam())
-    const httpResponse = await sut.handle(fakeRequest)
+    const httpResponse = await sut.add(fakeRequest)
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
@@ -105,7 +107,7 @@ describe('Exam Controller', () => {
       return await new Promise((resolve, reject) => reject(new Error()))
     })
     const { id, ...fakeExam } = makeFakeExam()
-    const httpResponse = await sut.handle(makeFakeRequest(fakeExam))
+    const httpResponse = await sut.add(makeFakeRequest(fakeExam))
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
@@ -115,7 +117,7 @@ describe('Exam Controller', () => {
     const fakeExam = makeFakeExam()
     const { id, ...fakeExamData } = fakeExam
     const httpRequest = makeFakeRequest(fakeExamData)
-    await sut.handle(httpRequest)
+    await sut.add(httpRequest)
     expect(addSpy).toHaveBeenCalledWith(fakeExamData)
   })
 
@@ -123,7 +125,7 @@ describe('Exam Controller', () => {
     const { sut } = makeSut()
     const { id, ...fakeExam } = makeFakeExam()
     const fakeRequest = makeFakeRequest(fakeExam)
-    const httpResponse = await sut.handle(fakeRequest)
+    const httpResponse = await sut.add(fakeRequest)
     const fakeResponseBody = makeFakeExam()
     expect(httpResponse).toEqual(ok(fakeResponseBody))
   })
