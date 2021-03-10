@@ -2,6 +2,7 @@ import {
   AddExam,
   Controller,
   ExamTypeValidator,
+  GetExam,
   HttpRequest,
   HttpResponse,
   UpdateExam
@@ -13,7 +14,8 @@ export class ExamController implements Controller {
   constructor (
     private readonly addExam: AddExam,
     private readonly examTypeValidator: ExamTypeValidator,
-    private readonly updateExam: UpdateExam
+    private readonly updateExam: UpdateExam,
+    private readonly getExam: GetExam
   ) {}
 
   async add (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -67,6 +69,16 @@ export class ExamController implements Controller {
         questions
       })
 
+      return ok(exam)
+    } catch (error) {
+      return serverError(error)
+    }
+  }
+
+  async get (httpRequest: HttpRequest): Promise<HttpResponse> {
+    try {
+      if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
+      const exam = await this.getExam.get(httpRequest.body)
       return ok(exam)
     } catch (error) {
       return serverError(error)
