@@ -16,12 +16,24 @@ describe('Exam Routes', () => {
     await examCollection.deleteMany({})
   })
 
-  test('Should return an exam on success', async () => {
+  test('Should return an exam on add exam success', async () => {
     await request(app)
       .post('/api/exam')
       .send({
         name: 'Blue Exam',
-        description: 'Exam without questions',
+        description: 'Blue Exam without questions',
+        type: 'ONLINE'
+      })
+      .expect(200)
+  })
+
+  test('Should return an exam id on update exam success', async () => {
+    await request(app)
+      .put('/api/exam')
+      .send({
+        id: '6048039ae5a5d3cd29630a1e',
+        name: 'Blue Exam 2',
+        description: 'Blue Exam without questions 2',
         type: 'ONLINE'
       })
       .expect(200)
