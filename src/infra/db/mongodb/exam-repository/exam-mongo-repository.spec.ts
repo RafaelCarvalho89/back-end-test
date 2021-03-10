@@ -19,7 +19,7 @@ describe('Exam Mongo Repository', () => {
     return new ExamMongoRepository()
   }
 
-  test('Should return an exam on success', async () => {
+  test('Should return an exam on success when add Exam', async () => {
     const sut = makeSut()
     const exam = await sut.add({
       name: 'name',
@@ -32,5 +32,18 @@ describe('Exam Mongo Repository', () => {
     expect(exam.name).toBe('name')
     expect(exam.description).toBe('description')
     expect(exam.type).toBe('ONLINE')
+  })
+
+  test('Should return an exam id on success when update Exam', async () => {
+    const sut = makeSut()
+    const updatedExam = await sut.update({
+      id: '6048039ae5a5d3cd29630a1e',
+      name: 'name',
+      description: 'description',
+      type: 'ONLINE',
+      questions: []
+    })
+    expect(updatedExam).toBeTruthy()
+    expect(updatedExam.id).toBe('6048039ae5a5d3cd29630a1e')
   })
 })
