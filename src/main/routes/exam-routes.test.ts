@@ -18,7 +18,7 @@ describe('Exam Routes', () => {
 
   test('Should return an exam on add exam success', async () => {
     await request(app)
-      .post('/api/exam')
+      .post('/api/exam/new')
       .send({
         name: 'Blue Exam',
         description: 'Blue Exam without questions',
@@ -29,7 +29,7 @@ describe('Exam Routes', () => {
 
   test('Should return an exam id on update exam success', async () => {
     await request(app)
-      .put('/api/exam')
+      .put('/api/exam/update')
       .send({
         id: '6048039ae5a5d3cd29630a1e',
         name: 'Blue Exam 2',

@@ -38,8 +38,8 @@ describe('Exam Mongo Repository', () => {
     const sut = makeSut()
     const updatedExam = await sut.update({
       id: '6048039ae5a5d3cd29630a1e',
-      name: 'name',
-      description: 'description',
+      name: 'Updated Name',
+      description: 'Updated description',
       type: 'ONLINE',
       questions: []
     })
