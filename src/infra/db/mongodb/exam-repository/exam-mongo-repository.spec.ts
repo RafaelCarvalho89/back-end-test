@@ -62,4 +62,17 @@ describe('Exam Mongo Repository', () => {
     expect(examFound.description).toBe('description')
     expect(examFound.type).toBe('ONLINE')
   })
+
+  test('Should return an Exam List on success when list exams', async () => {
+    const sut = makeSut()
+    const addedExam = await sut.add({
+      name: 'name',
+      description: 'description',
+      type: 'ONLINE',
+      questions: []
+    })
+    const examList = await sut.list()
+    expect(examList).toBeTruthy()
+    expect(examList[0]).toEqual(addedExam)
+  })
 })
