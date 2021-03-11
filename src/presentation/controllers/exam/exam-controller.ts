@@ -9,13 +9,15 @@ import {
 } from './exam-controller-protocols'
 import { InvalidParamError, MissingParamError } from '../../errors'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
+import { ListExams } from '../../../domain/usecases/exam/list-exams'
 
 export class ExamController implements Controller {
   constructor (
     private readonly addExam: AddExam,
     private readonly examTypeValidator: ExamTypeValidator,
     private readonly updateExam: UpdateExam,
-    private readonly getExam: GetExam
+    private readonly getExam: GetExam,
+    private readonly listExams: ListExams
   ) {}
 
   async add (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -80,6 +82,15 @@ export class ExamController implements Controller {
       if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
       const exam = await this.getExam.get(httpRequest.body)
       return ok(exam)
+    } catch (error) {
+      return serverError(error)
+    }
+  }
+
+  async list (): Promise<HttpResponse> {
+    try {
+      const examList = await this.listExams.list()
+      return ok(examList)
     } catch (error) {
       return serverError(error)
     }
