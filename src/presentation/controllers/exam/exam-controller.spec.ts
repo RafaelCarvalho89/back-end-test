@@ -12,6 +12,7 @@ import {
   UpdateExamModel
 } from './exam-controller-protocols'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
+import { ListExams } from '../../../domain/usecases/exam/list-exams'
 
 const makeAddExam = (): AddExam => {
   class AddExamStub implements AddExam {
@@ -49,12 +50,22 @@ const makeGetExam = (): GetExam => {
   return new GetExamStub()
 }
 
+const makeListExams = (): ListExams => {
+  class ListExamsStub implements ListExams {
+    async list (): Promise<ExamModel[]> {
+      return await new Promise((resolve) => resolve([makeFakeExam()]))
+    }
+  }
+  return new ListExamsStub()
+}
+
 interface SutTypes {
   sut: ExamController
   addExamStub: AddExam
   examTypeValidatorStub: ExamTypeValidator
   getExamStub: GetExam
   updateExamStub: UpdateExam
+  listExamsStub: ListExams
 }
 
 const makeSut = (): SutTypes => {
@@ -62,18 +73,21 @@ const makeSut = (): SutTypes => {
   const updateExamStub = makeUpdateExam()
   const examTypeValidatorStub = makeExamTypeValidator()
   const getExamStub = makeGetExam()
+  const listExamsStub = makeListExams()
   const sut = new ExamController(
     addExamStub,
     examTypeValidatorStub,
     updateExamStub,
-    getExamStub
+    getExamStub,
+    listExamsStub
   )
   return {
     sut,
     addExamStub,
     examTypeValidatorStub,
     updateExamStub,
-    getExamStub
+    getExamStub,
+    listExamsStub
   }
 }
 
@@ -282,5 +296,20 @@ describe('Exam Controller', () => {
     const addedExamResponse = await sut.add(makeFakeRequest(makeFakeExam()))
     const getExamResponse = await sut.get({ body: { id: addedExamResponse.body.id } })
     expect(getExamResponse).toEqual(ok(makeFakeExam()))
+  })
+
+  test('Should return 200 if valid data is provided when get exam', async () => {
+    const { sut } = makeSut()
+    const examList = await sut.list()
+    expect(examList).toEqual(ok([makeFakeExam()]))
+  })
+
+  test('Should return 500 if ListExams throws', async () => {
+    const { sut, listExamsStub } = makeSut()
+    jest.spyOn(listExamsStub, 'list').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.list()
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
