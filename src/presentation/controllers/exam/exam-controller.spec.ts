@@ -3,6 +3,8 @@ import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import {
   AddExam,
   AddExamModel,
+  DeleteExam,
+  DeleteExamModel,
   ExamModel,
   ExamTypeValidator,
   GetExam,
@@ -32,15 +34,6 @@ const makeUpdateExam = (): UpdateExam => {
   return new UpdateExamStub()
 }
 
-const makeExamTypeValidator = (): ExamTypeValidator => {
-  class ExamTypeValidatorStub {
-    isExamType (type: string): boolean {
-      return true
-    }
-  }
-  return new ExamTypeValidatorStub()
-}
-
 const makeGetExam = (): GetExam => {
   class GetExamStub implements GetExam {
     async get (exam: GetExamModel): Promise<ExamModel> {
@@ -59,6 +52,24 @@ const makeListExams = (): ListExams => {
   return new ListExamsStub()
 }
 
+const makeDeleteExam = (): DeleteExam => {
+  class DeleteExamStub implements DeleteExam {
+    async delete (exam: DeleteExamModel): Promise<any> {
+      return await new Promise((resolve) => resolve(makeFakeExam()))
+    }
+  }
+  return new DeleteExamStub()
+}
+
+const makeExamTypeValidator = (): ExamTypeValidator => {
+  class ExamTypeValidatorStub {
+    isExamType (type: string): boolean {
+      return true
+    }
+  }
+  return new ExamTypeValidatorStub()
+}
+
 interface SutTypes {
   sut: ExamController
   addExamStub: AddExam
@@ -66,6 +77,7 @@ interface SutTypes {
   getExamStub: GetExam
   updateExamStub: UpdateExam
   listExamsStub: ListExams
+  deleteExamStub: DeleteExam
 }
 
 const makeSut = (): SutTypes => {
@@ -74,12 +86,14 @@ const makeSut = (): SutTypes => {
   const examTypeValidatorStub = makeExamTypeValidator()
   const getExamStub = makeGetExam()
   const listExamsStub = makeListExams()
+  const deleteExamStub = makeDeleteExam()
   const sut = new ExamController(
     addExamStub,
     examTypeValidatorStub,
     updateExamStub,
     getExamStub,
-    listExamsStub
+    listExamsStub,
+    deleteExamStub
   )
   return {
     sut,
@@ -87,7 +101,8 @@ const makeSut = (): SutTypes => {
     examTypeValidatorStub,
     updateExamStub,
     getExamStub,
-    listExamsStub
+    listExamsStub,
+    deleteExamStub
   }
 }
 
@@ -311,5 +326,11 @@ describe('Exam Controller', () => {
     })
     const httpResponse = await sut.list()
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+
+  test('Should return 400 if no id is provided when delete exam', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.delete({ body: {} })
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
   })
 })
