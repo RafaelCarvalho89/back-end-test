@@ -46,4 +46,20 @@ describe('Exam Mongo Repository', () => {
     expect(updatedExam).toBeTruthy()
     expect(updatedExam.id).toBe('6048039ae5a5d3cd29630a1e')
   })
+
+  test('Should return an exam on success when get Exam', async () => {
+    const sut = makeSut()
+    const addedExam = await sut.add({
+      name: 'name',
+      description: 'description',
+      type: 'ONLINE',
+      questions: []
+    })
+    const examFound = await sut.get({ id: addedExam.id })
+    expect(examFound).toBeTruthy()
+    expect(examFound.id).toEqual(addedExam.id)
+    expect(examFound.name).toBe('name')
+    expect(examFound.description).toBe('description')
+    expect(examFound.type).toBe('ONLINE')
+  })
 })
