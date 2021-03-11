@@ -11,7 +11,7 @@ describe('Exam Mongo Repository', () => {
   })
 
   beforeEach(async () => {
-    const examCollection = MongoHelper.getCollection('exams')
+    const examCollection = await MongoHelper.getCollection('exams')
     await examCollection.deleteMany({})
   })
 
