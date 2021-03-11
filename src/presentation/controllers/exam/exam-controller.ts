@@ -1,15 +1,16 @@
 import {
   AddExam,
   Controller,
+  DeleteExam,
   ExamTypeValidator,
   GetExam,
+  ListExams,
   HttpRequest,
   HttpResponse,
   UpdateExam
 } from './exam-controller-protocols'
 import { InvalidParamError, MissingParamError } from '../../errors'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
-import { ListExams } from '../../../domain/usecases/exam/list-exams'
 
 export class ExamController implements Controller {
   constructor (
@@ -17,7 +18,8 @@ export class ExamController implements Controller {
     private readonly examTypeValidator: ExamTypeValidator,
     private readonly updateExam: UpdateExam,
     private readonly getExam: GetExam,
-    private readonly listExams: ListExams
+    private readonly listExams: ListExams,
+    private readonly deleteExam: DeleteExam
   ) {}
 
   async add (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -91,6 +93,16 @@ export class ExamController implements Controller {
     try {
       const examList = await this.listExams.list()
       return ok(examList)
+    } catch (error) {
+      return serverError(error)
+    }
+  }
+
+  async delete (httpRequest: HttpRequest): Promise<HttpResponse> {
+    try {
+      if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
+      const deleteResponse = await this.deleteExam.delete(httpRequest.body)
+      return ok(deleteResponse)
     } catch (error) {
       return serverError(error)
     }

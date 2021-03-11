@@ -5,4 +5,5 @@ export interface Controller {
   update: (httpRequest: HttpRequest) => Promise<HttpResponse>
   get: (httpRequest: HttpRequest) => Promise<HttpResponse>
   list: (httpRequest: HttpRequest) => Promise<HttpResponse>
+  delete: (httpRequest: HttpRequest) => Promise<HttpResponse>
 }
