@@ -38,4 +38,13 @@ describe('Exam Routes', () => {
       })
       .expect(200)
   })
+
+  test('Should return an exam on get exam success', async () => {
+    await request(app)
+      .get('/api/exam/get')
+      .send({
+        id: '6048039ae5a5d3cd29630a1e'
+      })
+      .expect(200)
+  })
 })
