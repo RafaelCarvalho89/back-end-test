@@ -1,5 +1,6 @@
 import { DbAddExam } from '../../data/usecases/add-exam/db-add-exam'
 import { DbGetExam } from '../../data/usecases/get-exam/db-get-exam'
+import { DbListExams } from '../../data/usecases/list-exams/db-list-exams'
 import { DbUpdateExam } from '../../data/usecases/update-exam/db-update-exam'
 import { ExamMongoRepository } from '../../infra/db/mongodb/exam-repository/exam-mongo-repository'
 import { ExamController } from '../../presentation/controllers/exam/exam-controller'
@@ -11,5 +12,12 @@ export const makeExamController = (): ExamController => {
   const dbAddExam = new DbAddExam(examMongoRepository)
   const dbUpdateExam = new DbUpdateExam(examMongoRepository)
   const dbGetExam = new DbGetExam(examMongoRepository)
-  return new ExamController(dbAddExam, examTypeValidatorAdapter, dbUpdateExam, dbGetExam)
+  const dbListExams = new DbListExams(examMongoRepository)
+  return new ExamController(
+    dbAddExam,
+    examTypeValidatorAdapter,
+    dbUpdateExam,
+    dbGetExam,
+    dbListExams
+  )
 }
