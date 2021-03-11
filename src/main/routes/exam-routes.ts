@@ -8,4 +8,5 @@ export default (router: Router): void => {
   router.put('/exam/update', AdaptRoute.update(makeExamController()))
   router.get('/exam', AdaptRoute.get(makeExamController()))
   router.get('/exams', AdaptRoute.list(makeExamController()))
+  router.delete('/exam/delete', AdaptRoute.delete(makeExamController()))
 }

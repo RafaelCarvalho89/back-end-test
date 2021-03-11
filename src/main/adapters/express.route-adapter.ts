@@ -40,5 +40,15 @@ export const AdaptRoute = {
       const httpResponse = await controller.list(httpRequest)
       res.status(httpResponse.statusCode).json(httpResponse.body)
     }
+  },
+
+  delete (controller: Controller) {
+    return async (req: Request, res: Response) => {
+      const httpRequest: HttpRequest = {
+        body: req.body
+      }
+      const httpResponse = await controller.delete(httpRequest)
+      res.status(httpResponse.statusCode).json(httpResponse.body)
+    }
   }
 }
