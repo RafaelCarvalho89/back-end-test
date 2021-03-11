@@ -333,4 +333,13 @@ describe('Exam Controller', () => {
     const httpResponse = await sut.delete({ body: {} })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
   })
+
+  test('Should return 500 if DeleteExam throws', async () => {
+    const { sut, deleteExamStub } = makeSut()
+    jest.spyOn(deleteExamStub, 'delete').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.delete({ body: { id: '42' } })
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
 })
