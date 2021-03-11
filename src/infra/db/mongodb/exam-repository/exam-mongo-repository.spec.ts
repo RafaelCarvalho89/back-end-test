@@ -75,4 +75,17 @@ describe('Exam Mongo Repository', () => {
     expect(examList).toBeTruthy()
     expect(examList[0]).toEqual(addedExam)
   })
+
+  test('Should return an Response on success when delete Exam', async () => {
+    const sut = makeSut()
+    const addedExam = await sut.add({
+      name: 'name',
+      description: 'description',
+      type: 'ONLINE',
+      questions: []
+    })
+    const deleteResponse = await sut.delete({ id: addedExam.id })
+    expect(deleteResponse).toBeTruthy()
+    expect(deleteResponse).toEqual({ ok: 1 })
+  })
 })
