@@ -1,6 +1,7 @@
 import { ExamRepository } from '../../../../data/protocols/exam-repository/exam-repository'
 import {
   AddExamModel,
+  DeleteExamModel,
   GetExamModel,
   UpdateExamModel
 } from '../../../../domain/usecases/exam'
@@ -36,5 +37,13 @@ export class ExamMongoRepository implements ExamRepository {
     const examCollection = MongoHelper.getCollection('exams')
     const examList = await examCollection.find().toArray()
     return examList.map((collection) => MongoHelper.map(collection))
+  }
+
+  async delete (examData: DeleteExamModel): Promise<any> {
+    const examCollection = MongoHelper.getCollection('exams')
+    const { result: { n, ...ok } } = await examCollection.deleteOne({
+      _id: examData.id
+    })
+    return ok
   }
 }
