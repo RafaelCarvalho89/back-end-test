@@ -31,4 +31,10 @@ export class ExamMongoRepository implements ExamRepository {
     })
     return MongoHelper.map(exam)
   }
+
+  async list (): Promise<ExamModel[]> {
+    const examCollection = MongoHelper.getCollection('exams')
+    const examList = await examCollection.find().toArray()
+    return examList.map((collection) => MongoHelper.map(collection))
+  }
 }

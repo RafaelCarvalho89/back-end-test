@@ -5,4 +5,5 @@ export interface ExamRepository {
   add: (ExamData: AddExamModel) => Promise<ExamModel>
   update: (ExamData: UpdateExamModel) => Promise<any>
   get: (ExamData: GetExamModel) => Promise<ExamModel>
+  list: () => Promise<ExamModel[]>
 }
