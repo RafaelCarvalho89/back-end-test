@@ -118,7 +118,9 @@ const makeFakeRequest = (body: any): HttpRequest => ({
   body
 })
 
-describe('Exam Controller', () => {
+// ------------------------------ADD METHOD TESTS------------------------------
+
+describe('Exam Controller add method', () => {
   test('Should return 400 if no name is provided when add exam', async () => {
     const { sut } = makeSut()
     const { id, name, ...fakeExamWithoutName } = makeFakeExam()
@@ -201,7 +203,38 @@ describe('Exam Controller', () => {
     const fakeResponseBody = makeFakeExam()
     expect(httpResponse).toEqual(ok(fakeResponseBody))
   })
+})
 
+// ------------------------------GET METHOD TESTS------------------------------
+
+describe('Exam Controller get method', () => {
+  test('Should return 400 if no id is provided when get exam', async () => {
+    const { sut } = makeSut()
+    const fakeRequest = makeFakeRequest({})
+    const httpResponse = await sut.get(fakeRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
+  })
+
+  test('Should return 500 if GetExam throws', async () => {
+    const { sut, getExamStub } = makeSut()
+    jest.spyOn(getExamStub, 'get').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.get({ body: { id: '1234' } })
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+
+  test('Should return 200 if valid data is provided when get exam', async () => {
+    const { sut } = makeSut()
+    const addedExamResponse = await sut.add(makeFakeRequest(makeFakeExam()))
+    const getExamResponse = await sut.get({ body: { id: addedExamResponse.body.id } })
+    expect(getExamResponse).toEqual(ok(makeFakeExam()))
+  })
+})
+
+// ------------------------------UPDATE METHOD TESTS------------------------------
+
+describe('Exam Controller update method', () => {
   test('Should return 400 if no id is provided when update exam', async () => {
     const { sut } = makeSut()
     const { id, ...fakeExamWithoutName } = makeFakeExam()
@@ -289,36 +322,11 @@ describe('Exam Controller', () => {
     const fakeResponseBody = makeFakeExam()
     expect(httpResponse).toEqual(ok(fakeResponseBody))
   })
+})
 
-  test('Should return 400 if no id is provided when get exam', async () => {
-    const { sut } = makeSut()
-    const fakeRequest = makeFakeRequest({})
-    const httpResponse = await sut.get(fakeRequest)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
-  })
+// ------------------------------LIST METHOD TESTS------------------------------
 
-  test('Should return 500 if GetExam throws', async () => {
-    const { sut, getExamStub } = makeSut()
-    jest.spyOn(getExamStub, 'get').mockImplementationOnce(async () => {
-      return await new Promise((resolve, reject) => reject(new Error()))
-    })
-    const httpResponse = await sut.get({ body: { id: '1234' } })
-    expect(httpResponse).toEqual(serverError(new ServerError(null)))
-  })
-
-  test('Should return 200 if valid data is provided when get exam', async () => {
-    const { sut } = makeSut()
-    const addedExamResponse = await sut.add(makeFakeRequest(makeFakeExam()))
-    const getExamResponse = await sut.get({ body: { id: addedExamResponse.body.id } })
-    expect(getExamResponse).toEqual(ok(makeFakeExam()))
-  })
-
-  test('Should return 200 if valid data is provided when get exam', async () => {
-    const { sut } = makeSut()
-    const examList = await sut.list()
-    expect(examList).toEqual(ok([makeFakeExam()]))
-  })
-
+describe('Exam Controller list method', () => {
   test('Should return 500 if ListExams throws', async () => {
     const { sut, listExamsStub } = makeSut()
     jest.spyOn(listExamsStub, 'list').mockImplementationOnce(async () => {
@@ -328,6 +336,16 @@ describe('Exam Controller', () => {
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
+  test('Should return 200 if valid data is provided when list exams', async () => {
+    const { sut } = makeSut()
+    const examList = await sut.list()
+    expect(examList).toEqual(ok([makeFakeExam()]))
+  })
+})
+
+// ------------------------------DELETE METHOD TESTS------------------------------
+
+describe('Exam Controller delete method', () => {
   test('Should return 400 if no id is provided when delete exam', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.delete({ body: {} })
