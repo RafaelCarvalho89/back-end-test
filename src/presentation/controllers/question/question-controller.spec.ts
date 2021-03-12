@@ -9,6 +9,8 @@ import {
 } from './question-controller-protocols'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import {
+  DeleteQuestion,
+  DeleteQuestionModel,
   GetQuestionModel,
   ListQuestions,
   ListQuestionsModel,
@@ -54,12 +56,22 @@ const makeListQuestions = (): ListQuestions => {
   return new ListQuestionsStub()
 }
 
+const makeDeleteQuestion = (): DeleteQuestion => {
+  class DeleteQuestionStub implements DeleteQuestion {
+    async delete (deleteQuestionRequest: DeleteQuestionModel): Promise<any> {
+      return await new Promise((resolve) => resolve(makeFakeQuestion()))
+    }
+  }
+  return new DeleteQuestionStub()
+}
+
 interface SutTypes {
   sut: QuestionController
   addQuestionStub: AddQuestion
   getQuestionStub: GetQuestion
   updateQuestionStub: UpdateQuestion
   listQuestionsStub: ListQuestions
+  deleteQuestionStub: DeleteQuestion
 }
 
 const makeSut = (): SutTypes => {
@@ -67,18 +79,21 @@ const makeSut = (): SutTypes => {
   const getQuestionStub = makeGetQuestion()
   const updateQuestionStub = makeUpdateQuestion()
   const listQuestionsStub = makeListQuestions()
+  const deleteQuestionStub = makeDeleteQuestion()
   const sut = new QuestionController(
     addQuestionStub,
     getQuestionStub,
     updateQuestionStub,
-    listQuestionsStub
+    listQuestionsStub,
+    deleteQuestionStub
   )
   return {
     sut,
     addQuestionStub,
     getQuestionStub,
     updateQuestionStub,
-    listQuestionsStub
+    listQuestionsStub,
+    deleteQuestionStub
   }
 }
 
@@ -283,5 +298,24 @@ describe('Question Controller list method', () => {
     const { sut } = makeSut()
     const questionList = await sut.list(makeFakeQuestion().examId)
     expect(questionList).toEqual(ok([makeFakeQuestion()]))
+  })
+})
+
+// ------------------------------DELETE METHOD TESTS------------------------------
+
+describe('Question Controller delete method', () => {
+  test('Should return 400 if no id is provided when delete question', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.delete({ body: {} })
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
+  })
+
+  test('Should return 500 if DeleteQuestion throws', async () => {
+    const { sut, deleteQuestionStub } = makeSut()
+    jest.spyOn(deleteQuestionStub, 'delete').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.delete({ body: { id: '42' } })
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
