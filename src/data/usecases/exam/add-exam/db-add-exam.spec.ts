@@ -1,6 +1,6 @@
-import { ExamModel } from '../../../domain/models/exam/exam-model'
-import { AddExamModel } from '../../../domain/usecases/exam/add-exam'
-import { AddExamRepository } from '../../protocols/exam-repository/add-exam-repository'
+import { ExamModel } from '../../../../domain/models/exam/exam-model'
+import { AddExamModel } from '../../../../domain/usecases/exam/add-exam'
+import { AddExamRepository } from '../../../protocols/exam-repository/add-exam-repository'
 import { DbAddExam } from './db-add-exam'
 
 const makeFakeExam = (): ExamModel => ({

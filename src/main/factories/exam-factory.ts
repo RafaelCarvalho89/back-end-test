@@ -1,4 +1,4 @@
-import { DbAddExam } from '../../data/usecases/add-exam/db-add-exam'
+import { DbAddExam } from '../../data/usecases/exam/add-exam/db-add-exam'
 import { DbDeleteExam } from '../../data/usecases/delete-exam/db-delete-exam'
 import { DbGetExam } from '../../data/usecases/get-exam/db-get-exam'
 import { DbListExams } from '../../data/usecases/list-exams/db-list-exams'
