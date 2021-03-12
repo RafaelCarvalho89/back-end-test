@@ -4,30 +4,44 @@ import {
   AddQuestion,
   AddQuestionModel,
   QuestionModel,
-  HttpRequest
+  HttpRequest,
+  GetQuestion
 } from './question-controller-protocols'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
+import { GetQuestionModel } from '../../../domain/usecases/question'
 
 const makeAddQuestion = (): AddQuestion => {
   class AddQuestionStub implements AddQuestion {
-    async add (question: AddQuestionModel): Promise<QuestionModel> {
+    async add (addQuestionRequest: AddQuestionModel): Promise<QuestionModel> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
   return new AddQuestionStub()
 }
 
+const makeGetQuestion = (): GetQuestion => {
+  class GetQuestionStub implements GetQuestion {
+    async get (getQuestionRequest: GetQuestionModel): Promise<QuestionModel> {
+      return await new Promise((resolve) => resolve(makeFakeQuestion()))
+    }
+  }
+  return new GetQuestionStub()
+}
+
 interface SutTypes {
   sut: QuestionController
   addQuestionStub: AddQuestion
+  getQuestionStub: GetQuestion
 }
 
 const makeSut = (): SutTypes => {
   const addQuestionStub = makeAddQuestion()
-  const sut = new QuestionController(addQuestionStub)
+  const getQuestionStub = makeGetQuestion()
+  const sut = new QuestionController(addQuestionStub, getQuestionStub)
   return {
     sut,
-    addQuestionStub
+    addQuestionStub,
+    getQuestionStub
   }
 }
 
@@ -123,5 +137,32 @@ describe('Question Controller add method', () => {
     const httpResponse = await sut.add(fakeRequest)
     const fakeResponseBody = makeFakeQuestion()
     expect(httpResponse).toEqual(ok(fakeResponseBody))
+  })
+})
+
+// ------------------------------GET METHOD TESTS------------------------------
+
+describe('Question Controller get method', () => {
+  test('Should return 400 if no id is provided when get question', async () => {
+    const { sut } = makeSut()
+    const fakeRequest = makeFakeRequest({})
+    const httpResponse = await sut.get(fakeRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
+  })
+
+  test('Should return 500 if GetQuestion throws', async () => {
+    const { sut, getQuestionStub } = makeSut()
+    jest.spyOn(getQuestionStub, 'get').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.get({ body: { id: '1234' } })
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+
+  test('Should return 200 if valid data is provided when get question', async () => {
+    const { sut } = makeSut()
+    const addedQuestionResponse = await sut.add(makeFakeRequest(makeFakeQuestion()))
+    const getQuestionResponse = await sut.get({ body: { id: addedQuestionResponse.body.id } })
+    expect(getQuestionResponse).toEqual(ok(makeFakeQuestion()))
   })
 })
