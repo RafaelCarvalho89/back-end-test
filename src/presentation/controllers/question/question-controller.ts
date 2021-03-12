@@ -4,6 +4,7 @@ import {
   GetQuestion,
   HttpRequest,
   HttpResponse,
+  ListQuestions,
   UpdateQuestion
 } from './question-controller-protocols'
 import { MissingParamError } from '../../errors'
@@ -13,7 +14,8 @@ export class QuestionController implements Controller {
   constructor (
     private readonly addQuestion: AddQuestion,
     private readonly getQuestion: GetQuestion,
-    private readonly updateQuestion: UpdateQuestion
+    private readonly updateQuestion: UpdateQuestion,
+    private readonly listQuestions: ListQuestions
   ) {}
 
   async add (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -63,7 +65,12 @@ export class QuestionController implements Controller {
   }
 
   async list (httpRequest: HttpRequest): Promise<HttpResponse> {
-    return ok({ ok: 'ok' })
+    try {
+      const questionList = await this.listQuestions.list(httpRequest.body)
+      return ok(questionList)
+    } catch (error) {
+      return serverError(error)
+    }
   }
 
   async delete (httpRequest: HttpRequest): Promise<HttpResponse> {
