@@ -1,3 +1,7 @@
+export interface DeleteQuestionModel {
+  id: string
+}
+
 export interface DeleteQuestion {
-  delete: (id: string) => Promise<any>
+  delete: (deleteQuestionModel: DeleteQuestionModel) => Promise<any>
 }
