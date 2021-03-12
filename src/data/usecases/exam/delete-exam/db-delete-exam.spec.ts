@@ -1,6 +1,6 @@
-import { ExamModel } from '../../../domain/models/exam/exam-model'
-import { DeleteExamModel } from '../../../domain/usecases/exam/delete-exam'
-import { DeleteExamRepository } from '../../protocols/exam-repository/delete-exam-repository'
+import { ExamModel } from '../../../../domain/models/exam/exam-model'
+import { DeleteExamModel } from '../../../../domain/usecases/exam/delete-exam'
+import { DeleteExamRepository } from '../../../protocols/exam-repository/delete-exam-repository'
 import { DbDeleteExam } from './db-delete-exam'
 
 const makeFakeDeleteExam = (): DeleteExamModel => ({
