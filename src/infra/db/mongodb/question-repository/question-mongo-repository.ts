@@ -10,21 +10,23 @@ import { QuestionModel } from '../../../../domain/models/question/question-model
 import { MongoHelper } from '../helpers/mongo-helper'
 
 export class QuestionMongoRepository implements QuestionRepository {
-  async add (questionData: AddQuestionModel): Promise<any> {
-    const { examId, ...addQuestionData } = questionData
+  async add (questionData: AddQuestionModel): Promise<QuestionModel> {
+    const { examId, statement, options } = questionData
     const examCollection = await MongoHelper.getCollection('exams')
-    const exam = await examCollection.findOne({
-      _id: examId
-    })
+    const exam = await MongoHelper.getById(examId, examCollection)
+    if (!exam) return null
 
-    if (!exam?.questions) exam.questions = []
-    exam.questions.push(addQuestionData)
-    const { result: { ok } } = await examCollection.updateOne(
-      { _id: examId },
-      { $set: exam },
-      { upsert: true }
-    )
-    return { ok } || null
+    if (!exam.questions) exam.questions = []
+    exam.questions.push(MongoHelper.addObjectId({
+      statement,
+      options: MongoHelper.addObjectIdInObjectList(options)
+    }))
+
+    const { result: { ok } } = await MongoHelper.updateOne(examCollection, examId, exam)
+    const updatedExam = await MongoHelper.getDocumentById(examId, 'exams')
+    const lastPosition = updatedExam.questions.length - 1
+    const addedQuestion = updatedExam.questions[lastPosition]
+    return ok ? addedQuestion : null
   }
 
   async update (questionData: UpdateQuestionModel): Promise<any> {
