@@ -1,6 +1,7 @@
 import {
   AddQuestion,
   Controller,
+  GetQuestion,
   HttpRequest,
   HttpResponse
 } from './question-controller-protocols'
@@ -9,7 +10,8 @@ import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 
 export class QuestionController implements Controller {
   constructor (
-    private readonly addQuestion: AddQuestion
+    private readonly addQuestion: AddQuestion,
+    private readonly getQuestion: GetQuestion
   ) {}
 
   async add (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -33,7 +35,13 @@ export class QuestionController implements Controller {
   }
 
   async get (httpRequest: HttpRequest): Promise<HttpResponse> {
-    return ok({ ok: 'ok' })
+    try {
+      if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
+      const question = await this.getQuestion.get(httpRequest.body)
+      return ok(question)
+    } catch (error) {
+      return serverError(error)
+    }
   }
 
   async list (httpRequest: HttpRequest): Promise<HttpResponse> {
