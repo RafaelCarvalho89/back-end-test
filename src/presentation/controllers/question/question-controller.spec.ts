@@ -10,6 +10,8 @@ import {
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import {
   GetQuestionModel,
+  ListQuestions,
+  ListQuestionsModel,
   UpdateQuestion,
   UpdateQuestionModel
 } from '../../../domain/usecases/question'
@@ -43,27 +45,40 @@ const makeGetQuestion = (): GetQuestion => {
   return new GetQuestionStub()
 }
 
+const makeListQuestions = (): ListQuestions => {
+  class ListQuestionsStub implements ListQuestions {
+    async list (ListQuestionsRequest: ListQuestionsModel): Promise<QuestionModel[]> {
+      return await new Promise((resolve) => resolve([makeFakeQuestion()]))
+    }
+  }
+  return new ListQuestionsStub()
+}
+
 interface SutTypes {
   sut: QuestionController
   addQuestionStub: AddQuestion
   getQuestionStub: GetQuestion
   updateQuestionStub: UpdateQuestion
+  listQuestionsStub: ListQuestions
 }
 
 const makeSut = (): SutTypes => {
   const addQuestionStub = makeAddQuestion()
   const getQuestionStub = makeGetQuestion()
   const updateQuestionStub = makeUpdateQuestion()
+  const listQuestionsStub = makeListQuestions()
   const sut = new QuestionController(
     addQuestionStub,
     getQuestionStub,
-    updateQuestionStub
+    updateQuestionStub,
+    listQuestionsStub
   )
   return {
     sut,
     addQuestionStub,
     getQuestionStub,
-    updateQuestionStub
+    updateQuestionStub,
+    listQuestionsStub
   }
 }
 
@@ -249,5 +264,24 @@ describe('Question Controller get method', () => {
       body: { id: addedQuestionResponse.body.id }
     })
     expect(getQuestionResponse).toEqual(ok(makeFakeQuestion()))
+  })
+})
+
+// ------------------------------LIST METHOD TESTS------------------------------
+
+describe('Question Controller list method', () => {
+  test('Should return 500 if ListQuestions throws', async () => {
+    const { sut, listQuestionsStub } = makeSut()
+    jest.spyOn(listQuestionsStub, 'list').mockImplementationOnce(async () => {
+      return await new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.list({})
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+
+  test('Should return 200 if valid data is provided when list questions', async () => {
+    const { sut } = makeSut()
+    const questionList = await sut.list(makeFakeQuestion().examId)
+    expect(questionList).toEqual(ok([makeFakeQuestion()]))
   })
 })
