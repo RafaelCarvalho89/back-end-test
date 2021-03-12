@@ -1,6 +1,7 @@
 import {
   AddQuestion,
   Controller,
+  DeleteQuestion,
   GetQuestion,
   HttpRequest,
   HttpResponse,
@@ -15,7 +16,8 @@ export class QuestionController implements Controller {
     private readonly addQuestion: AddQuestion,
     private readonly getQuestion: GetQuestion,
     private readonly updateQuestion: UpdateQuestion,
-    private readonly listQuestions: ListQuestions
+    private readonly listQuestions: ListQuestions,
+    private readonly deleteQuestion: DeleteQuestion
   ) {}
 
   async add (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -74,6 +76,12 @@ export class QuestionController implements Controller {
   }
 
   async delete (httpRequest: HttpRequest): Promise<HttpResponse> {
-    return ok({ ok: 'ok' })
+    try {
+      if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
+      const deleteResponse = await this.deleteQuestion.delete(httpRequest.body)
+      return ok(deleteResponse)
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
