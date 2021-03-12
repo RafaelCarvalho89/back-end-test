@@ -1,5 +1,5 @@
-import { ExamModel } from '../../../domain/models/exam/exam-model'
-import { ListExamsRepository } from '../../protocols/exam-repository/list-exams-repository'
+import { ExamModel } from '../../../../domain/models/exam/exam-model'
+import { ListExamsRepository } from '../../../protocols/exam-repository/list-exams-repository'
 import { DbListExams } from './db-list-exams'
 
 const makeFakeExam = (): ExamModel => ({
