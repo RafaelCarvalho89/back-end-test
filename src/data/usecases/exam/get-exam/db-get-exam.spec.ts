@@ -1,6 +1,6 @@
-import { ExamModel } from '../../../domain/models/exam/exam-model'
-import { GetExamModel } from '../../../domain/usecases/exam/get-exam'
-import { GetExamRepository } from '../../protocols/exam-repository/get-exam-repository'
+import { ExamModel } from '../../../../domain/models/exam/exam-model'
+import { GetExamModel } from '../../../../domain/usecases/exam/get-exam'
+import { GetExamRepository } from '../../../protocols/exam-repository/get-exam-repository'
 import { DbGetExam } from './db-get-exam'
 
 const makeFakeGetExam = (): GetExamModel => ({

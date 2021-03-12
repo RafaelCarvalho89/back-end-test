@@ -1,6 +1,6 @@
 import { DbAddExam } from '../../data/usecases/exam/add-exam/db-add-exam'
 import { DbDeleteExam } from '../../data/usecases/delete-exam/db-delete-exam'
-import { DbGetExam } from '../../data/usecases/get-exam/db-get-exam'
+import { DbGetExam } from '../../data/usecases/exam/get-exam/db-get-exam'
 import { DbListExams } from '../../data/usecases/list-exams/db-list-exams'
 import { DbUpdateExam } from '../../data/usecases/update-exam/db-update-exam'
 import { ExamMongoRepository } from '../../infra/db/mongodb/exam-repository/exam-mongo-repository'
