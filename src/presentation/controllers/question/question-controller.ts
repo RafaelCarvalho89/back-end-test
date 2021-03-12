@@ -3,7 +3,8 @@ import {
   Controller,
   GetQuestion,
   HttpRequest,
-  HttpResponse
+  HttpResponse,
+  UpdateQuestion
 } from './question-controller-protocols'
 import { MissingParamError } from '../../errors'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
@@ -11,7 +12,8 @@ import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 export class QuestionController implements Controller {
   constructor (
     private readonly addQuestion: AddQuestion,
-    private readonly getQuestion: GetQuestion
+    private readonly getQuestion: GetQuestion,
+    private readonly updateQuestion: UpdateQuestion
   ) {}
 
   async add (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -31,7 +33,23 @@ export class QuestionController implements Controller {
   }
 
   async update (httpRequest: HttpRequest): Promise<HttpResponse> {
-    return ok({ ok: 'ok' })
+    try {
+      const requiredFields = ['id', 'statement', 'options']
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field))
+        }
+      }
+      const { id, statement, options } = httpRequest.body
+      const question = await this.updateQuestion.update({
+        id,
+        statement,
+        options
+      })
+      return ok(question)
+    } catch (error) {
+      return serverError(error)
+    }
   }
 
   async get (httpRequest: HttpRequest): Promise<HttpResponse> {
