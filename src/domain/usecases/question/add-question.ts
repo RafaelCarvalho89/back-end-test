@@ -1,9 +1,15 @@
-import { OptionModel, QuestionModel } from '../../models/question/question-model'
+import { QuestionModel } from '../../models/question/question-model'
+
+export interface AddOptionModel {
+  key: string
+  value: string
+  correct: boolean
+}
 
 export interface AddQuestionModel {
   examId: string
   statement: string
-  options: OptionModel[]
+  options: AddOptionModel[]
 }
 
 export interface AddQuestion {
