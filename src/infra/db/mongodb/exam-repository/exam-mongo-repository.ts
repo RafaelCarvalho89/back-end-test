@@ -7,6 +7,7 @@ import {
 } from '../../../../domain/usecases/exam'
 import { ExamModel } from '../../../../domain/models/exam/exam-model'
 import { MongoHelper } from '../helpers/mongo-helper'
+import { ObjectId } from 'mongodb'
 
 export class ExamMongoRepository implements ExamRepository {
   async add (examData: AddExamModel): Promise<ExamModel> {
@@ -28,7 +29,7 @@ export class ExamMongoRepository implements ExamRepository {
   async get (examData: GetExamModel): Promise<ExamModel> {
     const examCollection = await MongoHelper.getCollection('exams')
     const exam = await examCollection.findOne({
-      _id: examData.id
+      _id: new ObjectId(examData.id)
     })
     return MongoHelper.map(exam)
   }
