@@ -1,6 +1,12 @@
 import { MongoHelper } from '../helpers/mongo-helper'
 import { ExamMongoRepository } from './exam-mongo-repository'
 
+const makeFakeExam = (): any => ({
+  name: 'name',
+  description: 'description',
+  type: 'ONLINE'
+})
+
 describe('Exam Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -21,40 +27,38 @@ describe('Exam Mongo Repository', () => {
 
   test('Should return an exam on success when add Exam', async () => {
     const sut = makeSut()
-    const exam = await sut.add({
-      name: 'name',
-      description: 'description',
-      type: 'ONLINE',
-      questions: []
-    })
+    const fakeExam = (makeFakeExam())
+    const exam = await sut.add(fakeExam)
     expect(exam).toBeTruthy()
     expect(exam.id).toBeTruthy()
-    expect(exam.name).toBe('name')
-    expect(exam.description).toBe('description')
-    expect(exam.type).toBe('ONLINE')
+    expect(exam.name).toBe(fakeExam.name)
+    expect(exam.description).toBe(fakeExam.description)
+    expect(exam.type).toBe(fakeExam.type)
   })
 
-  test('Should return an exam id on success when update Exam', async () => {
+  test('Should return an updated exam on success when update Exam', async () => {
     const sut = makeSut()
+    const fakeExam = (makeFakeExam())
+    const addedExam = await sut.add(fakeExam)
     const updatedExam = await sut.update({
-      id: '6048039ae5a5d3cd29630a1e',
-      name: 'Updated Name',
-      description: 'Updated description',
-      type: 'ONLINE',
+      id: addedExam.id,
+      name: 'UPDATED Name',
+      description: 'UPDATED description',
+      type: 'OFFLINE',
       questions: []
     })
     expect(updatedExam).toBeTruthy()
-    expect(updatedExam.id).toBe('6048039ae5a5d3cd29630a1e')
+    expect(updatedExam.id).toBeTruthy()
+    expect(updatedExam.name).toBe('UPDATED Name')
+    expect(updatedExam.description).toBe('UPDATED description')
+    expect(updatedExam.type).toBe('OFFLINE')
+    expect(updatedExam.questions).toEqual([])
   })
 
   test('Should return an exam on success when get Exam', async () => {
     const sut = makeSut()
-    const addedExam = await sut.add({
-      name: 'name',
-      description: 'description',
-      type: 'ONLINE',
-      questions: []
-    })
+    const fakeExam = (makeFakeExam())
+    const addedExam = await sut.add(fakeExam)
     const examFound = await sut.get({ id: addedExam.id })
     expect(examFound).toBeTruthy()
     expect(examFound.id).toEqual(addedExam.id)
@@ -65,12 +69,8 @@ describe('Exam Mongo Repository', () => {
 
   test('Should return an Exam List on success when list exams', async () => {
     const sut = makeSut()
-    const addedExam = await sut.add({
-      name: 'name',
-      description: 'description',
-      type: 'ONLINE',
-      questions: []
-    })
+    const fakeExam = (makeFakeExam())
+    const addedExam = await sut.add(fakeExam)
     const examList = await sut.list()
     expect(examList).toBeTruthy()
     expect(examList[0]).toEqual(addedExam)
@@ -78,14 +78,10 @@ describe('Exam Mongo Repository', () => {
 
   test('Should return an Response on success when delete Exam', async () => {
     const sut = makeSut()
-    const addedExam = await sut.add({
-      name: 'name',
-      description: 'description',
-      type: 'ONLINE',
-      questions: []
-    })
+    const fakeExam = (makeFakeExam())
+    const addedExam = await sut.add(fakeExam)
     const deleteResponse = await sut.delete({ id: addedExam.id })
     expect(deleteResponse).toBeTruthy()
-    expect(deleteResponse).toEqual({ ok: 1 })
+    expect(deleteResponse).toEqual({ delete: 'ok' })
   })
 })

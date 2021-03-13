@@ -7,44 +7,43 @@ import {
 } from '../../../../domain/usecases/exam'
 import { ExamModel } from '../../../../domain/models/exam/exam-model'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { ObjectId } from 'mongodb'
 
 export class ExamMongoRepository implements ExamRepository {
+  private readonly collectionName = 'exams'
+
+  private newExam (exam: AddExamModel): ExamModel {
+    const { name, description, type, questions } = exam
+    return MongoHelper.addObjectId({
+      name,
+      description,
+      type,
+      questions: questions ? MongoHelper.addObjectIdInObjectList(questions) : []
+    })
+  }
+
   async add (examData: AddExamModel): Promise<ExamModel> {
     const examCollection = await MongoHelper.getCollection('exams')
     const result = await examCollection.insertOne(examData)
     return MongoHelper.map(result.ops[0])
   }
 
-  async update (examData: UpdateExamModel): Promise<any> {
-    const examCollection = await MongoHelper.getCollection('exams')
-    const { upsertedId } = await examCollection.updateOne(
-      { _id: examData.id },
-      { $set: examData },
-      { upsert: true }
-    )
-    return { id: upsertedId._id }
+  async update (examData: UpdateExamModel): Promise<any|null> {
+    const { id, ...updatedContent } = examData
+    const result = await MongoHelper.updateOne(id, updatedContent, 'exams')
+    const updatedExam = await MongoHelper.getDocumentById(id, this.collectionName)
+    return result.nModified === 1 ? MongoHelper.map(updatedExam) : null
   }
 
   async get (examData: GetExamModel): Promise<ExamModel> {
-    const examCollection = await MongoHelper.getCollection('exams')
-    const exam = await examCollection.findOne({
-      _id: new ObjectId(examData.id)
-    })
-    return MongoHelper.map(exam)
+    const foundExam = await MongoHelper.getDocumentById(examData.id, this.collectionName)
+    return MongoHelper.map(foundExam)
   }
 
   async list (): Promise<ExamModel[]> {
-    const examCollection = await MongoHelper.getCollection('exams')
-    const examList = await examCollection.find().toArray()
-    return examList.map((collection) => MongoHelper.map(collection))
+    return MongoHelper.mapList(await MongoHelper.list(this.collectionName))
   }
 
-  async delete (examData: DeleteExamModel): Promise<any> {
-    const examCollection = await MongoHelper.getCollection('exams')
-    const { result: { n, ...ok } } = await examCollection.deleteOne({
-      _id: examData.id
-    })
-    return ok
+  async delete (examData: DeleteExamModel): Promise<any|null> {
+    return await MongoHelper.delete(examData.id, this.collectionName)
   }
 }

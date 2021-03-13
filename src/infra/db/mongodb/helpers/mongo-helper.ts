@@ -17,8 +17,12 @@ export const MongoHelper = {
     this.client = null
   },
 
-  async getCollection (name: string): Promise<Collection> {
+  async ensureConnection (): Promise<void> {
     if (!this.client?.isConnected) await this.connect(this.uri)
+  },
+
+  async getCollection (name: string): Promise<Collection> {
+    await this.ensureConnection()
     return this.client.db().collection(name)
   },
 
@@ -26,6 +30,15 @@ export const MongoHelper = {
     if (!collection) return {}
     const { _id, ...collectionWithoutId } = collection
     return Object.assign({}, collectionWithoutId, { id: _id })
+  },
+
+  mapList: (collectionList: any[]): any[] => {
+    const mappedCollectionList = []
+    for (const collection of collectionList) {
+      const mappedCollection = MongoHelper.map(collection)
+      mappedCollectionList.push(mappedCollection)
+    }
+    return mappedCollectionList
   },
 
   addObjectId: (object: any): any => {
@@ -41,23 +54,39 @@ export const MongoHelper = {
     return newObjectList
   },
 
-  async getDocumentById (id: string, collectionName: string): Promise<any|null> {
-    if (!this.client?.isConnected) await this.connect(this.uri)
+  insertObjectInDocumentField (object: any, field: string, document: any): any {
+    if (!document[field]) document[field] = []
+    document[field].push(object)
+    return document
+  },
+
+  async getDocumentById (id: string, collectionName: string): Promise<any> {
+    await this.ensureConnection()
     const documentFound = await (this.client.db().collection(collectionName)).findOne({
       _id: id
     })
-    return documentFound || null
+    return documentFound
   },
 
-  async getById (id: string, collection: Collection): Promise<any> {
-    return await collection.findOne({ _id: id })
-  },
-
-  async updateOne (collection: Collection, id: string, updatedContent: any): Promise<any> {
-    return await collection.updateOne(
+  async updateOne (id: string, updatedContent: any, collectionName: string): Promise<any> {
+    await this.ensureConnection()
+    const { result } = await (this.client.db().collection(collectionName)).updateOne(
       { _id: id },
       { $set: updatedContent },
-      { upsert: true }
+      { upsert: false }
     )
+    return result
+  },
+
+  async list (collectionName: string): Promise<any> {
+    await this.ensureConnection()
+    const documentList = await (this.client.db().collection(collectionName)).find().toArray()
+    return documentList
+  },
+
+  async delete (id: string, collectionName: string): Promise<any|null> {
+    await this.ensureConnection()
+    const { deletedCount } = await (this.client.db().collection(collectionName)).deleteOne({ _id: id })
+    return deletedCount === 1 ? { delete: 'ok' } : {}
   }
 }
