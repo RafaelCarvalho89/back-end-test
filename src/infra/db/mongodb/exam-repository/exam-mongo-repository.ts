@@ -11,25 +11,24 @@ import { MongoHelper } from '../helpers/mongo-helper'
 export class ExamMongoRepository implements ExamRepository {
   private readonly collectionName = 'exams'
 
-  private newExam (exam: AddExamModel): ExamModel {
+  private newExam (exam: AddExamModel): AddExamModel {
     const { name, description, type, questions } = exam
-    return MongoHelper.addObjectId({
+    return {
       name,
       description,
       type,
       questions: questions ? MongoHelper.addObjectIdInObjectList(questions) : []
-    })
+    }
   }
 
   async add (examData: AddExamModel): Promise<ExamModel> {
-    const examCollection = await MongoHelper.getCollection('exams')
-    const result = await examCollection.insertOne(examData)
-    return MongoHelper.map(result.ops[0])
+    const newExam = this.newExam(examData)
+    return await MongoHelper.insertOne(newExam, this.collectionName)
   }
 
   async update (examData: UpdateExamModel): Promise<any|null> {
     const { id, ...updatedContent } = examData
-    const result = await MongoHelper.updateOne(id, updatedContent, 'exams')
+    const result = await MongoHelper.updateOne(id, updatedContent, this.collectionName)
     const updatedExam = await MongoHelper.getDocumentById(id, this.collectionName)
     return result.nModified === 1 ? MongoHelper.map(updatedExam) : null
   }

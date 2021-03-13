@@ -54,7 +54,7 @@ export const MongoHelper = {
     return newObjectList
   },
 
-  insertObjectInDocumentField (object: any, field: string, document: any): any {
+  insertObjectInDocumentField: (object: any, field: string, document: any): any => {
     if (!document[field]) document[field] = []
     document[field].push(object)
     return document
@@ -62,17 +62,22 @@ export const MongoHelper = {
 
   async getDocumentById (id: string, collectionName: string): Promise<any> {
     await this.ensureConnection()
-    const documentFound = await (this.client.db().collection(collectionName)).findOne({
+    return (this.client.db().collection(collectionName)).findOne({
       _id: id
     })
-    return documentFound
   },
 
-  async updateOne (id: string, updatedContent: any, collectionName: string): Promise<any> {
+  async insertOne (inputData: any, collectionName: string): Promise<any> {
+    await this.ensureConnection()
+    const result = await (this.client.db().collection(collectionName)).insertOne(inputData)
+    return this.map(result.ops[0])
+  },
+
+  async updateOne (id: string, updatedData: any, collectionName: string): Promise<any> {
     await this.ensureConnection()
     const { result } = await (this.client.db().collection(collectionName)).updateOne(
       { _id: id },
-      { $set: updatedContent },
+      { $set: updatedData },
       { upsert: false }
     )
     return result
