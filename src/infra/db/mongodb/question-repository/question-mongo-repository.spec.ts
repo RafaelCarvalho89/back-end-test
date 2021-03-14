@@ -35,6 +35,33 @@ const makeFakeOptions = (): any => ([
   }
 ])
 
+const makeFakeUpdatedOptions = (): any => ([
+  {
+    id: '607b9974-4914-44df-81e8-d56ec6a58951',
+    key: 'a',
+    value: 'viver - UPDATED',
+    correct: false
+  },
+  {
+    id: '607b9974-4914-44df-81e8-d56ec6a58952',
+    key: 'b',
+    value: 'beber café - UPDATED',
+    correct: false
+  },
+  {
+    id: '607b9974-4914-44df-81e8-d56ec6a58953',
+    key: 'c',
+    value: 'codar - UPDATED',
+    correct: false
+  },
+  {
+    id: '607b9974-4914-44df-81e8-d56ec6a58953',
+    key: 'd',
+    value: '42 - UPDATED',
+    correct: true
+  }
+])
+
 const makeFakeOptionsWithoutId = (): any => {
   const fakeOptions = makeFakeOptions()
   const fakeOptionsWithoutId = []
@@ -110,5 +137,24 @@ describe('Question Mongo Repository', () => {
     expect(questions.length).toBe(1)
     expect(questions[0].statement).toBe(question.statement)
     expect(questions[0].options).toBeTruthy()
+  })
+
+  test('Should return question on success when update question', async () => {
+    const { sut, examRepositoryStub } = makeSut()
+    const fakeExam = await examRepositoryStub.add(makeFakeExam())
+    const fakeQuestion = makeFakeQuestionWithoutId(fakeExam.id)
+    const addedQuestion = await sut.add(fakeQuestion)
+    const updatedOptions = makeFakeUpdatedOptions()
+    const updatedStatement = 'STATEMENT UPDATED'
+    const updatedQuestion = await sut.update({
+      id: addedQuestion.id,
+      statement: updatedStatement,
+      options: updatedOptions
+    })
+    expect(updatedQuestion).toBeTruthy()
+    expect(updatedQuestion.id).toStrictEqual(addedQuestion.id)
+    expect(updatedQuestion.statement).toBe(updatedStatement)
+    expect(updatedQuestion.options).toBeTruthy()
+    expect(updatedQuestion.options).toEqual(updatedOptions)
   })
 })
