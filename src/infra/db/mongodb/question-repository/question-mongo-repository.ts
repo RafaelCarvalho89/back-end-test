@@ -4,16 +4,16 @@ import {
   AddQuestionModel,
   DeleteQuestionModel,
   GetQuestionModel,
-  GetQuestionResponseModel,
   ListQuestionsModel,
   UpdateQuestionModel
 } from '../../../../domain/usecases/question'
 import { QuestionModel } from '../../../../domain/models/question/question-model'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { ExamMongoRepository } from '../exam-repository/exam-mongo-repository'
+import { ObjectId } from 'mongodb'
 
 export class QuestionMongoRepository implements QuestionRepository {
-  private readonly collectionName = 'exam'
+  private readonly collectionName = 'exams'
 
   private newQuestion (statement: string, options: AddOptionModel[]): QuestionModel {
     return MongoHelper.addObjectId({
@@ -38,15 +38,15 @@ export class QuestionMongoRepository implements QuestionRepository {
     return { id: '42' }
   }
 
-  async get (questionData: GetQuestionModel): Promise<GetQuestionResponseModel> {
+  async get (questionData: GetQuestionModel): Promise<QuestionModel> {
     const examMongoRepository = new ExamMongoRepository()
     const exam = await examMongoRepository.findOneByFilter(
-      { questions: { $elemMatch: { id: questionData.id } } },
-      { projection: { _id: 1, name: 1, questions: 1 } }
+      { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } },
+      // { projection: { _id: 1, name: 1, questions: 1 } }
+      { projection: { questions: 1 } }
     )
-
-    const foundedQuestion = Object.assign({}, exam.questions[0], { examId: exam.id, examName: exam.name })
-    return exam ? foundedQuestion : null
+    // const foundedQuestion = Object.assign({}, exam.questions[0], { examId: exam.id, examName: exam.name })
+    return exam ? exam.questions[0] : null
   }
 
   async list (questionData: ListQuestionsModel): Promise<QuestionModel[]> {
