@@ -53,20 +53,9 @@ export class QuestionMongoRepository implements QuestionRepository {
   }
 
   async list (questionData: ListQuestionsModel): Promise<QuestionModel[]> {
-    return [
-      {
-        id: '42',
-        statement: 'statement',
-        options: [
-          {
-            id: '607b9974-4914-44df-81e8-d56ec6a58951',
-            key: 'a',
-            value: 'viver',
-            correct: false
-          }
-        ]
-      }
-    ]
+    const examMongoRepository = new ExamMongoRepository()
+    const exam = await examMongoRepository.get({ id: questionData.examId })
+    return exam ? exam.questions : null
   }
 
   async delete (questionData: DeleteQuestionModel): Promise<any> {
