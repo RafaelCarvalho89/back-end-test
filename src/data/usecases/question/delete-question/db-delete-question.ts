@@ -2,7 +2,7 @@ import {
   DeleteQuestion,
   DeleteQuestionModel,
   DeleteQuestionRepository
-} from './db-delete-questions-protocols'
+} from './db-delete-question-protocols'
 
 export class DbDeleteQuestion implements DeleteQuestion {
   constructor (private readonly deleteQuestionRepository: DeleteQuestionRepository) {}

@@ -1,7 +1,7 @@
 import { QuestionModel } from '../../../../domain/models/question/question-model'
 import { DeleteQuestionModel } from '../../../../domain/usecases/question/delete-question'
 import { DeleteQuestionRepository } from '../../../protocols/question-repository/delete-question-repository'
-import { DbDeleteQuestion } from './db-delete-questions'
+import { DbDeleteQuestion } from './db-delete-question'
 
 const makeFakeQuestion = (): QuestionModel => ({
   id: '607b9974-4914-44df-81e8-d56ec6a58912',
