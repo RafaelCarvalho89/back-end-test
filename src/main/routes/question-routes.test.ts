@@ -58,4 +58,11 @@ describe('Question Routes', () => {
       .send(makeFakeQuestion())
       .expect(200)
   })
+
+  test('Should return question on get success', async () => {
+    await request(app)
+      .get('/api/question')
+      .send(makeFakeQuestion())
+      .expect(200)
+  })
 })
