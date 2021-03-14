@@ -1,5 +1,6 @@
 import { QuestionRepository } from '../../../../data/protocols/question-repository/question-repository'
 import {
+  AddOptionModel,
   AddQuestionModel,
   DeleteQuestionModel,
   GetQuestionModel,
@@ -8,21 +9,28 @@ import {
 } from '../../../../domain/usecases/question'
 import { QuestionModel } from '../../../../domain/models/question/question-model'
 import { MongoHelper } from '../helpers/mongo-helper'
+import { ExamMongoRepository } from '../exam-repository/exam-mongo-repository'
 
 export class QuestionMongoRepository implements QuestionRepository {
+  private readonly collectionName = 'exam'
+
+  private newQuestion (statement: string, options: AddOptionModel[]): QuestionModel {
+    return MongoHelper.addObjectId({
+      statement,
+      options: MongoHelper.addObjectIdInObjectList(options)
+    })
+  }
+
   async add (questionData: AddQuestionModel): Promise<QuestionModel> {
-    const exam = await MongoHelper.getDocumentById(questionData.examId, 'exams')
+    const { examId, statement, options } = questionData
+    const examMongoRepository = new ExamMongoRepository()
+    const exam = await examMongoRepository.get({ id: examId })
     if (!exam) return null
-    const examCollection = await MongoHelper.getCollection('exams')
-    if (!exam.questions) exam.questions = []
-    exam.questions.push(MongoHelper.addObjectId({
-      statement: questionData.statement,
-      options: MongoHelper.addObjectIdInObjectList(questionData.options)
-    }))
-    const { result: { ok } } = await MongoHelper.updateOne(examCollection, questionData.examId, exam)
-    const updatedExam = await MongoHelper.getDocumentById(questionData.examId, 'exams')
+    const newQuestion = this.newQuestion(statement, options)
+    const newExam = MongoHelper.insertObjectInDocumentField(newQuestion, 'questions', exam)
+    const updatedExam = await examMongoRepository.update(newExam)
     const lastPosition = updatedExam.questions.length - 1
-    return ok ? updatedExam.questions[lastPosition] : null
+    return updatedExam.questions[lastPosition]
   }
 
   async update (questionData: UpdateQuestionModel): Promise<any> {
