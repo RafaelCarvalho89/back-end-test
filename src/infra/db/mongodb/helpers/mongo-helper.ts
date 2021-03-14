@@ -81,7 +81,7 @@ export const MongoHelper = {
   async updateOne (id: string, updatedData: any, collectionName: string): Promise<any> {
     await this.ensureConnection()
     const { result } = await (this.client.db().collection(collectionName)).updateOne(
-      { _id: id },
+      { _id: new ObjectId(id) },
       { $set: updatedData },
       { upsert: false }
     )
@@ -96,7 +96,7 @@ export const MongoHelper = {
 
   async delete (id: string, collectionName: string): Promise<any|null> {
     await this.ensureConnection()
-    const { deletedCount } = await (this.client.db().collection(collectionName)).deleteOne({ _id: id })
+    const { deletedCount } = await (this.client.db().collection(collectionName)).deleteOne({ _id: new ObjectId(id) })
     return deletedCount === 1 ? { delete: 'ok' } : {}
   }
 }
