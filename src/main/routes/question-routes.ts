@@ -5,4 +5,5 @@ import { makeQuestionController } from '../factories/question-factory'
 
 export default (router: Router): void => {
   router.post('/question/new', AdaptRoute.add(makeQuestionController()))
+  router.get('/questions', AdaptRoute.add(makeQuestionController()))
 }
