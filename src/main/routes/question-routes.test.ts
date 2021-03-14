@@ -2,8 +2,6 @@ import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 import app from '../config/app'
 
-const fakeExamId = '607b9974-4914-44df-81e8-d56ec6a589bf'
-
 const makeFakeOptions = (): any => ([
   {
     key: 'a',
@@ -28,7 +26,7 @@ const makeFakeOptions = (): any => ([
 ])
 
 const makeFakeQuestion = (): any => ({
-  examId: fakeExamId,
+  examId: '604de08e5f3e114605efbfec',
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
   options: makeFakeOptions()
 })

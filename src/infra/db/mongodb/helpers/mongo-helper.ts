@@ -63,7 +63,7 @@ export const MongoHelper = {
   async getDocumentById (id: string, collectionName: string): Promise<any> {
     await this.ensureConnection()
     return (this.client.db().collection(collectionName)).findOne({
-      _id: id
+      _id: new ObjectId(id)
     })
   },
 
