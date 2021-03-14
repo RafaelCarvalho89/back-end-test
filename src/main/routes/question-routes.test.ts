@@ -2,6 +2,9 @@ import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 import app from '../config/app'
 
+const fakeExamId = '604de08e5f3e114605efbfec'
+const fakeQuestionId = '604e5be11a78573cb23a01a8'
+
 const makeFakeOptions = (): any => ([
   {
     key: 'a',
@@ -26,7 +29,7 @@ const makeFakeOptions = (): any => ([
 ])
 
 const makeFakeQuestion = (): any => ({
-  examId: '604de08e5f3e114605efbfec',
+  examId: fakeExamId,
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
   options: makeFakeOptions()
 })
@@ -55,14 +58,14 @@ describe('Question Routes', () => {
   test('Should return questions on list success', async () => {
     await request(app)
       .get('/api/questions')
-      .send(makeFakeQuestion())
+      .send({ examId: fakeExamId })
       .expect(200)
   })
 
   test('Should return question on get success', async () => {
     await request(app)
       .get('/api/question')
-      .send(makeFakeQuestion())
+      .send({ id: fakeQuestionId })
       .expect(200)
   })
 })
