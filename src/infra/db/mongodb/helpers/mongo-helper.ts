@@ -88,6 +88,16 @@ export const MongoHelper = {
     return result
   },
 
+  async updateOneByFilter (filter: any, updatedData: any, collectionName: string): Promise<any> {
+    await this.ensureConnection()
+    const { result } = await (this.client.db().collection(collectionName)).updateOne(
+      filter,
+      { $set: updatedData },
+      { upsert: false }
+    )
+    return result
+  },
+
   async list (collectionName: string): Promise<any> {
     await this.ensureConnection()
     const documentList = await (this.client.db().collection(collectionName)).find().toArray()

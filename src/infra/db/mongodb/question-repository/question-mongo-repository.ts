@@ -6,7 +6,8 @@ import {
   GetQuestionModel,
   GetQuestionResponseModel,
   ListQuestionsModel,
-  UpdateQuestionModel
+  UpdateQuestionModel,
+  UpdateQuestionResponseModel
 } from '../../../../domain/usecases/question'
 import { QuestionModel } from '../../../../domain/models/question/question-model'
 import { MongoHelper } from '../helpers/mongo-helper'
@@ -35,8 +36,13 @@ export class QuestionMongoRepository implements QuestionRepository {
     return updatedExam.questions[lastPosition]
   }
 
-  async update (questionData: UpdateQuestionModel): Promise<any> {
-    return { id: '42' }
+  async update (questionData: UpdateQuestionModel): Promise<UpdateQuestionResponseModel> {
+    const result = await MongoHelper.updateOneByFilter(
+      { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } },
+      { 'questions.$': questionData },
+      this.collectionName
+    )
+    return result.nModified ? await this.get({ id: questionData.id }) : null
   }
 
   async get (questionData: GetQuestionModel): Promise<GetQuestionResponseModel> {

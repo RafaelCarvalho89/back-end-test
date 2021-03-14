@@ -6,6 +6,11 @@ export interface UpdateQuestionModel {
   options: OptionModel[]
 }
 
+export interface UpdateQuestionResponseModel extends QuestionModel{
+  examId: string
+  examName: string
+}
+
 export interface UpdateQuestion {
   update: (question: UpdateQuestionModel) => Promise<QuestionModel>
 }
