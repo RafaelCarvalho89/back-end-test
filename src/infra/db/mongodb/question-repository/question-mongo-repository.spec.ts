@@ -85,4 +85,16 @@ describe('Question Mongo Repository', () => {
     expect(question.statement).toBe(fakeQuestion.statement)
     expect(question.options).toBeTruthy()
   })
+
+  test('Should return questions of exam on success when list questions', async () => {
+    const { sut, examRepositoryStub } = makeSut()
+    const fakeExam = await examRepositoryStub.add(makeFakeExam())
+    const fakeQuestion = makeFakeQuestionWithoutId(fakeExam.id)
+    const question = await sut.add(fakeQuestion)
+    const questions = await sut.list(fakeQuestion)
+    expect(questions).toBeTruthy()
+    expect(questions.length).toBe(1)
+    expect(questions[0].statement).toBe(question.statement)
+    expect(questions[0].options).toBeTruthy()
+  })
 })
