@@ -67,6 +67,11 @@ export const MongoHelper = {
     })
   },
 
+  async findOneByFilter (filter: any, collectionName: string, projection?: any): Promise<any> {
+    await this.ensureConnection()
+    return (this.client.db().collection(collectionName)).findOne(filter, projection)
+  },
+
   async insertOne (inputData: any, collectionName: string): Promise<any> {
     await this.ensureConnection()
     const result = await (this.client.db().collection(collectionName)).insertOne(inputData)

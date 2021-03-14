@@ -45,4 +45,9 @@ export class ExamMongoRepository implements ExamRepository {
   async delete (examData: DeleteExamModel): Promise<any|null> {
     return await MongoHelper.delete(examData.id, this.collectionName)
   }
+
+  async findOneByFilter (filter: any, projection?: any): Promise<any> {
+    const foundExam = await MongoHelper.findOneByFilter(filter, this.collectionName, projection)
+    return foundExam ? MongoHelper.map(foundExam) : null
+  }
 }

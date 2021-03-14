@@ -4,6 +4,7 @@ import {
   AddQuestionModel,
   DeleteQuestionModel,
   GetQuestionModel,
+  GetQuestionResponseModel,
   ListQuestionsModel,
   UpdateQuestionModel
 } from '../../../../domain/usecases/question'
@@ -37,19 +38,15 @@ export class QuestionMongoRepository implements QuestionRepository {
     return { id: '42' }
   }
 
-  async get (questionData: GetQuestionModel): Promise<QuestionModel> {
-    return {
-      id: '42',
-      statement: 'statement',
-      options: [
-        {
-          id: '607b9974-4914-44df-81e8-d56ec6a58951',
-          key: 'a',
-          value: 'viver',
-          correct: false
-        }
-      ]
-    }
+  async get (questionData: GetQuestionModel): Promise<GetQuestionResponseModel> {
+    const examMongoRepository = new ExamMongoRepository()
+    const exam = await examMongoRepository.findOneByFilter(
+      { questions: { $elemMatch: { id: questionData.id } } },
+      { projection: { _id: 1, name: 1, questions: 1 } }
+    )
+
+    const foundedQuestion = Object.assign({}, exam.questions[0], { examId: exam.id, examName: exam.name })
+    return exam ? foundedQuestion : null
   }
 
   async list (questionData: ListQuestionsModel): Promise<QuestionModel[]> {
