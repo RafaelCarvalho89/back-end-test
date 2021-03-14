@@ -86,6 +86,19 @@ describe('Question Mongo Repository', () => {
     expect(question.options).toBeTruthy()
   })
 
+  test('Should return question and examId on success when get questions', async () => {
+    const { sut, examRepositoryStub } = makeSut()
+    const fakeExam = await examRepositoryStub.add(makeFakeExam())
+    const fakeQuestion = makeFakeQuestionWithoutId(fakeExam.id)
+    const addedQuestion = await sut.add(fakeQuestion)
+    const foundQuestion = await sut.get({ id: addedQuestion.id })
+    expect(foundQuestion).toBeTruthy()
+    expect(foundQuestion.examId).toStrictEqual(fakeExam.id)
+    expect(foundQuestion.id).toStrictEqual(addedQuestion.id)
+    expect(foundQuestion.statement).toBe(addedQuestion.statement)
+    expect(foundQuestion.options).toBeTruthy()
+  })
+
   test('Should return questions of exam on success when list questions', async () => {
     const { sut, examRepositoryStub } = makeSut()
     const fakeExam = await examRepositoryStub.add(makeFakeExam())
