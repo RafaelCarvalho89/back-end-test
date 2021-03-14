@@ -35,7 +35,7 @@ export class ExamMongoRepository implements ExamRepository {
 
   async get (examData: GetExamModel): Promise<ExamModel> {
     const foundExam = await MongoHelper.getDocumentById(examData.id, this.collectionName)
-    return MongoHelper.map(foundExam)
+    return foundExam ? MongoHelper.map(foundExam) : null
   }
 
   async list (): Promise<ExamModel[]> {
