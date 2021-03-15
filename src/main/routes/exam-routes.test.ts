@@ -2,6 +2,8 @@ import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 import app from '../config/app'
 
+const fakeExamId = '6048039ae5a5d3cd29630a1e'
+
 describe('Exam Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -31,7 +33,7 @@ describe('Exam Routes', () => {
     await request(app)
       .put('/api/exam/update')
       .send({
-        id: '6048039ae5a5d3cd29630a1e',
+        id: fakeExamId,
         name: 'Blue Exam 2',
         description: 'Blue Exam without questions 2',
         type: 'ONLINE'
@@ -43,7 +45,7 @@ describe('Exam Routes', () => {
     await request(app)
       .get('/api/exam')
       .send({
-        id: '6048039ae5a5d3cd29630a1e'
+        id: fakeExamId
       })
       .expect(200)
   })
@@ -59,7 +61,7 @@ describe('Exam Routes', () => {
     await request(app)
       .delete('/api/exam/delete')
       .send({
-        id: '6048039ae5a5d3cd29630a1e'
+        id: fakeExamId
       })
       .expect(200)
   })
