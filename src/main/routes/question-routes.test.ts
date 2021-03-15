@@ -94,4 +94,11 @@ describe('Question Routes', () => {
       .send(makeFakeUpdateQuestion())
       .expect(200)
   })
+
+  test('Should return exam without question on delete question success', async () => {
+    await request(app)
+      .delete('/api/question/delete')
+      .send({ id: fakeQuestionId })
+      .expect(200)
+  })
 })
