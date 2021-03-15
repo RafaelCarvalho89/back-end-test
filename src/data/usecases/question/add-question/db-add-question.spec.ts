@@ -3,36 +3,37 @@ import { AddQuestionModel } from '../../../../domain/usecases/question/add-quest
 import { AddQuestionRepository } from '../../../protocols/question-repository/add-question-repository'
 import { DbAddQuestion } from './db-add-question'
 
+const fakeExamId = '6048039ae5a5d3cd29630a1e'
+const fakeQuestionId = '6048039ae5a5d3cd29689f23'
+
+const makeFakeOptions = (): any => ([
+  {
+    key: 'a',
+    value: 'viver',
+    correct: false
+  },
+  {
+    key: 'b',
+    value: 'beber café',
+    correct: false
+  },
+  {
+    key: 'c',
+    value: 'codar',
+    correct: false
+  },
+  {
+    key: 'd',
+    value: '42',
+    correct: true
+  }
+])
+
 const makeFakeQuestion = (): any => ({
-  examId: '607b9974-4914-44df-81e8-d56ec6a589bf',
-  id: '607b9974-4914-44df-81e8-d56ec6a58912',
+  examId: fakeExamId,
+  id: fakeQuestionId,
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
-  options: [
-    {
-      id: '607b9974-4914-44df-81e8-d56ec6a58951',
-      key: 'a',
-      value: 'viver',
-      correct: false
-    },
-    {
-      id: '607b9974-4914-44df-81e8-d56ec6a58952',
-      key: 'b',
-      value: 'beber café',
-      correct: false
-    },
-    {
-      id: '607b9974-4914-44df-81e8-d56ec6a58953',
-      key: 'c',
-      value: 'codar',
-      correct: false
-    },
-    {
-      id: '607b9974-4914-44df-81e8-d56ec6a58954',
-      key: 'd',
-      value: '42',
-      correct: true
-    }
-  ]
+  options: makeFakeOptions()
 })
 
 const makeFakeQuestionData = (): AddQuestionModel => {

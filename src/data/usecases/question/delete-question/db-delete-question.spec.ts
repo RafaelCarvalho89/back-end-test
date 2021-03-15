@@ -3,8 +3,10 @@ import { DeleteQuestionModel } from '../../../../domain/usecases/question/delete
 import { DeleteQuestionRepository } from '../../../protocols/question-repository/delete-question-repository'
 import { DbDeleteQuestion } from './db-delete-question'
 
+const fakeQuestionId = '607b9974-4914-44df-81e8-d56ec6a58912'
+
 const makeFakeQuestion = (): QuestionModel => ({
-  id: '607b9974-4914-44df-81e8-d56ec6a58912',
+  id: fakeQuestionId,
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
   options: [
     {
@@ -34,10 +36,6 @@ const makeFakeQuestion = (): QuestionModel => ({
   ]
 })
 
-const makeFakeDeleteQuestion = (): DeleteQuestionModel => ({
-  id: '607b9974-4914-44df-81e8-d56ec6a58912'
-})
-
 const makeDeleteQuestionRepository = (): DeleteQuestionRepository => {
   class DeleteQuestionRepositoryStub implements DeleteQuestionRepository {
     async delete (QuestionData: DeleteQuestionModel): Promise<any> {
@@ -62,8 +60,8 @@ describe('DbDeleteQuestion Use case', () => {
   test('Should call DeleteQuestionRepository with correct values', async () => {
     const { sut, deleteQuestionRepositoryStub } = makeSut()
     const deleteSpy = jest.spyOn(deleteQuestionRepositoryStub, 'delete')
-    await sut.delete(makeFakeDeleteQuestion())
-    expect(deleteSpy).toHaveBeenCalledWith(makeFakeDeleteQuestion())
+    await sut.delete({ id: fakeQuestionId })
+    expect(deleteSpy).toHaveBeenCalledWith({ id: fakeQuestionId })
   })
 
   test('Should throw if DeleteQuestionRepository throws', async () => {
@@ -73,13 +71,13 @@ describe('DbDeleteQuestion Use case', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )
-    const promise = sut.delete(makeFakeDeleteQuestion())
+    const promise = sut.delete({ id: fakeQuestionId })
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return an Response on success', async () => {
     const { sut } = makeSut()
-    const deleteResponse = await sut.delete(makeFakeDeleteQuestion())
+    const deleteResponse = await sut.delete({ id: fakeQuestionId })
     expect(deleteResponse).toBeTruthy()
   })
 })

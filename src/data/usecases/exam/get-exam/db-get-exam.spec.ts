@@ -3,12 +3,14 @@ import { GetExamModel } from '../../../../domain/usecases/exam/get-exam'
 import { GetExamRepository } from '../../../protocols/exam-repository/get-exam-repository'
 import { DbGetExam } from './db-get-exam'
 
+const fakeExamId = '6048039ae5a5d3cd29630a1e'
+
 const makeFakeGetExam = (): GetExamModel => ({
-  id: '6048039ae5a5d3cd29630a1e'
+  id: fakeExamId
 })
 
 const makeFakeExam = (): ExamModel => ({
-  id: '6048039ae5a5d3cd29630a1e',
+  id: fakeExamId,
   name: 'name',
   description: 'description',
   type: 'ONLINE',

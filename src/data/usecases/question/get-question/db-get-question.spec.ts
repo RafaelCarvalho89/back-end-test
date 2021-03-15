@@ -3,9 +3,11 @@ import { GetQuestionModel } from '../../../../domain/usecases/question/get-quest
 import { GetQuestionRepository } from '../../../protocols/question-repository/get-question-repository'
 import { DbGetQuestion } from './db-get-question'
 
+const fakeQuestionId = '607b9974-4914-44df-81e8-d56ec6a58912'
+
 const makeFakeQuestion = (): any => ({
   examId: '607b9974-4914-44df-81e8-d56ec6a589bf',
-  id: '607b9974-4914-44df-81e8-d56ec6a58912',
+  id: fakeQuestionId,
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
   options: [
     {
@@ -35,10 +37,6 @@ const makeFakeQuestion = (): any => ({
   ]
 })
 
-const makeFakeGetQuestion = (): GetQuestionModel => ({
-  id: '607b9974-4914-44df-81e8-d56ec6a58912'
-})
-
 const makeGetQuestionRepository = (): GetQuestionRepository => {
   class GetQuestionRepositoryStub implements GetQuestionRepository {
     async get (questionData: GetQuestionModel): Promise<QuestionModel> {
@@ -63,8 +61,8 @@ describe('DbGetQuestion Use case', () => {
   test('Should call GetQuestionRepository with correct values', async () => {
     const { sut, getQuestionRepositoryStub } = makeSut()
     const getSpy = jest.spyOn(getQuestionRepositoryStub, 'get')
-    await sut.get(makeFakeGetQuestion())
-    expect(getSpy).toHaveBeenCalledWith(makeFakeGetQuestion())
+    await sut.get({ id: fakeQuestionId })
+    expect(getSpy).toHaveBeenCalledWith({ id: fakeQuestionId })
   })
 
   test('Should throw if GetQuestionRepository throws', async () => {
@@ -74,13 +72,13 @@ describe('DbGetQuestion Use case', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )
-    const promise = sut.get(makeFakeGetQuestion())
+    const promise = sut.get({ id: fakeQuestionId })
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return and Question on success', async () => {
     const { sut } = makeSut()
-    const question = await sut.get(makeFakeGetQuestion())
+    const question = await sut.get({ id: fakeQuestionId })
     expect(question).toEqual(makeFakeQuestion())
   })
 })

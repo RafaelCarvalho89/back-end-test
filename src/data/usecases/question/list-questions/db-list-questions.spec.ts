@@ -3,8 +3,10 @@ import { ListQuestionsRepository } from '../../../protocols/question-repository/
 import { DbListQuestions } from './db-list-questions'
 import { ListQuestionsModel } from './db-list-questions-protocols'
 
+const fakeExamId = '607b9974-4914-44df-81e8-d56ec6a589bf'
+
 const makeFakeQuestion = (): any => ({
-  examId: '607b9974-4914-44df-81e8-d56ec6a589bf',
+  examId: fakeExamId,
   id: '607b9974-4914-44df-81e8-d56ec6a58912',
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
   options: [
@@ -35,10 +37,6 @@ const makeFakeQuestion = (): any => ({
   ]
 })
 
-const makeFakeQuestionData = (): ListQuestionsModel => ({
-  examId: '607b9974-4914-44df-81e8-d56ec6a589bf'
-})
-
 const makeListQuestionsRepository = (): ListQuestionsRepository => {
   class ListQuestionsRepositoryStub implements ListQuestionsRepository {
     async list (questionData: ListQuestionsModel): Promise<QuestionModel[]> {
@@ -67,13 +65,13 @@ describe('DbListQuestions Use case', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )
-    const promise = sut.list(makeFakeQuestionData())
+    const promise = sut.list({ examId: fakeExamId })
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return and Question List on success', async () => {
     const { sut } = makeSut()
-    const question = await sut.list(makeFakeQuestionData())
+    const question = await sut.list({ examId: fakeExamId })
     expect(question).toEqual([makeFakeQuestion()])
   })
 })
