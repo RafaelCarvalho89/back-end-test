@@ -1,23 +1,36 @@
 import { ExamRepository } from '../../../../data/protocols/exam-repository/exam-repository'
 import {
   AddExamModel,
+  AddExamQuestionModel,
   DeleteExamModel,
   GetExamModel,
   UpdateExamModel
 } from '../../../../domain/usecases/exam'
 import { ExamModel } from '../../../../domain/models/exam/exam-model'
 import { MongoHelper } from '../helpers/mongo-helper'
+import { QuestionModel } from '../../../../domain/models/question/question-model'
 
 export class ExamMongoRepository implements ExamRepository {
   private readonly collectionName = 'exams'
 
+  private newQuestion (question: AddExamQuestionModel): QuestionModel {
+    const { statement, options } = question
+    return MongoHelper.addObjectId({
+      statement,
+      options: MongoHelper.addObjectIdInObjectList(options)
+    })
+  }
+
   private newExam (exam: AddExamModel): AddExamModel {
-    const { name, description, type, questions } = exam
+    let questions: QuestionModel[] = []
+    if (exam.questions && exam.questions !== []) {
+      questions = exam.questions.map((question: QuestionModel) => this.newQuestion(question))
+    }
     return {
-      name,
-      description,
-      type,
-      questions: questions ? MongoHelper.addObjectIdInObjectList(questions) : []
+      name: exam.name,
+      description: exam.description,
+      type: exam.type,
+      questions
     }
   }
 
