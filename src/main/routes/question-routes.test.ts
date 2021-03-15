@@ -28,10 +28,29 @@ const makeFakeOptions = (): any => ([
   }
 ])
 
+const makeFakeUpdateOptions = (): any => ([
+  {
+    key: 'a',
+    value: 'viver - UPDATED',
+    correct: false
+  },
+  {
+    key: 'd',
+    value: '42 - UPDATED',
+    correct: true
+  }
+])
+
 const makeFakeQuestion = (): any => ({
   examId: fakeExamId,
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
   options: makeFakeOptions()
+})
+
+const makeFakeUpdateQuestion = (): any => ({
+  id: fakeQuestionId,
+  statement: 'Qual o sentido da vida? - UPDATE',
+  options: makeFakeUpdateOptions()
 })
 
 describe('Question Routes', () => {
@@ -66,6 +85,13 @@ describe('Question Routes', () => {
     await request(app)
       .get('/api/question')
       .send({ id: fakeQuestionId })
+      .expect(200)
+  })
+
+  test('Should return question on update success', async () => {
+    await request(app)
+      .put('/api/question/update')
+      .send(makeFakeUpdateQuestion())
       .expect(200)
   })
 })
