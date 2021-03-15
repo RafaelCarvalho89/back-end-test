@@ -81,6 +81,13 @@ export class QuestionMongoRepository implements QuestionRepository {
   }
 
   async delete (questionData: DeleteQuestionModel): Promise<any> {
-    return { ok: 'ok' }
+    const examMongoRepository = new ExamMongoRepository()
+    const exam = await examMongoRepository.findOneByFilter(
+      { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } }
+    )
+    if (!exam) return null
+    const indexForDelete = exam.questions.findIndex((question: any) => question.id === questionData.id)
+    exam.questions.splice(indexForDelete, 1)
+    return await examMongoRepository.update(exam)
   }
 }
