@@ -1,9 +1,15 @@
-import { QuestionModel, OptionModel } from '../../models/question/question-model'
+import { QuestionModel } from '../../models/question/question-model'
+
+export interface UpdateOptionModel {
+  key: string
+  value: string
+  correct: boolean
+}
 
 export interface UpdateQuestionModel {
   id: string
   statement: string
-  options: OptionModel[]
+  options: UpdateOptionModel[]
 }
 
 export interface UpdateQuestionResponseModel extends QuestionModel{

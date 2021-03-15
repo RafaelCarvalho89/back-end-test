@@ -3,33 +3,24 @@ import { QuestionMongoRepository } from './question-mongo-repository'
 import { ExamMongoRepository } from '../exam-repository/exam-mongo-repository'
 
 const makeFakeExam = (): any => ({
-  name: 'Test',
-  description: 'Exam for question test',
+  name: 'Prova AZUL',
+  description: 'Prova AZUL 2021',
   type: 'ONLINE'
 })
 
 const makeFakeOptions = (): any => ([
   {
-    id: '607b9974-4914-44df-81e8-d56ec6a58951',
     key: 'a',
     value: 'viver',
     correct: false
   },
   {
-    id: '607b9974-4914-44df-81e8-d56ec6a58952',
     key: 'b',
-    value: 'beber café',
-    correct: false
-  },
-  {
-    id: '607b9974-4914-44df-81e8-d56ec6a58953',
-    key: 'c',
     value: 'codar',
     correct: false
   },
   {
-    id: '607b9974-4914-44df-81e8-d56ec6a58953',
-    key: 'd',
+    key: 'c',
     value: '42',
     correct: true
   }
@@ -37,45 +28,21 @@ const makeFakeOptions = (): any => ([
 
 const makeFakeUpdatedOptions = (): any => ([
   {
-    id: '607b9974-4914-44df-81e8-d56ec6a58951',
     key: 'a',
     value: 'viver - UPDATED',
     correct: false
   },
   {
-    id: '607b9974-4914-44df-81e8-d56ec6a58952',
     key: 'b',
-    value: 'beber café - UPDATED',
-    correct: false
-  },
-  {
-    id: '607b9974-4914-44df-81e8-d56ec6a58953',
-    key: 'c',
-    value: 'codar - UPDATED',
-    correct: false
-  },
-  {
-    id: '607b9974-4914-44df-81e8-d56ec6a58953',
-    key: 'd',
     value: '42 - UPDATED',
     correct: true
   }
 ])
 
-const makeFakeOptionsWithoutId = (): any => {
-  const fakeOptions = makeFakeOptions()
-  const fakeOptionsWithoutId = []
-  for (const option of fakeOptions) {
-    const { id, ...optionWithoutId } = option
-    fakeOptionsWithoutId.push(optionWithoutId)
-  }
-  return fakeOptionsWithoutId
-}
-
 const makeFakeQuestionWithoutId = (examId: string): any => ({
   examId,
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
-  options: makeFakeOptionsWithoutId()
+  options: makeFakeOptions()
 })
 
 describe('Question Mongo Repository', () => {
@@ -155,6 +122,5 @@ describe('Question Mongo Repository', () => {
     expect(updatedQuestion.id).toStrictEqual(addedQuestion.id)
     expect(updatedQuestion.statement).toBe(updatedStatement)
     expect(updatedQuestion.options).toBeTruthy()
-    expect(updatedQuestion.options).toEqual(updatedOptions)
   })
 })

@@ -6,6 +6,7 @@ import {
   GetQuestionModel,
   GetQuestionResponseModel,
   ListQuestionsModel,
+  UpdateOptionModel,
   UpdateQuestionModel,
   UpdateQuestionResponseModel
 } from '../../../../domain/usecases/question'
@@ -24,6 +25,14 @@ export class QuestionMongoRepository implements QuestionRepository {
     })
   }
 
+  private updateQuestion (id: string, statement: string, options: UpdateOptionModel[]): any {
+    return {
+      id: new ObjectId(id),
+      statement,
+      options: MongoHelper.addObjectIdInObjectList(options)
+    }
+  }
+
   async add (questionData: AddQuestionModel): Promise<QuestionModel> {
     const { examId, statement, options } = questionData
     const examMongoRepository = new ExamMongoRepository()
@@ -37,19 +46,21 @@ export class QuestionMongoRepository implements QuestionRepository {
   }
 
   async update (questionData: UpdateQuestionModel): Promise<UpdateQuestionResponseModel> {
+    const updateQuestion = this.updateQuestion(questionData.id, questionData.statement, questionData.options)
     const result = await MongoHelper.updateOneByFilter(
       { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } },
-      { 'questions.$': questionData },
+      { 'questions.$': updateQuestion },
       this.collectionName
     )
     if (!result.nModified) return null
     const examMongoRepository = new ExamMongoRepository()
-    const { id, name, questions } = await examMongoRepository.findOneByFilter(
-      { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } }
+    const exam = await examMongoRepository.findOneByFilter(
+      { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } },
+      { projection: { _id: 1, name: 1, questions: 1 } }
     )
-    const updatedQuestion = questions.find(
+    const updatedQuestion = exam.questions.find(
       (question: any) => JSON.stringify(question.id) === JSON.stringify(questionData.id))
-    return Object.assign({}, updatedQuestion, { examId: id, examName: name })
+    return Object.assign({}, updatedQuestion, { examId: exam._id, examName: exam.name })
   }
 
   async get (questionData: GetQuestionModel): Promise<GetQuestionResponseModel> {
