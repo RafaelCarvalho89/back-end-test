@@ -42,7 +42,14 @@ export class QuestionMongoRepository implements QuestionRepository {
       { 'questions.$': questionData },
       this.collectionName
     )
-    return result.nModified ? await this.get({ id: questionData.id }) : null
+    if (!result.nModified) return null
+    const examMongoRepository = new ExamMongoRepository()
+    const { id, name, questions } = await examMongoRepository.findOneByFilter(
+      { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } }
+    )
+    const updatedQuestion = questions.find(
+      (question: any) => JSON.stringify(question.id) === JSON.stringify(questionData.id))
+    return Object.assign({}, updatedQuestion, { examId: id, examName: name })
   }
 
   async get (questionData: GetQuestionModel): Promise<GetQuestionResponseModel> {
@@ -52,7 +59,8 @@ export class QuestionMongoRepository implements QuestionRepository {
       { projection: { _id: 1, name: 1, questions: 1 } }
     )
     if (!exam) return null
-    return Object.assign({}, exam.questions[0], { examId: exam.id, examName: exam.name })
+    const foundQuestion = exam.questions.find((question: any) => JSON.stringify(question.id) === JSON.stringify(questionData.id))
+    return Object.assign({}, foundQuestion, { examId: exam.id, examName: exam.name })
   }
 
   async list (questionData: ListQuestionsModel): Promise<QuestionModel[]> {
