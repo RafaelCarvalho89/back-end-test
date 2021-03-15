@@ -8,4 +8,5 @@ export default (router: Router): void => {
   router.get('/question', AdaptRoute.get(makeQuestionController()))
   router.get('/questions', AdaptRoute.list(makeQuestionController()))
   router.put('/question/update', AdaptRoute.update(makeQuestionController()))
+  router.delete('/question/delete', AdaptRoute.delete(makeQuestionController()))
 }
