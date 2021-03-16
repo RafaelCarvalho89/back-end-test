@@ -54,7 +54,7 @@ Rota de servidor local
 
   - `POST` /api/exam/new
 
-  - <details>
+  <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -187,7 +187,7 @@ Rota de servidor local
 
   - `GET` /api/exam
 
-  - <details>
+  <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -252,7 +252,7 @@ Rota de servidor local
   
   - **Obs.: `exams`, no plural.**
 
-  - <details>
+  <details>
 
   #### Requisição sem Parâmetros
 
@@ -282,7 +282,7 @@ Rota de servidor local
 
   - `PUT` /api/exam/update
 
-  - <details>
+  <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -397,7 +397,7 @@ Rota de servidor local
 
   - `DELETE` /api/exam/delete
 
-  - <details>
+  <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -429,7 +429,7 @@ Rota de servidor local
 
   - `POST` /api/question/new
 
-  - <details>
+  <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -512,4 +512,62 @@ Rota de servidor local
   }
   ```
 
-  - </details>
+  </details>
+
+
+  - ### 4.2 Obter Questão
+
+  - `GET` /api/question
+
+  <details>
+
+  #### Parâmetros da requisição
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**id**  <br>*required*|O id da Questão.|string|
+
+
+  **Exemplo da requisição obter questão.**
+  ```json
+  {
+    "id": "605112af2a3daa997ee6bb8f"
+  }
+  ```
+
+
+  **`200 OK` - Exemplo de resposta da requisição obter questão com `SUCESSO`.**
+  ```json
+  {
+    "id": "605112af2a3daa997ee6bb8f",
+    "statement": "Qual o sentido da vida, do universo e tudo mais?",
+    "options": [
+      {
+        "key": "a",
+        "value": "viver",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb90"
+      },
+      {
+        "key": "b",
+        "value": "beber café",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb91"
+      },
+      {
+        "key": "c",
+        "value": "codar",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb92"
+      },
+      {
+        "key": "d",
+        "value": "42",
+        "correct": true,
+        "id": "605112af2a3daa997ee6bb93"
+      }
+    ],
+    "examId": "60500a71fef08553a78d1948",
+    "examName": "Prova AMARELA"
+  }
+  ```
+  </details>
