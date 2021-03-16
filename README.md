@@ -750,3 +750,70 @@ Rota de servidor local
   ```
 
   </details>
+
+
+  - ### 4.5 Deletar Questão
+
+  - `DELETE` /api/question/delete
+
+  <details>
+
+  #### Parâmetros da requisição
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**id**  <br>*required*|O id da Questão.|string|
+
+
+  **Exemplo da requisição deletar questão.**
+  ```json
+  {
+    "id": "605112af2a3daa997ee6bb8f"
+  }
+  ```
+
+
+  **`200 OK` - Exemplo de resposta da requisição deletar questão. Com `SUCESSO`.**
+
+  **Obs.: A resposta retorna a Prova no qual a questão pertencia. `Já sem a questão deletada`.**
+
+  ```json
+  {
+    "id": "60500a71fef08553a78d1948",
+    "name": "Prova AMARELA",
+    "description": "Prova sem questões",
+    "type": "OFFLINE",
+    "questions": [
+      {
+        "id": "605125a7abd2a8b71f67381e",
+        "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars?",
+        "options": [
+          {
+            "key": "a",
+            "value": "Cronológica dos Fatos",
+            "correct": false,
+            "id": "605125a7abd2a8b71f673823"
+          },
+          {
+            "key": "b",
+            "value": "Lançamento dos Filmes",
+            "correct": false,
+            "id": "605125a7abd2a8b71f673824"
+          },
+          {
+            "key": "c",
+            "value": "Ernst Rister",
+            "correct": true,
+            "id": "605125a7abd2a8b71f673825"
+          },
+          {
+            "key": "d",
+            "value": "Machete",
+            "correct": false,
+            "id": "605125a7abd2a8b71f673826"
+          }
+        ]
+      }
+    ]
+  }
+  ```
+  </details>
