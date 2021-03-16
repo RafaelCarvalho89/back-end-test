@@ -9,8 +9,8 @@ se resume em uma API de provas, mantendo o gerenciamento de Provas(Exams) e de Q
 <details>
 <summary><strong>Details</strong></summary>
 
-* [instalação](#installation)
-* [APPI](#api)
+* [Instalação](#installation)
+* [API](#api)
   * [Provas](#exams)
     * [Adicionar Prova](#add-exam)
     * [Obter Prova](#get-exam)
@@ -28,11 +28,13 @@ se resume em uma API de provas, mantendo o gerenciamento de Provas(Exams) e de Q
 ## Instalação
 
 <p>Clonando o projeto</p>
+
 ```console
 git clone https://github.com/RafaelCarvalho89/back-end-test.git
 ```
 
 <p>Instalando as dependencias</p>
+
 ```console
 npm install
 ```
