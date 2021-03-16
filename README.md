@@ -10,14 +10,14 @@
 <details>
 <summary><strong>Details</strong></summary>
 
-* [Instalação](#installation)
+* [Instalação](#instalacao)
 * [API](#api)
   * [Provas](#provas)
-    * [Adicionar Prova](#adicionar-prova)
-    * [Obter Prova](#obter-prova)
-    * [Listar Provas](#listar-provas)
-    * [Atualizar Prova](#atualizar-prova)
-    * [Deletar Prova](#deletar-prova)
+    * [POST - Adicionar Prova](#adicionar-prova)
+    * [GET - Obter Prova](#obter-prova)
+    * [GET - Listar Provas](#listar-provas)
+    * [PUT - Atualizar Prova](#atualizar-prova)
+    * [DELETE - Deletar Prova](#deletar-prova)
 
 </details>
 
