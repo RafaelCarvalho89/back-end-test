@@ -50,7 +50,7 @@ Rota de servidor local
 ## 3 Provas
 
 
-### 3.1 Adicionar Prova
+  - ### 3.1 Adicionar Prova
 
   `POST` /api/exam/new
 
@@ -80,110 +80,110 @@ Rota de servidor local
   |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
 
 
-**Exemplo da requisição passando uma prova `COM QUESTÕES`.**
-```json
-{
-  "name": "Prova AMARELA",
-  "description": "Prova completa",
-  "type": "ONLINE",
-  "questions": [
-    {
-      "statement": "Qual o sentido da vida, do universo e tudo mais?",
-      "options": [
-        {
-          "key": "a",
-          "value": "viver",
-          "correct": false
-        },
-        {
-          "key": "b",
-          "value": "beber café",
-          "correct": false
-        },
-        {
-          "key": "c",
-          "value": "codar",
-          "correct": false
-        },
-        {
-          "key": "d",
-          "value": "42",
-          "correct": true
-        }
-      ]
-    }
-  ]
-}
-```
+  **Exemplo da requisição passando uma prova `COM QUESTÕES`.**
+  ```json
+  {
+    "name": "Prova AMARELA",
+    "description": "Prova completa",
+    "type": "ONLINE",
+    "questions": [
+      {
+        "statement": "Qual o sentido da vida, do universo e tudo mais?",
+        "options": [
+          {
+            "key": "a",
+            "value": "viver",
+            "correct": false
+          },
+          {
+            "key": "b",
+            "value": "beber café",
+            "correct": false
+          },
+          {
+            "key": "c",
+            "value": "codar",
+            "correct": false
+          },
+          {
+            "key": "d",
+            "value": "42",
+            "correct": true
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
 
-**`200 OK` - Exemplo de resposta da requisição passando uma prova `COM QUESTÕES` e com `SUCESSO`.**
-```json
-{
-  "id": "6050f9e222a72e7089ed1988",
-  "name": "Prova AMARELA",
-  "description": "Prova completa",
-  "type": "ONLINE",
-  "questions": [
-    {
-      "id": "6050f9e222a72e7089ed1987",
-      "statement": "Qual o sentido da vida, do universo e tudo mais?",
-      "options": [
-        {
-          "key": "a",
-          "value": "viver",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1983"
-        },
-        {
-          "key": "b",
-          "value": "beber café",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1984"
-        },
-        {
-          "key": "c",
-          "value": "codar",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1985"
-        },
-        {
-          "key": "d",
-          "value": "42",
-          "correct": true,
-          "id": "6050f9e222a72e7089ed1986"
-        }
-      ]
-    }
-  ]
-}
-```
+  **`200 OK` - Exemplo de resposta da requisição passando uma prova `COM QUESTÕES` e com `SUCESSO`.**
+  ```json
+  {
+    "id": "6050f9e222a72e7089ed1988",
+    "name": "Prova AMARELA",
+    "description": "Prova completa",
+    "type": "ONLINE",
+    "questions": [
+      {
+        "id": "6050f9e222a72e7089ed1987",
+        "statement": "Qual o sentido da vida, do universo e tudo mais?",
+        "options": [
+          {
+            "key": "a",
+            "value": "viver",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1983"
+          },
+          {
+            "key": "b",
+            "value": "beber café",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1984"
+          },
+          {
+            "key": "c",
+            "value": "codar",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1985"
+          },
+          {
+            "key": "d",
+            "value": "42",
+            "correct": true,
+            "id": "6050f9e222a72e7089ed1986"
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
 
-**Exemplo da requisição passando uma prova `SEM QUESTÕES`.**
-```json
-{
-  "name": "Prova AZUL",
-  "description": "Prova sem questões",
-  "type": "ONLINE"
-}
-```
+  **Exemplo da requisição passando uma prova `SEM QUESTÕES`.**
+  ```json
+  {
+    "name": "Prova AZUL",
+    "description": "Prova sem questões",
+    "type": "ONLINE"
+  }
+  ```
 
 
-**`200 OK` - Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES` e com `SUCESSO`.**
-```json
-{
-  "id": "6050f9e222a72e7089ed2021",
-  "name": "Prova AZUL",
-  "description": "Prova sem questões",
-  "type": "ONLINE",
-  "questions": []
-}
-```
+  **`200 OK` - Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES` e com `SUCESSO`.**
+  ```json
+  {
+    "id": "6050f9e222a72e7089ed2021",
+    "name": "Prova AZUL",
+    "description": "Prova sem questões",
+    "type": "ONLINE",
+    "questions": []
+  }
+  ```
 </details>
 
 
-### 3.2 Obter Prova
+  - ### 3.2 Obter Prova
 
   `GET` /api/exam
 
@@ -246,7 +246,7 @@ Rota de servidor local
   ```
   </details>
 
-### 3.3 Listar Provas
+  - ### 3.3 Listar Provas
 
   `GET` /api/exams 
   
@@ -278,7 +278,7 @@ Rota de servidor local
   </details>
 
 
-### 3.4 Atualizar Prova
+  - ### 3.4 Atualizar Prova
 
   `PUT` /api/exam/update
 
@@ -310,90 +310,90 @@ Rota de servidor local
   |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
 
 
-**Exemplo da requisição para atualização de prova.**
-```json
-{
-  "id": "6050f9e222a72e7089ed1988",
-  "name": "Prova AMARELA 2021 ATUALIZADA",
-  "description": "Prova completa 2021 ATUALIZADA",
-  "type": "ONLINE",
-  "questions": [
-    {
-      "statement": "Qual o sentido da vida, do universo e tudo mais? 2021 ATUALIZADO ¯\_(ツ)_/¯",
-      "options": [
-        {
-          "key": "a",
-          "value": "viver",
-          "correct": false
-        },
-        {
-          "key": "b",
-          "value": "beber café",
-          "correct": false
-        },
-        {
-          "key": "c",
-          "value": "codar",
-          "correct": false
-        },
-        {
-          "key": "d",
-          "value": "42",
-          "correct": true
-        }
-      ]
-    }
-  ]
-}
-```
+  **Exemplo da requisição para atualização de prova.**
+  ```json
+  {
+    "id": "6050f9e222a72e7089ed1988",
+    "name": "Prova AMARELA 2021 ATUALIZADA",
+    "description": "Prova completa 2021 ATUALIZADA",
+    "type": "ONLINE",
+    "questions": [
+      {
+        "statement": "Qual o sentido da vida, do universo e tudo mais? 2021 ATUALIZADO ¯\_(ツ)_/¯",
+        "options": [
+          {
+            "key": "a",
+            "value": "viver",
+            "correct": false
+          },
+          {
+            "key": "b",
+            "value": "beber café",
+            "correct": false
+          },
+          {
+            "key": "c",
+            "value": "codar",
+            "correct": false
+          },
+          {
+            "key": "d",
+            "value": "42",
+            "correct": true
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
 
-**`200 OK` - Exemplo de resposta da requisição para atualização de prova com `SUCESSO`.**
-```json
-{
-  "id": "6050f9e222a72e7089ed1988",
-  "name": "Prova AMARELA 2021 ATUALIZADA",
-  "description": "Prova completa 2021 ATUALIZADA",
-  "type": "ONLINE",
-  "questions": [
-    {
-      "id": "6050f9e222a72e7089ed1987",
-      "statement": "Qual o sentido da vida, do universo e tudo mais? 2021 ATUALIZADO ¯\_(ツ)_/¯",
-      "options": [
-        {
-          "key": "a",
-          "value": "viver",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1983"
-        },
-        {
-          "key": "b",
-          "value": "beber café",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1984"
-        },
-        {
-          "key": "c",
-          "value": "codar",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1985"
-        },
-        {
-          "key": "d",
-          "value": "42",
-          "correct": true,
-          "id": "6050f9e222a72e7089ed1986"
-        }
-      ]
-    }
-  ]
-}
-```
+  **`200 OK` - Exemplo de resposta da requisição para atualização de prova com `SUCESSO`.**
+  ```json
+  {
+    "id": "6050f9e222a72e7089ed1988",
+    "name": "Prova AMARELA 2021 ATUALIZADA",
+    "description": "Prova completa 2021 ATUALIZADA",
+    "type": "ONLINE",
+    "questions": [
+      {
+        "id": "6050f9e222a72e7089ed1987",
+        "statement": "Qual o sentido da vida, do universo e tudo mais? 2021 ATUALIZADO ¯\_(ツ)_/¯",
+        "options": [
+          {
+            "key": "a",
+            "value": "viver",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1983"
+          },
+          {
+            "key": "b",
+            "value": "beber café",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1984"
+          },
+          {
+            "key": "c",
+            "value": "codar",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1985"
+          },
+          {
+            "key": "d",
+            "value": "42",
+            "correct": true,
+            "id": "6050f9e222a72e7089ed1986"
+          }
+        ]
+      }
+    ]
+  }
+  ``` 
 
 
-</details>
+  </details>
 
-### 3.5 Deletar Prova
+  - ### 3.5 Deletar Prova
 
   `DELETE` /api/exam/delete
 
@@ -425,7 +425,7 @@ Rota de servidor local
 ## 4 Questões
 
 
-### 4.1 Adicionar Questão
+  - ### 4.1 Adicionar Questão
 
   `POST` /api/question/new
 
@@ -447,69 +447,69 @@ Rota de servidor local
   |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
 
 
-**Exemplo da requisição adicionar Questão.**
-```json
-{
-	"examId": "60500a71fef08553a78d1948",
-  "statement": "Qual o sentido da vida, do universo e tudo mais?",
-  "options": [
-		{
-			"key": "a",
-			"value": "viver",
-			"correct": false
-		},
-		{
-			"key": "b",
-			"value": "beber café",
-			"correct": false
-		},
-		{
-			"key": "c",
-			"value": "codar",
-			"correct": false
-		},
-		{
-			"key": "d",
-			"value": "42",
-			"correct": true
-		}
-	]
-}
-```
+  **Exemplo da requisição adicionar Questão.**
+  ```json
+  {
+    "examId": "60500a71fef08553a78d1948",
+    "statement": "Qual o sentido da vida, do universo e tudo mais?",
+    "options": [
+      {
+        "key": "a",
+        "value": "viver",
+        "correct": false
+      },
+      {
+        "key": "b",
+        "value": "beber café",
+        "correct": false
+      },
+      {
+        "key": "c",
+        "value": "codar",
+        "correct": false
+      },
+      {
+        "key": "d",
+        "value": "42",
+        "correct": true
+      }
+    ]
+  }
+  ```
 
 
-**`200 OK` - Exemplo de resposta da requisição adicionar Questão com `SUCESSO`.**
-```json
-{
-  "id": "605112af2a3daa997ee6bb8f",
-  "statement": "Qual o sentido da vida, do universo e tudo mais?",
-  "options": [
-    {
-      "key": "a",
-      "value": "viver",
-      "correct": false,
-      "id": "605112af2a3daa997ee6bb90"
-    },
-    {
-      "key": "b",
-      "value": "beber café",
-      "correct": false,
-      "id": "605112af2a3daa997ee6bb91"
-    },
-    {
-      "key": "c",
-      "value": "codar",
-      "correct": false,
-      "id": "605112af2a3daa997ee6bb92"
-    },
-    {
-      "key": "d",
-      "value": "42",
-      "correct": true,
-      "id": "605112af2a3daa997ee6bb93"
-    }
-  ]
-}
-```
+  **`200 OK` - Exemplo de resposta da requisição adicionar Questão com `SUCESSO`.**
+  ```json
+  {
+    "id": "605112af2a3daa997ee6bb8f",
+    "statement": "Qual o sentido da vida, do universo e tudo mais?",
+    "options": [
+      {
+        "key": "a",
+        "value": "viver",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb90"
+      },
+      {
+        "key": "b",
+        "value": "beber café",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb91"
+      },
+      {
+        "key": "c",
+        "value": "codar",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb92"
+      },
+      {
+        "key": "d",
+        "value": "42",
+        "correct": true,
+        "id": "605112af2a3daa997ee6bb93"
+      }
+    ]
+  }
+  ```
 
-</details>
+  </details>
