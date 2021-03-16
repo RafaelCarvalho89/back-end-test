@@ -15,8 +15,14 @@
   * [3.1.Adicionar Prova - [POST]](#31-adicionar-prova)
   * [3.2.Obter Prova - [GET]](#32-obter-prova)
   * [3.3.Listar Provas - [GET]](#33-listar-provas)
-  * [3.4.Atualizar Prova - [UPDATE]](#34-atualizar-prova)
+  * [3.4.Atualizar Prova - [PUT]](#34-atualizar-prova)
   * [3.5.Deletar Prova - [DELETE]](#35-deletar-prova)
+* [4.Questões](#3-questoes)
+  * [4.1.Adicionar Questão - [POST]](#31-adicionar-questao)
+  * [4.2.Obter Questão - [GET]](#32-obter-questao)
+  * [4.3.Listar Questões - [GET]](#33-listar-questoes)
+  * [4.4.Atualizar Questão - [PUT]](#34-atualizar-questao)
+  * [4.5.Deletar Questão - [DELETE]](#35-deletar-questao)
 
 
 ## 1 Instalação
@@ -414,3 +420,96 @@ Rota de servidor local
   }
   ```
   </details>
+
+
+## 4 Questões
+
+
+### 4.1 Adicionar Questão
+
+  `POST` /api/question/new
+
+  <details>
+
+  #### Parâmetros da requisição
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**examId**  <br>*required*|O id da Prova que a Questão será adicionada.|string|
+  |**Body**|**statement**  <br>*required*|O enunciado da Questão.|string|
+  |**Body**|**options**  <br>*required*|Opções da Questão. Obs: Um Array de `option`. |[option[]](#option)|
+
+
+  #### Option
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**key**  <br>*required*|A chave da opção.|string|
+  |**Body**|**value**  <br>*required*|O valor da opção.|string|
+  |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
+
+
+**Exemplo da requisição adicionar Questão.**
+```json
+{
+	"examId": "60500a71fef08553a78d1948",
+  "statement": "Qual o sentido da vida, do universo e tudo mais?",
+  "options": [
+		{
+			"key": "a",
+			"value": "viver",
+			"correct": false
+		},
+		{
+			"key": "b",
+			"value": "beber café",
+			"correct": false
+		},
+		{
+			"key": "c",
+			"value": "codar",
+			"correct": false
+		},
+		{
+			"key": "d",
+			"value": "42",
+			"correct": true
+		}
+	]
+}
+```
+
+
+**`200 OK` - Exemplo de resposta da requisição adicionar Questão com `SUCESSO`.**
+```json
+{
+  "id": "605112af2a3daa997ee6bb8f",
+  "statement": "Qual o sentido da vida, do universo e tudo mais?",
+  "options": [
+    {
+      "key": "a",
+      "value": "viver",
+      "correct": false,
+      "id": "605112af2a3daa997ee6bb90"
+    },
+    {
+      "key": "b",
+      "value": "beber café",
+      "correct": false,
+      "id": "605112af2a3daa997ee6bb91"
+    },
+    {
+      "key": "c",
+      "value": "codar",
+      "correct": false,
+      "id": "605112af2a3daa997ee6bb92"
+    },
+    {
+      "key": "d",
+      "value": "42",
+      "correct": true,
+      "id": "605112af2a3daa997ee6bb93"
+    }
+  ]
+}
+```
+
+</details>
