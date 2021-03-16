@@ -12,18 +12,12 @@
 
 * [Instalação](#installation)
 * [API](#api)
-  * [Provas](#exams)
-    * [Adicionar Prova](#add-exam)
-    * [Obter Prova](#get-exam)
-    * [Listar Provas](#list-exam)
-    * [Atualizar Prova](#update-exam)
-    * [Deletar Prova](#delete-exam)
-  * [Questões da Prova](#exam-questions)
-    * [Adicionar Questão](#add-question)
-    * [Obter Questão](#get-question)
-    * [Listar Questões](#list-questions)
-    * [Atualizar Questão](#update-question)
-    * [Deletar Questão](#delete-question)
+  * [Provas](#provas)
+    * [Adicionar Prova](#adicionar-prova)
+    * [Obter Prova](#obter-prova)
+    * [Listar Provas](#listar-provas)
+    * [Atualizar Prova](#atualizar-prova)
+    * [Deletar Prova](#deletar-prova)
 
 </details>
 
