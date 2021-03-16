@@ -52,9 +52,9 @@ Rota de servidor local
 
   - ### 3.1 Adicionar Prova
 
-  `POST` /api/exam/new
+  - `POST` /api/exam/new
 
-  <details>
+  - <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -185,9 +185,9 @@ Rota de servidor local
 
   - ### 3.2 Obter Prova
 
-  `GET` /api/exam
+  - `GET` /api/exam
 
-  <details>
+  - <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -248,11 +248,11 @@ Rota de servidor local
 
   - ### 3.3 Listar Provas
 
-  `GET` /api/exams 
+  - `GET` /api/exams 
   
   - **Obs.: `exams`, no plural.**
 
-  <details>
+  - <details>
 
   #### Requisição sem Parâmetros
 
@@ -280,9 +280,9 @@ Rota de servidor local
 
   - ### 3.4 Atualizar Prova
 
-  `PUT` /api/exam/update
+  - `PUT` /api/exam/update
 
-  <details>
+  - <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -395,9 +395,9 @@ Rota de servidor local
 
   - ### 3.5 Deletar Prova
 
-  `DELETE` /api/exam/delete
+  - `DELETE` /api/exam/delete
 
-  <details>
+  - <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -427,9 +427,9 @@ Rota de servidor local
 
   - ### 4.1 Adicionar Questão
 
-  `POST` /api/question/new
+  - `POST` /api/question/new
 
-  <details>
+  - <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
