@@ -1,12 +1,18 @@
 import { ExamModel, ExamType } from '../../models/exam/exam-model'
-import { QuestionModel } from '../../models/question/question-model'
+import { UpdateOptionModel } from '../question'
+
+export interface UpdateExamQuestionModel {
+  id: string
+  statement: string
+  options: UpdateOptionModel[]
+}
 
 export interface UpdateExamModel {
   id: string
   name: string
   description: string
   type: ExamType
-  questions?: QuestionModel[]
+  questions?: UpdateExamQuestionModel[]
 }
 
 export interface UpdateExam {
