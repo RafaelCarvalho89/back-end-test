@@ -10,7 +10,7 @@ import {
   UpdateQuestionModel,
   UpdateQuestionResponseModel
 } from '../../../../domain/usecases/question'
-import { QuestionModel } from '../../../../domain/models/question/question-model'
+import { OptionModel, QuestionModel } from '../../../../domain/models/question/question-model'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { ExamMongoRepository } from '../exam-repository/exam-mongo-repository'
 import { ObjectId } from 'mongodb'
@@ -31,6 +31,23 @@ export class QuestionMongoRepository implements QuestionRepository {
       statement,
       options: MongoHelper.addObjectIdInObjectList(options)
     }
+  }
+
+  private makeRandomOptions (options: OptionModel[]): OptionModel[] {
+    const optionRange: any[] = options.map((option: OptionModel) => option.key)
+
+    const randomOptions: OptionModel[] = []
+    const rangeLength = optionRange.length
+    for (let index = 0; index < rangeLength; index++) {
+      const randomNumber = Math.floor(Math.random() * optionRange.length)
+      options[index].key = optionRange[randomNumber]
+      randomOptions.push(options[index])
+      optionRange.splice(randomNumber, 1)
+    }
+
+    return randomOptions.sort((reference, compare) => {
+      return (reference.key > compare.key) ? 1 : ((compare.key > reference.key) ? -1 : 0)
+    })
   }
 
   async add (questionData: AddQuestionModel): Promise<QuestionModel> {
@@ -77,7 +94,15 @@ export class QuestionMongoRepository implements QuestionRepository {
   async list (questionData: ListQuestionsModel): Promise<QuestionModel[]> {
     const examMongoRepository = new ExamMongoRepository()
     const exam = await examMongoRepository.get({ id: questionData.examId })
-    return exam ? exam.questions : null
+
+    if (!exam) return null
+    const questionsWithRandomOptions: QuestionModel[] = []
+    for (const question of exam.questions) {
+      question.options = this.makeRandomOptions(question.options)
+      questionsWithRandomOptions.push(question)
+    }
+
+    return questionsWithRandomOptions
   }
 
   async delete (questionData: DeleteQuestionModel): Promise<any> {
