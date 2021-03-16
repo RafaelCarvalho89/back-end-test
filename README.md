@@ -39,32 +39,37 @@ npm install
 
 Rota de servidor local
 
-[HOST] - http://localhost:5050/api
+`[HOST]` - http://localhost:5050/api
 ### Provas
-<Detalhes>
-</Detalhes>
+<details>
+</details>
 
 #### Adicionar Prova
-<Detalhes>
-[POST]/exam
-</Detalhes>
+<details>
+
+`[POST]` /exam
+</details>
 
 #### Obter Prova
-<Detalhes>
-[GET]/exam
-</Detalhes>
+<details>
+
+`[GET]`/exam
+</details>
 
 #### Listar Provas
-<Detalhes>
-[GET]/exams
-</Detalhes>
+<details>
+
+`[GET]`/exams
+</details>
 
 #### Atualizar Prova
-<Detalhes>
-[PUT]/exam/update
-</Detalhes>
+<details>
+
+`[PUT]`/exam/update
+</details>
 
 #### Deletar Prova
-<Detalhes>
-[DELETE]/exam/delete
-</Detalhes>
+<details>
+
+`[DELETE]`/exam/delete
+</details>
