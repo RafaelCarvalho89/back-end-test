@@ -9,7 +9,7 @@
 
 ## Sumário
 
-* [1.Instalação](#1-instalacao)
+* [1.Instalação](#1-instalação)
 * [2.API](#2-api)
 * [3.Provas](#3-provas)
   * [3.1.Adicionar Prova - [POST]](#31-adicionar-prova)
@@ -17,12 +17,12 @@
   * [3.3.Listar Provas - [GET]](#33-listar-provas)
   * [3.4.Atualizar Prova - [PUT]](#34-atualizar-prova)
   * [3.5.Deletar Prova - [DELETE]](#35-deletar-prova)
-* [4.Questões](#4-questoes)
-  * [4.1.Adicionar Questão - [POST]](#41-adicionar-questao)
-  * [4.2.Obter Questão - [GET]](#42-obter-questao)
-  * [4.3.Listar Questões - [GET]](#43-listar-questoes)
-  * [4.4.Atualizar Questão - [PUT]](#44-atualizar-questao)
-  * [4.5.Deletar Questão - [DELETE]](#45-deletar-questao)
+* [4.Questões](#4-questões)
+  * [4.1.Adicionar Questão - [POST]](#41-adicionar-questão)
+  * [4.2.Obter Questão - [GET]](#42-obter-questão)
+  * [4.3.Listar Questões - [GET]](#43-listar-questões)
+  * [4.4.Atualizar Questão - [PUT]](#44-atualizar-questão)
+  * [4.5.Deletar Questão - [DELETE]](#45-deletar-questão)
 
 
 ## 1 Instalação
@@ -659,4 +659,94 @@ Rota de servidor local
     }
   ]
   ```
+  </details>
+
+
+  - ### 4.4 Atualizar Questão
+
+  - `PUT` /api/question/update
+
+  <details>
+
+  #### Parâmetros da requisição
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**id**  <br>*required*|O id da Questão.|string|
+  |**Body**|**statement**  <br>*required*|O enunciado da Questão.|string|
+  |**Body**|**options**  <br>*required*|Opções da Questão. Obs: Um Array de `option`. |[option[]](#option)|
+
+
+  #### Option
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**key**  <br>*required*|A chave da opção.|string|
+  |**Body**|**value**  <br>*required*|O valor da opção.|string|
+  |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
+
+
+  **Exemplo da requisição adicionar Questão.**
+  ```json
+  {
+    "id": "60511cd1b841c7ac42d626e1",
+    "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars? 2021 ATUALIZADO ¯\_(ツ)_/¯",
+    "options": [
+      {
+        "key": "a",
+        "value": "Lançamento dos Filmes",
+        "correct": false,
+      },
+      {
+        "key": "b",
+        "value": "Machete",
+        "correct": false,
+      },
+      {
+        "key": "c",
+        "value": "Cronológica dos Fatos",
+        "correct": false,
+      },
+      {
+        "key": "d",
+        "value": "Ernst Rister ¯\_(ツ)_/¯",
+        "correct": true,
+      }
+    ]
+  }
+  ```
+
+
+  **`200 OK` - Exemplo de resposta da requisição atualizar Questão. Com `SUCESSO`.**
+  ```json
+  {
+    "id": "60511cd1b841c7ac42d626e1",
+    "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars? 2021 ATUALIZADO ¯\_(ツ)_/¯",
+    "options": [
+      {
+        "key": "a",
+        "value": "Lançamento dos Filmes",
+        "correct": false,
+        "id": "60511cd1b841c7ac42d626e7"
+      },
+      {
+        "key": "b",
+        "value": "Machete",
+        "correct": false,
+        "id": "60511cd1b841c7ac42d626e9"
+      },
+      {
+        "key": "c",
+        "value": "Cronológica dos Fatos",
+        "correct": false,
+        "id": "60511cd1b841c7ac42d626e6"
+      },
+      {
+        "key": "d",
+        "value": "Ernst Rister ¯\_(ツ)_/¯",
+        "correct": true,
+        "id": "60511cd1b841c7ac42d626e8"
+      }
+    ]
+  }
+  ```
+
   </details>
