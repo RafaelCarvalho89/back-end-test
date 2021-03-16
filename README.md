@@ -1,6 +1,6 @@
 # Descrição do Projeto.
 
-<p>Este projeto é a implementação de um teste para uma vaga de Desenvolvedor Back End.</p>
+<p>Este projeto é a implementação da resolução de um teste para uma vaga de Desenvolvedor Back End.</p>
 
 <p>Ele se resume basicamente em uma API de provas, mantendo o gerenciamento de Provas (Exams), e de Questões da Prova (Questions).</p>
 
@@ -43,44 +43,114 @@ npm install
 
 Rota de servidor local
 
-`[HOST]` - http://localhost:5050/api
+`[HOST]` - http://localhost:5050
 
 
 ### Provas
-<details>
-</details>
 
 
   #### Adicionar Prova
-  <details>
 
-  `[POST]` /exam
-  </details>
+  `[POST]`/api/exam
 
+  #### Parâmetros da requisição
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**name**  <br>*required*|O nome da Prova.|string|
+  |**Body**|**description**  <br>*required*|Descrição da Prova.|string|
+  |**Body**|**type**  <br>*required*|Tipo da Prova. Obs.: `"ONLINE"` ou `"OFFLINE"`  |string|
+  |**Body**|**questions**  <br>*optional*|Questões da Prova. Obs: Um Array de `question`. |[question[]](#question)|
 
-  #### Obter Prova
-  <details>
+  #### Question
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**statement**  <br>*required*|O enunciado da Questão.|string|
+  |**Body**|**options**  <br>*required*|Opções da Questão. Obs: Um Array de `option`. |[option[]](#option)|
 
-  `[GET]`/exam
-  </details>
-
-  #### Listar Provas
-  <details>
-
-
-  `[GET]`/exams
-  </details>
-
-  #### Atualizar Prova
-  <details>
-
-
-  `[PUT]`/exam/update
-  </details>
+  #### Option
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**key**  <br>*required*|A chave da opção.|string|
+  |**Body**|**value**  <br>*required*|O valor da opção.|string|
+  |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
 
 
-  #### Deletar Prova
-  <details>
+*Exemplo da requisição passando uma prova com questoes.*
+```json
+{
+  "name": "Prova AMARELA",
+  "description": "Prova completa",
+  "type": "ONLINE",
+  "questions": [
+    {
+      "statement": "Qual o sentido da vida, do universo e tudo mais?",
+      "options": [
+        {
+          "key": "a",
+          "value": "viver",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "value": "beber café",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "value": "codar",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "value": "42",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}
+```
 
-  `[DELETE]`/exam/delete
-  </details>
+*Exemplo de resposta darequisição passando uma prova com questoes.*
+```json
+{
+  "id": "6050f9e222a72e7089ed1988",
+  "name": "Prova AMARELA",
+  "description": "Prova completa",
+  "type": "ONLINE",
+  "questions": [
+    {
+      "id": "6050f9e222a72e7089ed1987",
+      "statement": "Qual o sentido da vida, do universo e tudo mais?",
+      "options": [
+        {
+          "key": "a",
+          "value": "viver",
+          "correct": false,
+          "id": "6050f9e222a72e7089ed1983"
+        },
+        {
+          "key": "b",
+          "value": "beber café",
+          "correct": false,
+          "id": "6050f9e222a72e7089ed1984"
+        },
+        {
+          "key": "c",
+          "value": "codar",
+          "correct": false,
+          "id": "6050f9e222a72e7089ed1985"
+        },
+        {
+          "key": "d",
+          "value": "42",
+          "correct": true,
+          "id": "6050f9e222a72e7089ed1986"
+        }
+      ]
+    }
+  ]
+}
+```
+
+
