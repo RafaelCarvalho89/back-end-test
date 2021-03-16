@@ -78,6 +78,25 @@ export class ExamController implements Controller {
         }
       }
 
+      if (httpRequest.body.questions && httpRequest.body.questions !== []) {
+        const requiredQuestionFields = ['statement', 'options']
+        const requiredOptionFields = ['key', 'value', 'correct']
+
+        for (const question of httpRequest.body.questions) {
+          for (const field of requiredQuestionFields) {
+            if (!question[field]) return badRequest(new MissingParamError(field))
+          }
+
+          for (const option of question.options) {
+            for (const field of requiredOptionFields) {
+              if (option[field] === null || option[field] === undefined || option[field] === '') {
+                return badRequest(new MissingParamError(field))
+              }
+            }
+          }
+        }
+      }
+
       const isExamType = this.examTypeValidator.isExamType(
         httpRequest.body.type
       )
