@@ -17,12 +17,12 @@
   * [3.3.Listar Provas - [GET]](#33-listar-provas)
   * [3.4.Atualizar Prova - [PUT]](#34-atualizar-prova)
   * [3.5.Deletar Prova - [DELETE]](#35-deletar-prova)
-* [4.Questões](#3-questoes)
-  * [4.1.Adicionar Questão - [POST]](#31-adicionar-questao)
-  * [4.2.Obter Questão - [GET]](#32-obter-questao)
-  * [4.3.Listar Questões - [GET]](#33-listar-questoes)
-  * [4.4.Atualizar Questão - [PUT]](#34-atualizar-questao)
-  * [4.5.Deletar Questão - [DELETE]](#35-deletar-questao)
+* [4.Questões](#4-questoes)
+  * [4.1.Adicionar Questão - [POST]](#41-adicionar-questao)
+  * [4.2.Obter Questão - [GET]](#42-obter-questao)
+  * [4.3.Listar Questões - [GET]](#43-listar-questoes)
+  * [4.4.Atualizar Questão - [PUT]](#44-atualizar-questao)
+  * [4.5.Deletar Questão - [DELETE]](#45-deletar-questao)
 
 
 ## 1 Instalação
@@ -117,7 +117,7 @@ Rota de servidor local
   ```
 
 
-  **`200 OK` - Exemplo de resposta da requisição passando uma prova `COM QUESTÕES` e com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição passando uma prova `COM QUESTÕES` e. Com `SUCESSO`.**
   ```json
   {
     "id": "6050f9e222a72e7089ed1988",
@@ -170,7 +170,7 @@ Rota de servidor local
   ```
 
 
-  **`200 OK` - Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES` e com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES` e. Com `SUCESSO`.**
   ```json
   {
     "id": "6050f9e222a72e7089ed2021",
@@ -203,7 +203,7 @@ Rota de servidor local
   ```
 
 
-  **`200 OK` - Exemplo de resposta da requisição obter prova com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição obter prova. Com `SUCESSO`.**
   ```json
   {
     "id": "6050f9e222a72e7089ed1988",
@@ -256,7 +256,7 @@ Rota de servidor local
 
   #### Requisição sem Parâmetros
 
-  **`200 OK` - Exemplo de resposta da requisição listar provas com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição listar provas. Com `SUCESSO`.**
   ```json
   [
     {
@@ -348,7 +348,7 @@ Rota de servidor local
   ```
 
 
-  **`200 OK` - Exemplo de resposta da requisição para atualização de prova com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição para atualização de prova. Com `SUCESSO`.**
   ```json
   {
     "id": "6050f9e222a72e7089ed1988",
@@ -413,7 +413,7 @@ Rota de servidor local
   ```
 
 
-  **`200 OK` - Exemplo de resposta da requisição deletar prova com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição deletar prova. Com `SUCESSO`.**
   ```json
   {
     "delete": "ok"
@@ -478,7 +478,7 @@ Rota de servidor local
   ```
 
 
-  **`200 OK` - Exemplo de resposta da requisição adicionar Questão com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição adicionar Questão. Com `SUCESSO`.**
   ```json
   {
     "id": "605112af2a3daa997ee6bb8f",
@@ -535,7 +535,7 @@ Rota de servidor local
   ```
 
 
-  **`200 OK` - Exemplo de resposta da requisição obter questão com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição obter questão. Com `SUCESSO`.**
   ```json
   {
     "id": "605112af2a3daa997ee6bb8f",
@@ -569,5 +569,94 @@ Rota de servidor local
     "examId": "60500a71fef08553a78d1948",
     "examName": "Prova AMARELA"
   }
+  ```
+  </details>
+
+
+  - ### 4.3 Listar Questões da Prova
+
+  - `GET` /api/questions 
+  
+  - **Obs.: `questions`, no plural.**
+
+  <details>
+
+  #### Parâmetros da requisição
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**examId**  <br>*required*|O id da Prova das Questões.|string|
+
+
+  **Exemplo da requisição listar questões da prova.**
+  ```json
+  {
+    "examId": "60500a71fef08553a78d1948"
+  }
+  ```
+
+  **`200 OK` - Exemplo de resposta da requisição listar questões da prova. Com `SUCESSO`.**
+  ```json
+  [
+    {
+      "id": "605112af2a3daa997ee6bb8f",
+      "statement": "Qual o sentido da vida, do universo e tudo mais?",
+      "options": [
+        {
+          "key": "a",
+          "value": "viver",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e2"
+        },
+        {
+          "key": "b",
+          "value": "42",
+          "correct": true,
+          "id": "60511cd1b841c7ac42d626e5"
+        },
+        {
+          "key": "c",
+          "value": "beber café",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e3"
+        },
+        {
+          "key": "d",
+          "value": "codar",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e4"
+        }
+      ]
+    },
+    {
+      "id": "60511cd1b841c7ac42d626e1",
+      "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars?",
+      "options": [
+        {
+          "key": "a",
+          "value": "Lançamento dos Filmes",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e7"
+        },
+        {
+          "key": "b",
+          "value": "Machete",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e9"
+        },
+        {
+          "key": "c",
+          "value": "Cronológica dos Fatos",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e6"
+        },
+        {
+          "key": "d",
+          "value": "Ernst Rister",
+          "correct": true,
+          "id": "60511cd1b841c7ac42d626e8"
+        }
+      ]
+    }
+  ]
   ```
   </details>
