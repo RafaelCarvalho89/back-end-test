@@ -46,12 +46,14 @@ Rota de servidor local
 `HOST` - http://localhost:5050
 
 
-### Provas
+## Provas
 
 
-  #### Adicionar Prova
+
+  ### Adicionar Prova
 
   `POST`/api/exam/new
+
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -61,11 +63,13 @@ Rota de servidor local
   |**Body**|**type**  <br>*required*|Tipo da Prova. Obs.: `"ONLINE"` ou `"OFFLINE"`  |string|
   |**Body**|**questions**  <br>*optional*|Questões da Prova. Obs: Um Array de `question`. |[question[]](#question)|
 
+
   #### Question
   |Tipo|Nome|Descrição|Schema|
   |---|---|---|---|
   |**Body**|**statement**  <br>*required*|O enunciado da Questão.|string|
   |**Body**|**options**  <br>*required*|Opções da Questão. Obs: Um Array de `option`. |[option[]](#option)|
+
 
   #### Option
   |Tipo|Nome|Descrição|Schema|
@@ -73,6 +77,7 @@ Rota de servidor local
   |**Body**|**key**  <br>*required*|A chave da opção.|string|
   |**Body**|**value**  <br>*required*|O valor da opção.|string|
   |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
+
 
 
 **Exemplo da requisição passando uma prova `com questões`.**
@@ -110,6 +115,7 @@ Rota de servidor local
   ]
 }
 ```
+
 
 
 **Exemplo de resposta da requisição passando uma prova `com questoes`.**
@@ -153,6 +159,8 @@ Rota de servidor local
   ]
 }
 ```
+
+
 
 **Exemplo da requisição passando uma prova `sem questoes`.**
 ```json
