@@ -7,7 +7,7 @@
 <p>A seguir, se encontram as instruções de instalação do projeto, e de como consumir a API.</p>
 
 ## Sumário
-<Índice>
+<índice>
 <summary><strong>Details</strong></summary>
 
 * [Instalação](#installation)
@@ -24,7 +24,8 @@
     * [Listar Questões](#list-questions)
     * [Atualizar Questão](#update-question)
     * [Deletar Questão](#delete-question)
-</Índice>
+
+</índice>
 
 ## Instalação
 
@@ -53,6 +54,7 @@ npm install
 #### Obter Prova ( GET - /exam)
 <Detalhes>
 </Detalhes>
+
 
 #### Listar Provas ( GET - /exams)
 <Detalhes>
