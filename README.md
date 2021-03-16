@@ -111,7 +111,7 @@ Rota de servidor local
 ```
 
 
-**Exemplo de resposta da requisição passando uma prova `COM QUESTÕES` e com `SUCESSO`.**
+**`200 OK` - Exemplo de resposta da requisição passando uma prova `COM QUESTÕES` e com `SUCESSO`.**
 ```json
 {
   "id": "6050f9e222a72e7089ed1988",
@@ -164,7 +164,7 @@ Rota de servidor local
 ```
 
 
-**Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES` e com `SUCESSO`.**
+**`200 OK` - Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES` e com `SUCESSO`.**
 ```json
 {
   "id": "6050f9e222a72e7089ed2021",
@@ -197,7 +197,7 @@ Rota de servidor local
   ```
 
 
-  **Exemplo de resposta da requisição obter prova com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição obter prova com `SUCESSO`.**
   ```json
   {
     "id": "6050f9e222a72e7089ed1988",
@@ -250,7 +250,7 @@ Rota de servidor local
 
   #### Requisição sem Parâmetros
 
-  **Exemplo de resposta da requisição listar provas com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição listar provas com `SUCESSO`.**
   ```json
   [
     {
@@ -342,7 +342,7 @@ Rota de servidor local
 ```
 
 
-**Exemplo de resposta da requisição para atualização de prova com `SUCESSO`.**
+**`200 OK` - Exemplo de resposta da requisição para atualização de prova com `SUCESSO`.**
 ```json
 {
   "id": "6050f9e222a72e7089ed1988",
@@ -407,7 +407,7 @@ Rota de servidor local
   ```
 
 
-  **Exemplo de resposta da requisição deletar prova com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição deletar prova com `SUCESSO`.**
   ```json
   {
     "delete": "ok"
