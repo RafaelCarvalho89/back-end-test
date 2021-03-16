@@ -9,8 +9,6 @@
 
 ## Sumário
 
-<summary><strong>Details</strong></summary>
-
 * [1.Instalação](#1-instalacao)
 * [2.API](#2-api)
 * [3.Provas](#3-provas)
@@ -40,7 +38,7 @@ npm install
 
 Rota de servidor local
 
-`HOST` - http://localhost:5050
+`HOST` http://localhost:5050
 
 
 ## 3 Provas
@@ -48,7 +46,7 @@ Rota de servidor local
 
 ### 3.1 Adicionar Prova
 
-  `POST`/api/exam/new
+  `POST` /api/exam/new
 
   <details>
 
@@ -181,7 +179,7 @@ Rota de servidor local
 
 ### 3.2 Obter Prova
 
-  `GET`/api/exam
+  `GET` /api/exam
 
   <details>
 
@@ -244,7 +242,7 @@ Rota de servidor local
 
 ### 3.3 Listar Provas
 
-  `GET`/api/exams 
+  `GET` /api/exams 
   
   - **Obs.: `exams`, no plural.**
 
@@ -276,7 +274,7 @@ Rota de servidor local
 
 ### 3.4 Atualizar Prova
 
-  `PUT`/api/exam/update
+  `PUT` /api/exam/update
 
   <details>
 
@@ -388,3 +386,31 @@ Rota de servidor local
 
 
 </details>
+
+### 3.5 Deletar Prova
+
+  `DELETE` /api/exam/delete
+
+  <details>
+
+  #### Parâmetros da requisição
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**id**  <br>*required*|O id da Prova.|string|
+
+
+  **Exemplo da requisição deletar prova.**
+  ```json
+  {
+    "id": "60510d9b9062ed8fc8ad2a6e"
+  }
+  ```
+
+
+  **Exemplo de resposta da requisição deletar prova.**
+  ```json
+  {
+    "delete": "ok"
+  }
+  ```
+  </details>
