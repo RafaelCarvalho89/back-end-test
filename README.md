@@ -50,10 +50,11 @@ Rota de servidor local
 
 
 
-  ### Adicionar Prova
+### Adicionar Prova
 
   `POST`/api/exam/new
 
+  <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -182,11 +183,14 @@ Rota de servidor local
   "questions": []
 }
 ```
+</details>
 
 
-#### Obter Prova
+### Obter Prova
 
   `GET`/api/exam
+
+  <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -194,54 +198,85 @@ Rota de servidor local
   |**Body**|**id**  <br>*required*|O id da Prova.|string|
 
 
-**Exemplo da requisição.**
-```json
-{
-  "id": "6050f9e222a72e7089ed1988"
-}
-```
+  **Exemplo da requisição.**
+  ```json
+  {
+    "id": "6050f9e222a72e7089ed1988"
+  }
+  ```
 
 
-**Exemplo de resposta da requisição obter uma prova.**
-```json
-{
-  "id": "6050f9e222a72e7089ed1988",
-  "name": "Prova AMARELA",
-  "description": "Prova completa",
-  "type": "ONLINE",
-  "questions": [
+  **Exemplo de resposta da requisição obter uma prova.**
+  ```json
+  {
+    "id": "6050f9e222a72e7089ed1988",
+    "name": "Prova AMARELA",
+    "description": "Prova completa",
+    "type": "ONLINE",
+    "questions": [
+      {
+        "id": "6050f9e222a72e7089ed1987",
+        "statement": "Qual o sentido da vida, do universo e tudo mais?",
+        "options": [
+          {
+            "key": "a",
+            "value": "viver",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1983"
+          },
+          {
+            "key": "b",
+            "value": "beber café",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1984"
+          },
+          {
+            "key": "c",
+            "value": "codar",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1985"
+          },
+          {
+            "key": "d",
+            "value": "42",
+            "correct": true,
+            "id": "6050f9e222a72e7089ed1986"
+          }
+        ]
+      }
+    ]
+  }
+  ```
+  </details>
+
+### Listar Provas
+
+  `GET`/api/exams - **Obs.: `exams`, no plural.**
+
+  <details>
+
+  #### Requisição sem Parâmetros
+
+
+
+  **Exemplo de resposta da requisição listar provas.**
+  ```json
+  [
     {
-      "id": "6050f9e222a72e7089ed1987",
-      "statement": "Qual o sentido da vida, do universo e tudo mais?",
-      "options": [
-        {
-          "key": "a",
-          "value": "viver",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1983"
-        },
-        {
-          "key": "b",
-          "value": "beber café",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1984"
-        },
-        {
-          "key": "c",
-          "value": "codar",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1985"
-        },
-        {
-          "key": "d",
-          "value": "42",
-          "correct": true,
-          "id": "6050f9e222a72e7089ed1986"
-        }
-      ]
+      "name": "Prova AMARELA",
+      "description": "Prova sem questões",
+      "type": "OFFLINE",
+      "questions": [],
+      "id": "60500a71fef08553a78d1948"
+    },
+    {
+      "name": "Prova AZUL",
+      "description": "Prova sem questões",
+      "type": "ONLINE",
+      "questions": [],
+      "id": "605104ab28fda7815af489ae"
     }
   ]
-}
-```
-
+  ```
+  </details>
 
