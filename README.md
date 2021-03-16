@@ -7,7 +7,7 @@
 <p>A seguir, se encontram as instruções de instalação do projeto, e de como consumir a API.</p>
 
 ## Sumário
-<índice>
+<details>
 <summary><strong>Details</strong></summary>
 
 * [Instalação](#installation)
@@ -25,7 +25,7 @@
     * [Atualizar Questão](#update-question)
     * [Deletar Questão](#delete-question)
 
-</índice>
+</details>
 
 ## Instalação
 
