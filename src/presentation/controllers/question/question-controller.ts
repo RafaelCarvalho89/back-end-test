@@ -24,10 +24,27 @@ export class QuestionController implements Controller {
     try {
       const requiredFields = ['examId', 'statement', 'options']
       for (const field of requiredFields) {
-        if (!httpRequest.body[field]) {
-          return badRequest(new MissingParamError(field))
+        if (!httpRequest.body[field]) return badRequest(new MissingParamError(field))
+      }
+
+      const requiredOptionFields = ['key', 'value', 'correct']
+      for (const option of httpRequest.body.options) {
+        for (const field of requiredOptionFields) {
+          if (option[field] === null || option[field] === undefined || option[field] === '') {
+            return badRequest(new MissingParamError(field))
+          }
         }
       }
+
+      if (httpRequest.body.questions && httpRequest.body.questions !== []) {
+        const requiredOptionsFields = ['key', 'value', 'correct']
+        for (const option of httpRequest.body.options) {
+          for (const field of requiredOptionsFields) {
+            if (!option[field]) return badRequest(new MissingParamError(field))
+          }
+        }
+      }
+
       const { examId, statement, options } = httpRequest.body
       const question = await this.addQuestion.add({ examId, statement, options })
       return ok(question)
