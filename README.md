@@ -13,11 +13,11 @@
 * [Instalação](#instalacao)
 * [API](#api)
   * [Provas](#provas)
-    * [POST - Adicionar Prova](#adicionar-prova)
-    * [GET - Obter Prova](#obter-prova)
-    * [GET - Listar Provas](#listar-provas)
-    * [PUT - Atualizar Prova](#atualizar-prova)
-    * [DELETE - Deletar Prova](#deletar-prova)
+    * [Adicionar Prova - [POST]](#adicionar-prova)
+    * [Obter Prova - [GET]](#obter-prova)
+    * [Listar Provas - [GET]](#listar-provas)
+    * [Atualizar Prova - [UPDATE]](#atualizar-prova)
+    * [Deletar Prova - [DELETE]](#deletar-prova)
 
 </details>
 
@@ -37,26 +37,34 @@ npm install
 
 ## API
 
+Rota de servidor local
+
+[HOST] - http://localhost:5050/api
 ### Provas
 <Detalhes>
 </Detalhes>
 
 #### Adicionar Prova
 <Detalhes>
+[POST]/exam
 </Detalhes>
 
 #### Obter Prova
 <Detalhes>
+[GET]/exam
 </Detalhes>
 
 #### Listar Provas
 <Detalhes>
+[GET]/exams
 </Detalhes>
 
 #### Atualizar Prova
 <Detalhes>
+[PUT]/exam/update
 </Detalhes>
 
 #### Deletar Prova
 <Detalhes>
+[DELETE]/exam/delete
 </Detalhes>
