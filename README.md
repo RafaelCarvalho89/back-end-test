@@ -49,7 +49,6 @@ Rota de servidor local
 ## Provas
 
 
-
 ### Adicionar Prova
 
   `POST`/api/exam/new
@@ -78,7 +77,6 @@ Rota de servidor local
   |**Body**|**key**  <br>*required*|A chave da opção.|string|
   |**Body**|**value**  <br>*required*|O valor da opção.|string|
   |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
-
 
 
 **Exemplo da requisição passando uma prova `com questões`.**
@@ -116,7 +114,6 @@ Rota de servidor local
   ]
 }
 ```
-
 
 
 **Exemplo de resposta da requisição passando uma prova `com questoes`.**
@@ -162,7 +159,6 @@ Rota de servidor local
 ```
 
 
-
 **Exemplo da requisição passando uma prova `sem questoes`.**
 ```json
 {
@@ -198,7 +194,7 @@ Rota de servidor local
   |**Body**|**id**  <br>*required*|O id da Prova.|string|
 
 
-  **Exemplo da requisição.**
+  **Exemplo da requisição obter prova.**
   ```json
   {
     "id": "6050f9e222a72e7089ed1988"
@@ -206,7 +202,7 @@ Rota de servidor local
   ```
 
 
-  **Exemplo de resposta da requisição obter uma prova.**
+  **Exemplo de resposta da requisição obter prova.**
   ```json
   {
     "id": "6050f9e222a72e7089ed1988",
@@ -251,13 +247,13 @@ Rota de servidor local
 
 ### Listar Provas
 
-  `GET`/api/exams - **Obs.: `exams`, no plural.**
+  `GET`/api/exams 
+  
+  - **Obs.: `exams`, no plural.**
 
   <details>
 
   #### Requisição sem Parâmetros
-
-
 
   **Exemplo de resposta da requisição listar provas.**
   ```json
@@ -280,3 +276,117 @@ Rota de servidor local
   ```
   </details>
 
+
+### Atualizar Prova
+
+  `PUT`/api/exam/update
+
+  <details>
+
+  #### Parâmetros da requisição
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**id**  <br>*required*|O id da Prova.|string|
+  |**Body**|**name**  <br>*required*|O nome da Prova.|string|
+  |**Body**|**description**  <br>*required*|Descrição da Prova.|string|
+  |**Body**|**type**  <br>*required*|Tipo da Prova. Obs.: `"ONLINE"` ou `"OFFLINE"`  |string|
+  |**Body**|**questions**  <br>*required*|Questões da Prova. Obs: Um Array de `question`. |[question[]](#question)|
+
+
+  #### Question
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**id**  <br>*required*|O id da Questão.|string|
+  |**Body**|**statement**  <br>*required*|O enunciado da Questão.|string|
+  |**Body**|**options**  <br>*required*|Opções da Questão. Obs: Um Array de `option`. |[option[]](#option)|
+
+
+  #### Option
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**key**  <br>*required*|A chave da opção.|string|
+  |**Body**|**value**  <br>*required*|O valor da opção.|string|
+  |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
+
+
+**Exemplo da requisição para atualização de prova.**
+```json
+{
+  "name": "Prova AMARELA 2021 ATUALIZADA",
+  "description": "Prova completa 2021 ATUALIZADA",
+  "type": "ONLINE",
+  "questions": [
+    {
+      "statement": "Qual o sentido da vida, do universo e tudo mais? 2021 ATUALIZADO ¯\_(ツ)_/¯",
+      "options": [
+        {
+          "key": "a",
+          "value": "viver",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "value": "beber café",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "value": "codar",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "value": "42",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}
+```
+
+
+**Exemplo de resposta da requisição para atualização de prova.**
+```json
+{
+  "id": "6050f9e222a72e7089ed1988",
+  "name": "Prova AMARELA 2021 ATUALIZADA",
+  "description": "Prova completa 2021 ATUALIZADA",
+  "type": "ONLINE",
+  "questions": [
+    {
+      "id": "6050f9e222a72e7089ed1987",
+      "statement": "Qual o sentido da vida, do universo e tudo mais? 2021 ATUALIZADO ¯\_(ツ)_/¯",
+      "options": [
+        {
+          "key": "a",
+          "value": "viver",
+          "correct": false,
+          "id": "6050f9e222a72e7089ed1983"
+        },
+        {
+          "key": "b",
+          "value": "beber café",
+          "correct": false,
+          "id": "6050f9e222a72e7089ed1984"
+        },
+        {
+          "key": "c",
+          "value": "codar",
+          "correct": false,
+          "id": "6050f9e222a72e7089ed1985"
+        },
+        {
+          "key": "d",
+          "value": "42",
+          "correct": true,
+          "id": "6050f9e222a72e7089ed1986"
+        }
+      ]
+    }
+  ]
+}
+```
+
+
+</details>
