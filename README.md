@@ -6,8 +6,10 @@
 
 <p>A seguir, se encontram as instruções de instalação do projeto, e de como consumir a API.</p>
 
+
 ## Sumário
 <details>
+
 <summary><strong>Details</strong></summary>
 
 * [Instalação](#instalacao)
@@ -20,6 +22,7 @@
     * [Deletar Prova - [DELETE]](#deletar-prova)
 
 </details>
+
 
 ## Instalação
 
@@ -35,41 +38,49 @@ git clone https://github.com/RafaelCarvalho89/back-end-test.git
 npm install
 ```
 
+
 ## API
 
 Rota de servidor local
 
 `[HOST]` - http://localhost:5050/api
+
+
 ### Provas
 <details>
 </details>
 
-#### Adicionar Prova
-<details>
 
-`[POST]` /exam
-</details>
+  #### Adicionar Prova
+  <details>
 
-#### Obter Prova
-<details>
+  `[POST]` /exam
+  </details>
 
-`[GET]`/exam
-</details>
 
-#### Listar Provas
-<details>
+  #### Obter Prova
+  <details>
 
-`[GET]`/exams
-</details>
+  `[GET]`/exam
+  </details>
 
-#### Atualizar Prova
-<details>
+  #### Listar Provas
+  <details>
 
-`[PUT]`/exam/update
-</details>
 
-#### Deletar Prova
-<details>
+  `[GET]`/exams
+  </details>
 
-`[DELETE]`/exam/delete
-</details>
+  #### Atualizar Prova
+  <details>
+
+
+  `[PUT]`/exam/update
+  </details>
+
+
+  #### Deletar Prova
+  <details>
+
+  `[DELETE]`/exam/delete
+  </details>
