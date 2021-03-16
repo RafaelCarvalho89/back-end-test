@@ -43,7 +43,7 @@ npm install
 
 Rota de servidor local
 
-`[HOST]` - http://localhost:5050
+`HOST` - http://localhost:5050
 
 
 ### Provas
@@ -51,7 +51,7 @@ Rota de servidor local
 
   #### Adicionar Prova
 
-  `[POST]`/api/exam
+  `POST`/api/exam/new
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
@@ -75,7 +75,7 @@ Rota de servidor local
   |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
 
 
-*Exemplo da requisição passando uma prova com questoes.*
+**Exemplo da requisição passando uma prova `com questões`.**
 ```json
 {
   "name": "Prova AMARELA",
@@ -111,7 +111,90 @@ Rota de servidor local
 }
 ```
 
-*Exemplo de resposta darequisição passando uma prova com questoes.*
+
+**Exemplo de resposta da requisição passando uma prova `com questoes`.**
+```json
+{
+  "id": "6050f9e222a72e7089ed1988",
+  "name": "Prova AMARELA",
+  "description": "Prova completa",
+  "type": "ONLINE",
+  "questions": [
+    {
+      "id": "6050f9e222a72e7089ed1987",
+      "statement": "Qual o sentido da vida, do universo e tudo mais?",
+      "options": [
+        {
+          "key": "a",
+          "value": "viver",
+          "correct": false,
+          "id": "6050f9e222a72e7089ed1983"
+        },
+        {
+          "key": "b",
+          "value": "beber café",
+          "correct": false,
+          "id": "6050f9e222a72e7089ed1984"
+        },
+        {
+          "key": "c",
+          "value": "codar",
+          "correct": false,
+          "id": "6050f9e222a72e7089ed1985"
+        },
+        {
+          "key": "d",
+          "value": "42",
+          "correct": true,
+          "id": "6050f9e222a72e7089ed1986"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Exemplo da requisição passando uma prova `sem questoes`.**
+```json
+{
+  "name": "Prova AZUL",
+  "description": "Prova sem questões",
+  "type": "ONLINE"
+}
+```
+
+
+**Exemplo de resposta da requisição passando uma prova `SEM` questoes.**
+```json
+{
+  "id": "6050f9e222a72e7089ed2021",
+  "name": "Prova AZUL",
+  "description": "Prova sem questões",
+  "type": "ONLINE",
+  "questions": []
+}
+```
+
+
+#### Obter Prova
+
+  `GET`/api/exam
+
+  #### Parâmetros da requisição
+  |Tipo|Nome|Descrição|Schema|
+  |---|---|---|---|
+  |**Body**|**id**  <br>*required*|O id da Prova.|string|
+
+
+**Exemplo da requisição.**
+```json
+{
+  "id": "6050f9e222a72e7089ed1988"
+}
+```
+
+
+**Exemplo de resposta da requisição obter uma prova.**
 ```json
 {
   "id": "6050f9e222a72e7089ed1988",
