@@ -43,21 +43,26 @@ npm install
 
 ## API
 
-### Provas (Exams)
+### Provas
 <Detalhes>
 </Detalhes>
 
-#### Adicionar Prova ( POST - /exam/new)
+#### Adicionar Prova
 <Detalhes>
 </Detalhes>
 
-#### Obter Prova ( GET - /exam)
+#### Obter Prova
 <Detalhes>
 </Detalhes>
 
-
-#### Listar Provas ( GET - /exams)
+#### Listar Provas
 <Detalhes>
 </Detalhes>
 
+#### Atualizar Prova
+<Detalhes>
+</Detalhes>
 
+#### Deletar Prova
+<Detalhes>
+</Detalhes>
