@@ -6,6 +6,17 @@
 
 <p>A seguir, se encontram as instruções de instalação do projeto, e de como consumir a API.</p>
 
+<br>
+
+#### Tasks
+
+- [ ] feat: write documentation
+- [ ] fix: delete question broken
+- [ ] refactor: extract fields validation out of the controller
+- [ ] refactor: change the request to format with request param
+- [ ] revision: code and organization
+
+<br />
 
 ## Sumário
 
@@ -23,7 +34,9 @@
   * [4.3.Listar Questões - [GET]](#43-listar-questões)
   * [4.4.Atualizar Questão - [PUT]](#44-atualizar-questão)
   * [4.5.Deletar Questão - [DELETE]](#45-deletar-questão)
+* [5.Schema](#5-schema)
 
+<br />
 
 ## 1 Instalação
 
@@ -39,6 +52,7 @@ git clone https://github.com/RafaelCarvalho89/back-end-test.git
 npm install
 ```
 
+<br />
 
 ## 2 API
 
@@ -46,6 +60,9 @@ Rota de servidor local
 
 `HOST` http://localhost:5050
 
+- [ ] Response fails 
+
+<br />
 
 ## 3 Provas
 
@@ -182,6 +199,7 @@ Rota de servidor local
   ```
 </details>
 
+<br />
 
   - ### 3.2 Obter Prova
 
@@ -246,6 +264,8 @@ Rota de servidor local
   ```
   </details>
 
+  <br />
+
   - ### 3.3 Listar Provas
 
   - `GET` /api/exams 
@@ -276,6 +296,8 @@ Rota de servidor local
   ]
   ```
   </details>
+
+  <br />
 
 
   - ### 3.4 Atualizar Prova
@@ -390,8 +412,9 @@ Rota de servidor local
   }
   ``` 
 
-
   </details>
+
+  <br />
 
   - ### 3.5 Deletar Prova
 
@@ -421,6 +444,7 @@ Rota de servidor local
   ```
   </details>
 
+  <br />
 
 ## 4 Questões
 
@@ -514,6 +538,7 @@ Rota de servidor local
 
   </details>
 
+  <br />
 
   - ### 4.2 Obter Questão
 
@@ -572,6 +597,7 @@ Rota de servidor local
   ```
   </details>
 
+  <br />
 
   - ### 4.3 Listar Questões da Prova
 
@@ -661,6 +687,7 @@ Rota de servidor local
   ```
   </details>
 
+  <br />
 
   - ### 4.4 Atualizar Questão
 
@@ -751,6 +778,7 @@ Rota de servidor local
 
   </details>
 
+  <br />
 
   - ### 4.5 Deletar Questão
 
@@ -817,3 +845,5 @@ Rota de servidor local
   }
   ```
   </details>
+
+## 5 Schema
