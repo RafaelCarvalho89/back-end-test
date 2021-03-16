@@ -8,23 +8,20 @@
 
 
 ## Sumário
-<details>
 
 <summary><strong>Details</strong></summary>
 
-* [Instalação](#instalacao)
-* [API](#api)
-  * [Provas](#provas)
-    * [Adicionar Prova - [POST]](#adicionar-prova)
-    * [Obter Prova - [GET]](#obter-prova)
-    * [Listar Provas - [GET]](#listar-provas)
-    * [Atualizar Prova - [UPDATE]](#atualizar-prova)
-    * [Deletar Prova - [DELETE]](#deletar-prova)
-
-</details>
+* [1.Instalação](#1-instalacao)
+* [2.API](#2-api)
+* [3.Provas](#3-provas)
+  * [3.1.Adicionar Prova - [POST]](#3-1-adicionar-prova)
+  * [3.2.Obter Prova - [GET]](#3-2-obter-prova)
+  * [3.3.Listar Provas - [GET]](#3-3-listar-provas)
+  * [3.4.Atualizar Prova - [UPDATE]](#3-4-atualizar-prova)
+  * [3.5.Deletar Prova - [DELETE]](#3-5-deletar-prova)
 
 
-## Instalação
+## 1.Instalação
 
 <p>Clonando o projeto</p>
 
@@ -39,17 +36,17 @@ npm install
 ```
 
 
-## API
+## 2.API
 
 Rota de servidor local
 
 `HOST` - http://localhost:5050
 
 
-## Provas
+## 3.Provas
 
 
-### Adicionar Prova
+### 3.1.Adicionar Prova
 
   `POST`/api/exam/new
 
@@ -182,7 +179,7 @@ Rota de servidor local
 </details>
 
 
-### Obter Prova
+### 3.2.Obter Prova
 
   `GET`/api/exam
 
@@ -245,7 +242,7 @@ Rota de servidor local
   ```
   </details>
 
-### Listar Provas
+### 3.3.Listar Provas
 
   `GET`/api/exams 
   
@@ -277,7 +274,7 @@ Rota de servidor local
   </details>
 
 
-### Atualizar Prova
+### 3.4.Atualizar Prova
 
   `PUT`/api/exam/update
 
@@ -312,6 +309,7 @@ Rota de servidor local
 **Exemplo da requisição para atualização de prova.**
 ```json
 {
+  "id": "6050f9e222a72e7089ed1988",
   "name": "Prova AMARELA 2021 ATUALIZADA",
   "description": "Prova completa 2021 ATUALIZADA",
   "type": "ONLINE",
