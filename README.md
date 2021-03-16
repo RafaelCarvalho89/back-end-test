@@ -14,14 +14,14 @@
 * [1.Instalação](#1-instalacao)
 * [2.API](#2-api)
 * [3.Provas](#3-provas)
-  * [3.1.Adicionar Prova - [POST]](#3-1-adicionar-prova)
-  * [3.2.Obter Prova - [GET]](#3-2-obter-prova)
-  * [3.3.Listar Provas - [GET]](#3-3-listar-provas)
-  * [3.4.Atualizar Prova - [UPDATE]](#3-4-atualizar-prova)
-  * [3.5.Deletar Prova - [DELETE]](#3-5-deletar-prova)
+  * [3.1.Adicionar Prova - [POST]](#31-adicionar-prova)
+  * [3.2.Obter Prova - [GET]](#32-obter-prova)
+  * [3.3.Listar Provas - [GET]](#33-listar-provas)
+  * [3.4.Atualizar Prova - [UPDATE]](#34-atualizar-prova)
+  * [3.5.Deletar Prova - [DELETE]](#35-deletar-prova)
 
 
-## 1.Instalação
+## 1 Instalação
 
 <p>Clonando o projeto</p>
 
@@ -36,17 +36,17 @@ npm install
 ```
 
 
-## 2.API
+## 2 API
 
 Rota de servidor local
 
 `HOST` - http://localhost:5050
 
 
-## 3.Provas
+## 3 Provas
 
 
-### 3.1.Adicionar Prova
+### 3.1 Adicionar Prova
 
   `POST`/api/exam/new
 
@@ -179,7 +179,7 @@ Rota de servidor local
 </details>
 
 
-### 3.2.Obter Prova
+### 3.2 Obter Prova
 
   `GET`/api/exam
 
@@ -242,7 +242,7 @@ Rota de servidor local
   ```
   </details>
 
-### 3.3.Listar Provas
+### 3.3 Listar Provas
 
   `GET`/api/exams 
   
@@ -274,7 +274,7 @@ Rota de servidor local
   </details>
 
 
-### 3.4.Atualizar Prova
+### 3.4 Atualizar Prova
 
   `PUT`/api/exam/update
 
