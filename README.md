@@ -54,6 +54,8 @@
   npm install
   ```
 
+  <br />
+
   **3 - Verifique se o Mongo está inicializado, e inicialize o serviço caso não esteja.**
 
   <p>Para executar e gerenciar seu mongodprocesso, você usará o sistema init integrado de seu sistema operacional. </p>
@@ -64,7 +66,7 @@
   ps --no-headers -o comm 1
   ```
 
-  <p>Sera exibido no terminal<>
+  <p>Sera exibido no terminal</p>
 
   ```console
   systemd
@@ -83,8 +85,6 @@
   sudo systemctl status mongod
   ```
 
-  <br />
-
   <p>Ou para System V Init (service)</p>
 
   ```console
@@ -93,15 +93,13 @@
   <br />
 
 
-  <p>Se não estiver então inicialize-o</p>
+  <p>Se o Mongo não estiver inicialidado então inicialize-o</p>
 
   <p>Para systemd (systemctl)</p>
 
   ```console
   sudo systemctl start mongod
   ```
-
-  <br />
 
   <p>Ou para System V Init (service)</p>
 
@@ -127,15 +125,15 @@
 
   <br />
 
-  <p>Alem da resposta `200 OK` de sucesso, a API pode retornar mais dois tipos de resposta, `400 Bad request` e `500 Server error`.</p>
+  Alem da resposta `200 OK` de sucesso, a API pode retornar mais dois tipos de resposta, `400 Bad request` e `500 Server error`.
 
-  <p>A resposta `400 Bad request` é retornada quando formato da requisição esta incorreto.</p>
+  A resposta `400 Bad request` é retornada quando formato da requisição está incorreto.
 
-  <p>E a resposta `500 Server error` é retornada quando ocorre algum erro no serviço da API.</p>
+  E a resposta `500 Server error` é retornada quando ocorre algum erro no serviço da API.
 
   <br />
 
-  **Exemplo de uma requisição adicionar prova faltando o campo `name`..**
+  **Exemplo de uma requisição adicionar prova faltando o campo `name`.**
   ```json
   {
     "description": "Prova sem questões",
@@ -156,7 +154,7 @@
 
   <br />
 
-  **Exemplo de uma requisição adicionar prova com o valor do campo `type` inválido..**
+  **Exemplo de uma requisição adicionar prova com o valor do campo `type` inválido.**
   ```json
   {
     "name": "Prova VERMELHA",
@@ -262,7 +260,7 @@
 
   <br />
 
-  **`200 OK` - Exemplo de resposta da requisição passando uma prova `COM QUESTÕES` e. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição passando uma prova `COM QUESTÕES`. Com `SUCESSO`.**
   ```json
   {
     "id": "6050f9e222a72e7089ed1988",
@@ -319,7 +317,7 @@
   <br />
 
 
-  **`200 OK` - Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES` e. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES`. Com `SUCESSO`.**
   ```json
   {
     "id": "6050f9e222a72e7089ed2021",
@@ -1003,3 +1001,7 @@
   <br />
 
 ## 5 Schema
+
+<br />
+
+[Retornar ao Topo ^](#1-descrição-do-projeto)
