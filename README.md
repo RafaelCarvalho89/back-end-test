@@ -40,29 +40,153 @@
 
 ## 1 Instalação
 
-<p>Clonando o projeto</p>
+  **1 - Clone o projeto.**
 
-```console
-git clone https://github.com/RafaelCarvalho89/back-end-test.git
-```
+  ```console
+  git clone https://github.com/RafaelCarvalho89/back-end-test.git
+  ```
 
-<p>Instalando as dependencias</p>
+  <br />
 
-```console
-npm install
-```
+  **2 - Instale as dependencias.**
 
-<br />
+  ```console
+  npm install
+  ```
+
+  **3 - Verifique se o Mongo está inicializado, e inicialize o serviço caso não esteja.**
+
+  <p>Para executar e gerenciar seu mongodprocesso, você usará o sistema init integrado de seu sistema operacional. </p>
+
+  <p>Se você não tiver certeza de qual sistema init sua plataforma usa, execute o seguinte comando no terminal:</p>
+
+  ```console
+  ps --no-headers -o comm 1
+  ```
+
+  <p>Sera exibido no terminal<>
+
+  ```console
+  systemd
+  ```
+  ou 
+
+  ```console
+  init
+  ```
+
+  <br />
+
+  <p>Para systemd (systemctl)</p>
+
+  ```console
+  sudo systemctl status mongod
+  ```
+
+  <br />
+
+  <p>Ou para System V Init (service)</p>
+
+  ```console
+  sudo service mongod status
+  ```
+  <br />
+
+
+  <p>Se não estiver então inicialize-o</p>
+
+  <p>Para systemd (systemctl)</p>
+
+  ```console
+  sudo systemctl start mongod
+  ```
+
+  <br />
+
+  <p>Ou para System V Init (service)</p>
+
+  ```console
+  sudo service mongod start
+  ```
+
+  <br />
+
+  **4 - Inicialize o projeto**
+
+  ```console
+  npm start
+  ```
+
+  <br />        
 
 ## 2 API
 
-Rota de servidor local
+  Rota de servidor local
 
-`HOST` http://localhost:5050
+  `HOST` http://localhost:5050
 
-- [ ] Response fails 
+  <br />
 
-<br />
+  <p>Alem da resposta `200 OK` de sucesso, a API pode retornar mais dois tipos de resposta, `400 Bad request` e `500 Server error`.</p>
+
+  <p>A resposta `400 Bad request` é retornada quando formato da requisição esta incorreto.</p>
+
+  <p>E a resposta `500 Server error` é retornada quando ocorre algum erro no serviço da API.</p>
+
+  <br />
+
+  **Exemplo de uma requisição adicionar prova faltando o campo `name`..**
+  ```json
+  {
+    "description": "Prova sem questões",
+    "type": "ONLINE",
+    "questions": []
+  }
+  ```
+
+  <br />
+
+**`400 Bad Request` - Exemplo de resposta da requisição adicionar prova faltando o campo `name`.**
+  ```json
+  {
+    "name": "MissingParamError",
+    "message": "Missing param: name",
+  }
+  ```
+
+  <br />
+
+  **Exemplo de uma requisição adicionar prova com o valor do campo `type` inválido..**
+  ```json
+  {
+    "name": "Prova VERMELHA",
+    "description": "Prova sem questões",
+    "type": "BAZINGA",
+    "questions": []
+  }
+  ```
+
+  <br />
+
+  **`400 Bad Request` - Exemplo de resposta de uma requisição adicionar prova com o valor do campo `type` inválido.**
+  ```json
+  {
+    "name": "InvalidParamError",
+    "message": "Invalid param: type",
+  }
+  ```
+
+  <br />
+
+  **`500 Server Error` - Exemplo de resposta de uma requisição quando occorre algum erro no serviço da API.**
+  ```json
+  {
+    "name": "ServerError",
+    "message": "Internal Server Error",
+  }
+  ```
+
+  <br />
 
 ## 3 Provas
 
@@ -81,6 +205,7 @@ Rota de servidor local
   |**Body**|**type**  <br>*required*|Tipo da Prova. Obs.: `"ONLINE"` ou `"OFFLINE"`  |string|
   |**Body**|**questions**  <br>*optional*|Questões da Prova. Obs: Um Array de `question`. |[question[]](#question)|
 
+  <br />
 
   #### Question
   |Tipo|Nome|Descrição|Schema|
@@ -88,6 +213,7 @@ Rota de servidor local
   |**Body**|**statement**  <br>*required*|O enunciado da Questão.|string|
   |**Body**|**options**  <br>*required*|Opções da Questão. Obs: Um Array de `option`. |[option[]](#option)|
 
+  <br />
 
   #### Option
   |Tipo|Nome|Descrição|Schema|
@@ -96,6 +222,7 @@ Rota de servidor local
   |**Body**|**value**  <br>*required*|O valor da opção.|string|
   |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
 
+  <br />
 
   **Exemplo da requisição passando uma prova `COM QUESTÕES`.**
   ```json
@@ -133,6 +260,7 @@ Rota de servidor local
   }
   ```
 
+  <br />
 
   **`200 OK` - Exemplo de resposta da requisição passando uma prova `COM QUESTÕES` e. Com `SUCESSO`.**
   ```json
@@ -176,6 +304,8 @@ Rota de servidor local
   }
   ```
 
+  <br />
+
 
   **Exemplo da requisição passando uma prova `SEM QUESTÕES`.**
   ```json
@@ -185,6 +315,8 @@ Rota de servidor local
     "type": "ONLINE"
   }
   ```
+
+  <br />
 
 
   **`200 OK` - Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES` e. Com `SUCESSO`.**
@@ -197,9 +329,9 @@ Rota de servidor local
     "questions": []
   }
   ```
-</details>
+  </details>
 
-<br />
+  <br />
 
   - ### 3.2 Obter Prova
 
@@ -212,6 +344,7 @@ Rota de servidor local
   |---|---|---|---|
   |**Body**|**id**  <br>*required*|O id da Prova.|string|
 
+  <br />
 
   **Exemplo da requisição obter prova.**
   ```json
@@ -220,6 +353,7 @@ Rota de servidor local
   }
   ```
 
+  <br />
 
   **`200 OK` - Exemplo de resposta da requisição obter prova. Com `SUCESSO`.**
   ```json
@@ -315,6 +449,7 @@ Rota de servidor local
   |**Body**|**type**  <br>*required*|Tipo da Prova. Obs.: `"ONLINE"` ou `"OFFLINE"`  |string|
   |**Body**|**questions**  <br>*required*|Questões da Prova. Obs: Um Array de `question`. |[question[]](#question)|
 
+  <br />
 
   #### Question
   |Tipo|Nome|Descrição|Schema|
@@ -323,6 +458,7 @@ Rota de servidor local
   |**Body**|**statement**  <br>*required*|O enunciado da Questão.|string|
   |**Body**|**options**  <br>*required*|Opções da Questão. Obs: Um Array de `option`. |[option[]](#option)|
 
+  <br />
 
   #### Option
   |Tipo|Nome|Descrição|Schema|
@@ -331,6 +467,7 @@ Rota de servidor local
   |**Body**|**value**  <br>*required*|O valor da opção.|string|
   |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
 
+  <br />
 
   **Exemplo da requisição para atualização de prova.**
   ```json
@@ -369,6 +506,7 @@ Rota de servidor local
   }
   ```
 
+  <br />
 
   **`200 OK` - Exemplo de resposta da requisição para atualização de prova. Com `SUCESSO`.**
   ```json
@@ -427,6 +565,8 @@ Rota de servidor local
   |---|---|---|---|
   |**Body**|**id**  <br>*required*|O id da Prova.|string|
 
+  <br />
+
 
   **Exemplo da requisição deletar prova.**
   ```json
@@ -435,6 +575,7 @@ Rota de servidor local
   }
   ```
 
+  <br />
 
   **`200 OK` - Exemplo de resposta da requisição deletar prova. Com `SUCESSO`.**
   ```json
@@ -462,6 +603,7 @@ Rota de servidor local
   |**Body**|**statement**  <br>*required*|O enunciado da Questão.|string|
   |**Body**|**options**  <br>*required*|Opções da Questão. Obs: Um Array de `option`. |[option[]](#option)|
 
+  <br />
 
   #### Option
   |Tipo|Nome|Descrição|Schema|
@@ -470,6 +612,7 @@ Rota de servidor local
   |**Body**|**value**  <br>*required*|O valor da opção.|string|
   |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
 
+  <br />
 
   **Exemplo da requisição adicionar Questão.**
   ```json
@@ -501,6 +644,7 @@ Rota de servidor local
   }
   ```
 
+  <br />
 
   **`200 OK` - Exemplo de resposta da requisição adicionar Questão. Com `SUCESSO`.**
   ```json
@@ -551,6 +695,7 @@ Rota de servidor local
   |---|---|---|---|
   |**Body**|**id**  <br>*required*|O id da Questão.|string|
 
+  <br />
 
   **Exemplo da requisição obter questão.**
   ```json
@@ -559,6 +704,7 @@ Rota de servidor local
   }
   ```
 
+  <br />
 
   **`200 OK` - Exemplo de resposta da requisição obter questão. Com `SUCESSO`.**
   ```json
@@ -612,6 +758,7 @@ Rota de servidor local
   |---|---|---|---|
   |**Body**|**examId**  <br>*required*|O id da Prova das Questões.|string|
 
+  <br />
 
   **Exemplo da requisição listar questões da prova.**
   ```json
@@ -619,6 +766,8 @@ Rota de servidor local
     "examId": "60500a71fef08553a78d1948"
   }
   ```
+
+  <br />
 
   **`200 OK` - Exemplo de resposta da requisição listar questões da prova. Com `SUCESSO`.**
   ```json
@@ -702,6 +851,7 @@ Rota de servidor local
   |**Body**|**statement**  <br>*required*|O enunciado da Questão.|string|
   |**Body**|**options**  <br>*required*|Opções da Questão. Obs: Um Array de `option`. |[option[]](#option)|
 
+  <br />
 
   #### Option
   |Tipo|Nome|Descrição|Schema|
@@ -710,6 +860,7 @@ Rota de servidor local
   |**Body**|**value**  <br>*required*|O valor da opção.|string|
   |**Body**|**correct**  <br>*required*|Se a opção é verdadeira ou falsa. Obs.: `true` ou `false`|boolean|
 
+<br />
 
   **Exemplo da requisição adicionar Questão.**
   ```json
@@ -741,6 +892,7 @@ Rota de servidor local
   }
   ```
 
+  <br />
 
   **`200 OK` - Exemplo de resposta da requisição atualizar Questão. Com `SUCESSO`.**
   ```json
@@ -791,6 +943,7 @@ Rota de servidor local
   |---|---|---|---|
   |**Body**|**id**  <br>*required*|O id da Questão.|string|
 
+  <br />
 
   **Exemplo da requisição deletar questão.**
   ```json
@@ -799,6 +952,7 @@ Rota de servidor local
   }
   ```
 
+  <br />
 
   **`200 OK` - Exemplo de resposta da requisição deletar questão. Com `SUCESSO`.**
 
@@ -845,5 +999,7 @@ Rota de servidor local
   }
   ```
   </details>
+
+  <br />
 
 ## 5 Schema
