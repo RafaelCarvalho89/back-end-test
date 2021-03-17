@@ -189,7 +189,7 @@
 ## 3 Provas
 
 
-  - ### 3.1 Adicionar Prova
+  ### 3.1 Adicionar Prova
 
   - `POST` /api/exam/new
 
@@ -331,7 +331,7 @@
 
   <br />
 
-  - ### 3.2 Obter Prova
+  ### 3.2 Obter Prova
 
   - `GET` /api/exam
 
@@ -398,7 +398,7 @@
 
   <br />
 
-  - ### 3.3 Listar Provas
+  ### 3.3 Listar Provas
 
   - `GET` /api/exams 
   
@@ -432,7 +432,7 @@
   <br />
 
 
-  - ### 3.4 Atualizar Prova
+  ### 3.4 Atualizar Prova
 
   - `PUT` /api/exam/update
 
@@ -552,7 +552,7 @@
 
   <br />
 
-  - ### 3.5 Deletar Prova
+  ### 3.5 Deletar Prova
 
   - `DELETE` /api/exam/delete
 
@@ -588,7 +588,7 @@
 ## 4 Questões
 
 
-  - ### 4.1 Adicionar Questão
+  ### 4.1 Adicionar Questão
 
   - `POST` /api/question/new
 
@@ -682,7 +682,7 @@
 
   <br />
 
-  - ### 4.2 Obter Questão
+  ### 4.2 Obter Questão
 
   - `GET` /api/question
 
@@ -743,7 +743,7 @@
 
   <br />
 
-  - ### 4.3 Listar Questões da Prova
+  ### 4.3 Listar Questões da Prova
 
   - `GET` /api/questions 
   
@@ -836,7 +836,7 @@
 
   <br />
 
-  - ### 4.4 Atualizar Questão
+  ### 4.4 Atualizar Questão
 
   - `PUT` /api/question/update
 
@@ -930,7 +930,7 @@
 
   <br />
 
-  - ### 4.5 Deletar Questão
+  ### 4.4 Deletar Questão
 
   - `DELETE` /api/question/delete
 
