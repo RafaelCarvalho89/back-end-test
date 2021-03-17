@@ -11,7 +11,7 @@
 #### Tasks
 
 - [x] ~~feat: write documentation~~
-- [ ] fix: delete question broken
+- [x] ~~fix: delete question broken~~
 - [ ] refactor: extract fields validation out of the controller
 - [ ] refactor: change the request to format with request param
 - [ ] revision: code and organization

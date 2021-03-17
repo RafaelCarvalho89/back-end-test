@@ -111,7 +111,8 @@ export class QuestionMongoRepository implements QuestionRepository {
       { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } }
     )
     if (!exam) return null
-    const indexForDelete = exam.questions.findIndex((question: any) => question.id === questionData.id)
+    const indexForDelete = exam.questions.findIndex(
+      (question: QuestionModel) => JSON.stringify(question.id) === JSON.stringify(questionData.id))
     exam.questions.splice(indexForDelete, 1)
     return await examMongoRepository.update(exam)
   }
