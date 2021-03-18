@@ -1,5 +1,9 @@
+export interface UrlParams {
+  id?: string
+}
+
 export interface HttpRequest {
-  params?: string
+  params?: UrlParams
   body?: any
 }
 

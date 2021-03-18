@@ -119,8 +119,8 @@ export class ExamController implements Controller {
 
   async get (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!httpRequest.params) return badRequest(new MissingParamError('id'))
-      const exam = await this.getExam.get(httpRequest.params)
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+      const exam = await this.getExam.get(httpRequest.params.id)
       return ok(exam)
     } catch (error) {
       return serverError(error)

@@ -209,8 +209,7 @@ describe('Exam Controller add method', () => {
 describe('Exam Controller get method', () => {
   test('Should return 400 if no id is provided when get exam', async () => {
     const { sut } = makeSut()
-    const fakeRequest = makeFakeRequest({})
-    const httpResponse = await sut.get(fakeRequest)
+    const httpResponse = await sut.get({ params: { id: null } })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
   })
 
@@ -219,14 +218,14 @@ describe('Exam Controller get method', () => {
     jest.spyOn(getExamStub, 'get').mockImplementationOnce(async () => {
       return await new Promise((resolve, reject) => reject(new Error()))
     })
-    const httpResponse = await sut.get({ params: '1234' })
+    const httpResponse = await sut.get({ params: { id: '1234' } })
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
   test('Should return 200 if valid data is provided when get exam', async () => {
     const { sut } = makeSut()
     const addedExamResponse = await sut.add(makeFakeRequest(makeFakeExam()))
-    const getExamResponse = await sut.get({ params: addedExamResponse.body.id })
+    const getExamResponse = await sut.get({ params: { id: addedExamResponse.body.id } })
     expect(getExamResponse).toEqual(ok(makeFakeExam()))
   })
 })
