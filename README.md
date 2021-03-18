@@ -333,23 +333,19 @@
 
   ### 3.2 Obter Prova
 
-  - `GET` /api/exam
+  - `GET` /api/exam/{id}
 
   <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
   |---|---|---|---|
-  |**Body**|**id**  <br>*required*|O id da Prova.|string|
+  |**URL param**|**id**  <br>*required*|O id da Prova.|string|
 
   <br />
 
   **Exemplo da requisição obter prova.**
-  ```json
-  {
-    "id": "6050f9e222a72e7089ed1988"
-  }
-  ```
+  `GET` http://localhost:5050/api/exam/6050f9e222a72e7089ed1988
 
   <br />
 

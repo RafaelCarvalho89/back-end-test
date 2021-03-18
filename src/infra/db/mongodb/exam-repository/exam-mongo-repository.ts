@@ -3,7 +3,6 @@ import {
   AddExamModel,
   AddExamQuestionModel,
   DeleteExamModel,
-  GetExamModel,
   UpdateExamModel
 } from '../../../../domain/usecases/exam'
 import { ExamModel } from '../../../../domain/models/exam/exam-model'
@@ -71,8 +70,8 @@ export class ExamMongoRepository implements ExamRepository {
     return result.nModified === 1 ? MongoHelper.map(updatedExam) : null
   }
 
-  async get (examData: GetExamModel): Promise<ExamModel> {
-    const foundExam = await MongoHelper.getDocumentById(examData.id, this.collectionName)
+  async get (id: string): Promise<ExamModel> {
+    const foundExam = await MongoHelper.getDocumentById(id, this.collectionName)
     return foundExam ? MongoHelper.map(foundExam) : null
   }
 

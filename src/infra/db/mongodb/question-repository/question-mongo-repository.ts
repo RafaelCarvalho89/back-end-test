@@ -53,7 +53,7 @@ export class QuestionMongoRepository implements QuestionRepository {
   async add (questionData: AddQuestionModel): Promise<QuestionModel> {
     const { examId, statement, options } = questionData
     const examMongoRepository = new ExamMongoRepository()
-    const exam = await examMongoRepository.get({ id: examId })
+    const exam = await examMongoRepository.get(examId)
     if (!exam) return null
     const newQuestion = this.newQuestion(statement, options)
     const newExam = MongoHelper.insertObjectInDocumentField(newQuestion, 'questions', exam)
@@ -93,7 +93,7 @@ export class QuestionMongoRepository implements QuestionRepository {
 
   async list (questionData: ListQuestionsModel): Promise<QuestionModel[]> {
     const examMongoRepository = new ExamMongoRepository()
-    const exam = await examMongoRepository.get({ id: questionData.examId })
+    const exam = await examMongoRepository.get(questionData.examId)
 
     if (!exam) return null
     const questionsWithRandomOptions: QuestionModel[] = []
