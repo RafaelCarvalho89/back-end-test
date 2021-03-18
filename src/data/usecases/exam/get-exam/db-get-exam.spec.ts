@@ -1,13 +1,8 @@
 import { ExamModel } from '../../../../domain/models/exam/exam-model'
-import { GetExamModel } from '../../../../domain/usecases/exam/get-exam'
 import { GetExamRepository } from '../../../protocols/exam-repository/get-exam-repository'
 import { DbGetExam } from './db-get-exam'
 
 const fakeExamId = '6048039ae5a5d3cd29630a1e'
-
-const makeFakeGetExam = (): GetExamModel => ({
-  id: fakeExamId
-})
 
 const makeFakeExam = (): ExamModel => ({
   id: fakeExamId,
@@ -19,7 +14,7 @@ const makeFakeExam = (): ExamModel => ({
 
 const makeGetExamRepository = (): GetExamRepository => {
   class GetExamRepositoryStub implements GetExamRepository {
-    async get (ExamData: GetExamModel): Promise<ExamModel> {
+    async get (id: string): Promise<ExamModel> {
       return await new Promise((resolve) => resolve(makeFakeExam()))
     }
   }
@@ -41,8 +36,8 @@ describe('DbGetExam Use case', () => {
   test('Should call GetExamRepository with correct values', async () => {
     const { sut, getExamRepositoryStub } = makeSut()
     const getSpy = jest.spyOn(getExamRepositoryStub, 'get')
-    await sut.get(makeFakeGetExam())
-    expect(getSpy).toHaveBeenCalledWith(makeFakeGetExam())
+    await sut.get(fakeExamId)
+    expect(getSpy).toHaveBeenCalledWith(fakeExamId)
   })
 
   test('Should throw if GetExamRepository throws', async () => {
@@ -52,13 +47,13 @@ describe('DbGetExam Use case', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )
-    const promise = sut.get(makeFakeGetExam())
+    const promise = sut.get(fakeExamId)
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return and Exam on success', async () => {
     const { sut } = makeSut()
-    const exam = await sut.get(makeFakeGetExam())
+    const exam = await sut.get(fakeExamId)
     expect(exam).toEqual(makeFakeExam())
   })
 })

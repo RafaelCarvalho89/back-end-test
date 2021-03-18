@@ -59,7 +59,7 @@ describe('Exam Mongo Repository', () => {
     const sut = makeSut()
     const fakeExam = (makeFakeExam())
     const addedExam = await sut.add(fakeExam)
-    const examFound = await sut.get({ id: addedExam.id })
+    const examFound = await sut.get(addedExam.id)
     expect(examFound).toBeTruthy()
     expect(examFound.id).toEqual(addedExam.id)
     expect(examFound.name).toBe('name')

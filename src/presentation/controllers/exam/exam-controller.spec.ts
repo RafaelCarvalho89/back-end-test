@@ -8,7 +8,6 @@ import {
   ExamModel,
   ExamTypeValidator,
   GetExam,
-  GetExamModel,
   HttpRequest,
   UpdateExam,
   UpdateExamModel
@@ -36,7 +35,7 @@ const makeUpdateExam = (): UpdateExam => {
 
 const makeGetExam = (): GetExam => {
   class GetExamStub implements GetExam {
-    async get (exam: GetExamModel): Promise<ExamModel> {
+    async get (id: string): Promise<ExamModel> {
       return await new Promise((resolve) => resolve(makeFakeExam()))
     }
   }
@@ -220,14 +219,14 @@ describe('Exam Controller get method', () => {
     jest.spyOn(getExamStub, 'get').mockImplementationOnce(async () => {
       return await new Promise((resolve, reject) => reject(new Error()))
     })
-    const httpResponse = await sut.get({ body: { id: '1234' } })
+    const httpResponse = await sut.get({ params: '1234' })
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
   test('Should return 200 if valid data is provided when get exam', async () => {
     const { sut } = makeSut()
     const addedExamResponse = await sut.add(makeFakeRequest(makeFakeExam()))
-    const getExamResponse = await sut.get({ body: { id: addedExamResponse.body.id } })
+    const getExamResponse = await sut.get({ params: addedExamResponse.body.id })
     expect(getExamResponse).toEqual(ok(makeFakeExam()))
   })
 })

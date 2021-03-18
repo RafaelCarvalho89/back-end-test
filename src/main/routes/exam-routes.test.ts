@@ -43,10 +43,8 @@ describe('Exam Routes', () => {
 
   test('Should return an exam on get exam success', async () => {
     await request(app)
-      .get('/api/exam')
-      .send({
-        id: fakeExamId
-      })
+      .get(`/api/exam/${fakeExamId}`)
+      .send()
       .expect(200)
   })
 
