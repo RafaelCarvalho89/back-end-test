@@ -1,18 +1,12 @@
-import { QuestionModel } from '../../models/question-model'
-
-export interface UpdateOptionModel {
-  key: string
-  value: string
-  correct: boolean
-}
+import { DataOptionModel, QuestionModel } from '../../models/question-model'
 
 export interface UpdateQuestionModel {
   id: string
   statement: string
-  options: UpdateOptionModel[]
+  options: DataOptionModel[]
 }
 
-export interface UpdateQuestionResponseModel extends QuestionModel{
+export interface UpdateQuestionResponseModel extends QuestionModel {
   examId: string
   examName: string
 }
