@@ -49,7 +49,6 @@ export class ExamMongoRepository implements ExamRepository {
       questions = exam.questions.map((question: QuestionModel) => this.makeUpdateQuestion(question))
     }
     return {
-      id: exam.id,
       name: exam.name,
       description: exam.description,
       type: exam.type,
@@ -62,9 +61,9 @@ export class ExamMongoRepository implements ExamRepository {
     return await MongoHelper.insertOne(newExam, this.collectionName)
   }
 
-  async update (examData: UpdateExamModel): Promise<any|null> {
-    const { id, ...updatedContent } = this.makeUpdateExam(examData)
-    const result = await MongoHelper.updateOne(id, updatedContent, this.collectionName)
+  async update (id: string, examData: UpdateExamModel): Promise<ExamModel> {
+    const updateExam = this.makeUpdateExam(examData)
+    const result = await MongoHelper.updateOne(id, updateExam, this.collectionName)
     const updatedExam = await MongoHelper.getDocumentById(id, this.collectionName)
     return result.nModified === 1 ? MongoHelper.map(updatedExam) : null
   }

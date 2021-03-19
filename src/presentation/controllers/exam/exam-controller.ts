@@ -71,7 +71,9 @@ export class ExamController implements Controller {
 
   async update (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields = ['id', 'name', 'description', 'type']
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+
+      const requiredFields = ['name', 'description', 'type']
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
           return badRequest(new MissingParamError(field))
@@ -102,9 +104,8 @@ export class ExamController implements Controller {
       )
       if (!isExamType) return badRequest(new InvalidParamError('type'))
 
-      const { id, name, description, type, questions } = httpRequest.body
-      const exam = await this.updateExam.update({
-        id,
+      const { name, description, type, questions } = httpRequest.body
+      const exam = await this.updateExam.update(httpRequest.params.id, {
         name,
         description,
         type,

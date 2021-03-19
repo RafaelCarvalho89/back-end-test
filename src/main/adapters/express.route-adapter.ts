@@ -15,6 +15,7 @@ export const AdaptRoute = {
   update (controller: Controller) {
     return async (req: Request, res: Response) => {
       const httpRequest: HttpRequest = {
+        params: req.params,
         body: req.body
       }
       const httpResponse = await controller.update(httpRequest)

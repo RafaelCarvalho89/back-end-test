@@ -57,7 +57,7 @@ export class QuestionMongoRepository implements QuestionRepository {
     if (!exam) return null
     const newQuestion = this.newQuestion(statement, options)
     const newExam = MongoHelper.insertObjectInDocumentField(newQuestion, 'questions', exam)
-    const updatedExam = await examMongoRepository.update(newExam)
+    const updatedExam = await examMongoRepository.update(exam.id, newExam)
     const lastPosition = updatedExam.questions.length - 1
     return updatedExam.questions[lastPosition]
   }
@@ -110,10 +110,13 @@ export class QuestionMongoRepository implements QuestionRepository {
     const exam = await examMongoRepository.findOneByFilter(
       { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } }
     )
+
     if (!exam) return null
     const indexForDelete = exam.questions.findIndex(
       (question: QuestionModel) => JSON.stringify(question.id) === JSON.stringify(questionData.id))
+
     exam.questions.splice(indexForDelete, 1)
-    return await examMongoRepository.update(exam)
+    const { id, ...examDataForUpdate } = exam
+    return await examMongoRepository.update(id, examDataForUpdate)
   }
 }

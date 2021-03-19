@@ -8,7 +8,6 @@ export interface UpdateExamQuestionModel {
 }
 
 export interface UpdateExamModel {
-  id: string
   name: string
   description: string
   type: ExamType
@@ -16,5 +15,5 @@ export interface UpdateExamModel {
 }
 
 export interface UpdateExam {
-  update: (exam: UpdateExamModel) => Promise<ExamModel>
+  update: (id: string, exam: UpdateExamModel) => Promise<ExamModel>
 }
