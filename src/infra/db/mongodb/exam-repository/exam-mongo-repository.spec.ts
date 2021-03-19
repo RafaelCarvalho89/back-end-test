@@ -80,7 +80,7 @@ describe('Exam Mongo Repository', () => {
     const sut = makeSut()
     const fakeExam = (makeFakeExam())
     const addedExam = await sut.add(fakeExam)
-    const deleteResponse = await sut.delete({ id: addedExam.id })
+    const deleteResponse = await sut.delete(addedExam.id)
     expect(deleteResponse).toBeTruthy()
     expect(deleteResponse).toEqual({ delete: 'ok' })
   })

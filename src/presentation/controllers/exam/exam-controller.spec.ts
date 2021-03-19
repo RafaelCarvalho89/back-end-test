@@ -4,7 +4,6 @@ import {
   AddExam,
   AddExamModel,
   DeleteExam,
-  DeleteExamModel,
   ExamModel,
   ExamTypeValidator,
   GetExam,
@@ -53,7 +52,7 @@ const makeListExams = (): ListExams => {
 
 const makeDeleteExam = (): DeleteExam => {
   class DeleteExamStub implements DeleteExam {
-    async delete (exam: DeleteExamModel): Promise<any> {
+    async delete (id: string): Promise<any> {
       return await new Promise((resolve) => resolve(makeFakeExam()))
     }
   }
@@ -346,7 +345,7 @@ describe('Exam Controller list method', () => {
 describe('Exam Controller delete method', () => {
   test('Should return 400 if no id is provided when delete exam', async () => {
     const { sut } = makeSut()
-    const httpResponse = await sut.delete({ body: {} })
+    const httpResponse = await sut.delete({ params: { id: null } })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
   })
 

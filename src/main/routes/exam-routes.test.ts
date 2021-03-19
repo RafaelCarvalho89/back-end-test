@@ -57,10 +57,8 @@ describe('Exam Routes', () => {
 
   test('Should return an response on delete exam success', async () => {
     await request(app)
-      .delete('/api/exam/delete')
-      .send({
-        id: fakeExamId
-      })
+      .delete(`/api/exam/delete/${fakeExamId}`)
+      .send()
       .expect(200)
   })
 })
