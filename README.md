@@ -550,24 +550,20 @@
 
   ### 3.5 Deletar Prova
 
-  - `DELETE` /api/exam/delete
+  - `DELETE` /api/exam/delete/{id}
 
   <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
   |---|---|---|---|
-  |**Body**|**id**  <br>*required*|O id da Prova.|string|
+  |**URL param**|**id**  <br>*required*|O id da Prova.|string|
 
   <br />
 
 
   **Exemplo da requisição deletar prova.**
-  ```json
-  {
-    "id": "60510d9b9062ed8fc8ad2a6e"
-  }
-  ```
+  `DELETE` http://localhost:5050/api/exam/delete/6050f9e222a72e7089ed1988
 
   <br />
 

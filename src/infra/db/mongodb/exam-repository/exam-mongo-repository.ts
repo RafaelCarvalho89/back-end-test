@@ -2,7 +2,6 @@ import { ExamRepository } from '../../../../data/protocols/exam-repository/exam-
 import {
   AddExamModel,
   AddExamQuestionModel,
-  DeleteExamModel,
   UpdateExamModel
 } from '../../../../domain/usecases/exam'
 import { ExamModel } from '../../../../domain/models/exam/exam-model'
@@ -79,8 +78,8 @@ export class ExamMongoRepository implements ExamRepository {
     return MongoHelper.mapList(await MongoHelper.list(this.collectionName))
   }
 
-  async delete (examData: DeleteExamModel): Promise<any|null> {
-    return await MongoHelper.delete(examData.id, this.collectionName)
+  async delete (id: string): Promise<any|null> {
+    return await MongoHelper.delete(id, this.collectionName)
   }
 
   async findOneByFilter (filter: any, projection?: any): Promise<any> {
