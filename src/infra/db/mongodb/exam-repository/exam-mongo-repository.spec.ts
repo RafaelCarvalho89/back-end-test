@@ -40,8 +40,7 @@ describe('Exam Mongo Repository', () => {
     const sut = makeSut()
     const fakeExam = (makeFakeExam())
     const addedExam = await sut.add(fakeExam)
-    const updatedExam = await sut.update({
-      id: addedExam.id,
+    const updatedExam = await sut.update(addedExam.id, {
       name: 'UPDATED Name',
       description: 'UPDATED description',
       type: 'OFFLINE',

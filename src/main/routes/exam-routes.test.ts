@@ -29,18 +29,6 @@ describe('Exam Routes', () => {
       .expect(200)
   })
 
-  test('Should return an exam id on update exam success', async () => {
-    await request(app)
-      .put('/api/exam/update')
-      .send({
-        id: fakeExamId,
-        name: 'Blue Exam 2',
-        description: 'Blue Exam without questions 2',
-        type: 'ONLINE'
-      })
-      .expect(200)
-  })
-
   test('Should return an exam on get exam success', async () => {
     await request(app)
       .get(`/api/exam/${fakeExamId}`)
@@ -52,6 +40,17 @@ describe('Exam Routes', () => {
     await request(app)
       .get('/api/exams')
       .send()
+      .expect(200)
+  })
+
+  test('Should return an exam id on update exam success', async () => {
+    await request(app)
+      .put(`/api/exam/update/${fakeExamId}`)
+      .send({
+        name: 'Blue Exam 2',
+        description: 'Blue Exam without questions 2',
+        type: 'ONLINE'
+      })
       .expect(200)
   })
 
