@@ -1,4 +1,4 @@
-import { QuestionModel } from '../../../domain/models/question/question-model'
+import { QuestionModel } from '../../../domain/models/question-model'
 import { AddQuestionModel, DeleteQuestionModel, GetQuestionModel, GetQuestionResponseModel, ListQuestionsModel, UpdateQuestionModel } from '../../../domain/usecases/question'
 
 export interface QuestionRepository {

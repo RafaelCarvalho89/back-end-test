@@ -1,4 +1,4 @@
-import { QuestionModel } from '../../models/question/question-model'
+import { QuestionModel } from '../../models/question-model'
 
 export interface UpdateOptionModel {
   key: string

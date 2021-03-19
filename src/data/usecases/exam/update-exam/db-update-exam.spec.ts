@@ -1,4 +1,4 @@
-import { ExamModel } from '../../../../domain/models/exam/exam-model'
+import { ExamModel } from '../../../../domain/models/exam-model'
 import { UpdateExamModel } from '../../../../domain/usecases/exam/update-exam'
 import { UpdateExamRepository } from '../../../protocols/exam-repository/update-exam-repository'
 import { DbUpdateExam } from './db-update-exam'

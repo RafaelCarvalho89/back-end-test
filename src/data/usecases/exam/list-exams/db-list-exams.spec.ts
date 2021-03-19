@@ -1,4 +1,4 @@
-import { ExamModel } from '../../../../domain/models/exam/exam-model'
+import { ExamModel } from '../../../../domain/models/exam-model'
 import { ListExamsRepository } from '../../../protocols/exam-repository/list-exams-repository'
 import { DbListExams } from './db-list-exams'
 

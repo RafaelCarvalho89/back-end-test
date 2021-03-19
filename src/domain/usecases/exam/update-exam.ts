@@ -1,4 +1,4 @@
-import { ExamModel, ExamType } from '../../models/exam/exam-model'
+import { ExamModel, ExamType } from '../../models/exam-model'
 import { UpdateOptionModel } from '../question'
 
 export interface UpdateExamQuestionModel {

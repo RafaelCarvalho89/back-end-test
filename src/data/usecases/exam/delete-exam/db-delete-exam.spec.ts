@@ -1,4 +1,4 @@
-import { ExamModel } from '../../../../domain/models/exam/exam-model'
+import { ExamModel } from '../../../../domain/models/exam-model'
 import { DeleteExamRepository } from '../../../protocols/exam-repository/delete-exam-repository'
 import { DbDeleteExam } from './db-delete-exam'
 

@@ -1,4 +1,4 @@
-import { QuestionModel } from '../../../../domain/models/question/question-model'
+import { QuestionModel } from '../../../../domain/models/question-model'
 import { DeleteQuestionModel } from '../../../../domain/usecases/question/delete-question'
 import { DeleteQuestionRepository } from '../../../protocols/question-repository/delete-question-repository'
 import { DbDeleteQuestion } from './db-delete-question'

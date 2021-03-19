@@ -10,7 +10,7 @@ import {
   UpdateQuestionModel,
   UpdateQuestionResponseModel
 } from '../../../../domain/usecases/question'
-import { OptionModel, QuestionModel } from '../../../../domain/models/question/question-model'
+import { OptionModel, QuestionModel } from '../../../../domain/models/question-model'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { ExamMongoRepository } from '../exam-repository/exam-mongo-repository'
 import { ObjectId } from 'mongodb'

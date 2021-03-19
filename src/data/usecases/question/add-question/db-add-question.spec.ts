@@ -1,4 +1,4 @@
-import { QuestionModel } from '../../../../domain/models/question/question-model'
+import { QuestionModel } from '../../../../domain/models/question-model'
 import { AddQuestionModel } from '../../../../domain/usecases/question/add-question'
 import { AddQuestionRepository } from '../../../protocols/question-repository/add-question-repository'
 import { DbAddQuestion } from './db-add-question'

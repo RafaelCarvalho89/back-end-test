@@ -4,9 +4,9 @@ import {
   AddExamQuestionModel,
   UpdateExamModel
 } from '../../../../domain/usecases/exam'
-import { ExamModel } from '../../../../domain/models/exam/exam-model'
+import { ExamModel } from '../../../../domain/models/exam-model'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { QuestionModel } from '../../../../domain/models/question/question-model'
+import { QuestionModel } from '../../../../domain/models/question-model'
 import { ObjectId } from 'mongodb'
 import { UpdateQuestionModel } from '../../../../domain/usecases/question'
 
