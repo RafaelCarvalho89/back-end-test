@@ -1,5 +1,4 @@
-import { QuestionModel } from '../../../../domain/models/question-model'
-import { GetQuestionModel } from '../../../../domain/usecases/question/get-question'
+import { GetQuestionResponseModel } from '../../../../domain/usecases/question/get-question'
 import { GetQuestionRepository } from '../../../protocols/question-repository/get-question-repository'
 import { DbGetQuestion } from './db-get-question'
 
@@ -39,7 +38,7 @@ const makeFakeQuestion = (): any => ({
 
 const makeGetQuestionRepository = (): GetQuestionRepository => {
   class GetQuestionRepositoryStub implements GetQuestionRepository {
-    async get (questionData: GetQuestionModel): Promise<QuestionModel> {
+    async get (id: string): Promise<GetQuestionResponseModel> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -61,8 +60,8 @@ describe('DbGetQuestion Use case', () => {
   test('Should call GetQuestionRepository with correct values', async () => {
     const { sut, getQuestionRepositoryStub } = makeSut()
     const getSpy = jest.spyOn(getQuestionRepositoryStub, 'get')
-    await sut.get({ id: fakeQuestionId })
-    expect(getSpy).toHaveBeenCalledWith({ id: fakeQuestionId })
+    await sut.get(fakeQuestionId)
+    expect(getSpy).toHaveBeenCalledWith(fakeQuestionId)
   })
 
   test('Should throw if GetQuestionRepository throws', async () => {
@@ -72,13 +71,13 @@ describe('DbGetQuestion Use case', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )
-    const promise = sut.get({ id: fakeQuestionId })
+    const promise = sut.get(fakeQuestionId)
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return and Question on success', async () => {
     const { sut } = makeSut()
-    const question = await sut.get({ id: fakeQuestionId })
+    const question = await sut.get(fakeQuestionId)
     expect(question).toEqual(makeFakeQuestion())
   })
 })

@@ -74,17 +74,17 @@ describe('Question Routes', () => {
       .expect(200)
   })
 
+  test('Should return question on get success', async () => {
+    await request(app)
+      .get(`/api/question/${fakeQuestionId}`)
+      .send()
+      .expect(200)
+  })
+
   test('Should return questions on list success', async () => {
     await request(app)
       .get('/api/questions')
       .send({ examId: fakeExamId })
-      .expect(200)
-  })
-
-  test('Should return question on get success', async () => {
-    await request(app)
-      .get('/api/question')
-      .send({ id: fakeQuestionId })
       .expect(200)
   })
 

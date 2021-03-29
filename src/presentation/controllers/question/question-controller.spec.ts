@@ -11,7 +11,7 @@ import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import {
   DeleteQuestion,
   DeleteQuestionModel,
-  GetQuestionModel,
+  GetQuestionResponseModel,
   ListQuestions,
   ListQuestionsModel,
   UpdateQuestion,
@@ -40,7 +40,7 @@ const makeUpdateQuestion = (): UpdateQuestion => {
 
 const makeGetQuestion = (): GetQuestion => {
   class GetQuestionStub implements GetQuestion {
-    async get (getQuestionRequest: GetQuestionModel): Promise<QuestionModel> {
+    async get (id: string): Promise<GetQuestionResponseModel> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -256,8 +256,7 @@ describe('Question Controller update method', () => {
 describe('Question Controller get method', () => {
   test('Should return 400 if no id is provided when get question', async () => {
     const { sut } = makeSut()
-    const fakeRequest = makeFakeRequest({})
-    const httpResponse = await sut.get(fakeRequest)
+    const httpResponse = await sut.get({ params: { id: null } })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
   })
 
@@ -276,7 +275,7 @@ describe('Question Controller get method', () => {
       makeFakeRequest(makeFakeQuestion())
     )
     const getQuestionResponse = await sut.get({
-      body: { id: addedQuestionResponse.body.id }
+      params: { id: addedQuestionResponse.body.id }
     })
     expect(getQuestionResponse).toEqual(ok(makeFakeQuestion()))
   })

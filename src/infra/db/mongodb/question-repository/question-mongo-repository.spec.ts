@@ -85,7 +85,7 @@ describe('Question Mongo Repository', () => {
     const fakeExam = await examRepositoryStub.add(makeFakeExam())
     const fakeQuestion = makeFakeQuestionWithoutId(fakeExam.id)
     const addedQuestion = await sut.add(fakeQuestion)
-    const foundQuestion = await sut.get({ id: addedQuestion.id })
+    const foundQuestion = await sut.get(addedQuestion.id)
     expect(foundQuestion).toBeTruthy()
     expect(foundQuestion.examId).toStrictEqual(fakeExam.id)
     expect(foundQuestion.examName).toStrictEqual(fakeExam.name)
