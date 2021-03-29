@@ -2,7 +2,6 @@ import { QuestionRepository } from '../../../../data/protocols/question-reposito
 import {
   AddQuestionModel,
   DeleteQuestionModel,
-  GetQuestionModel,
   GetQuestionResponseModel,
   ListQuestionsModel,
   UpdateQuestionModel,
@@ -108,16 +107,16 @@ export class QuestionMongoRepository implements QuestionRepository {
     })
   }
 
-  async get (questionData: GetQuestionModel): Promise<GetQuestionResponseModel> {
+  async get (id: string): Promise<GetQuestionResponseModel> {
     const examMongoRepository = new ExamMongoRepository()
     const exam = await examMongoRepository.findOneByFilter(
-      { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } },
+      { questions: { $elemMatch: { id: new ObjectId(id) } } },
       { projection: { _id: 1, name: 1, questions: 1 } }
     )
     if (!exam) return null
     const foundQuestion = exam.questions.find(
       (question: any) =>
-        JSON.stringify(question.id) === JSON.stringify(questionData.id)
+        JSON.stringify(question.id) === JSON.stringify(id)
     )
     return Object.assign({}, foundQuestion, {
       examId: exam.id,

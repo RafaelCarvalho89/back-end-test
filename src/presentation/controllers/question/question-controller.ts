@@ -75,8 +75,8 @@ export class QuestionController implements Controller {
 
   async get (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
-      const question = await this.getQuestion.get(httpRequest.body)
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+      const question = await this.getQuestion.get(httpRequest.params.id)
       return ok(question)
     } catch (error) {
       return serverError(error)

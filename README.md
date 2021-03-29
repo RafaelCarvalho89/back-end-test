@@ -676,23 +676,19 @@
 
   ### 4.2 Obter Questão
 
-  - `GET` /api/question
+  - `GET` /api/question/{id}
 
   <details>
 
   #### Parâmetros da requisição
   |Tipo|Nome|Descrição|Schema|
   |---|---|---|---|
-  |**Body**|**id**  <br>*required*|O id da Questão.|string|
+  |**URL param**|**id**  <br>*required*|O id da Questão.|string|
 
   <br />
 
   **Exemplo da requisição obter questão.**
-  ```json
-  {
-    "id": "605112af2a3daa997ee6bb8f"
-  }
-  ```
+  `GET` http://localhost:5050/api/question/605112af2a3daa997ee6bb8f
 
   <br />
 
