@@ -1,7 +1,6 @@
 import { QuestionRepository } from '../../../../data/protocols/question-repository/question-repository'
 import {
   AddQuestionModel,
-  DeleteQuestionModel,
   GetQuestionResponseModel,
   ListQuestionsModel,
   UpdateQuestionModel,
@@ -138,16 +137,16 @@ export class QuestionMongoRepository implements QuestionRepository {
     return questionsWithRandomOptions
   }
 
-  async delete (questionData: DeleteQuestionModel): Promise<any> {
+  async delete (idForDelete: string): Promise<any> {
     const examMongoRepository = new ExamMongoRepository()
     const exam = await examMongoRepository.findOneByFilter({
-      questions: { $elemMatch: { id: new ObjectId(questionData.id) } }
+      questions: { $elemMatch: { id: new ObjectId(idForDelete) } }
     })
 
     if (!exam) return null
     const indexForDelete = exam.questions.findIndex(
       (question: QuestionModel) =>
-        JSON.stringify(question.id) === JSON.stringify(questionData.id)
+        JSON.stringify(question.id) === JSON.stringify(idForDelete)
     )
 
     exam.questions.splice(indexForDelete, 1)

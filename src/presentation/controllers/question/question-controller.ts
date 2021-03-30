@@ -94,8 +94,8 @@ export class QuestionController implements Controller {
 
   async delete (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
-      const deleteResponse = await this.deleteQuestion.delete(httpRequest.body)
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+      const deleteResponse = await this.deleteQuestion.delete(httpRequest.params.id)
       return ok(deleteResponse)
     } catch (error) {
       return serverError(error)
