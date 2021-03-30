@@ -133,7 +133,7 @@ describe('Question Mongo Repository', () => {
     await sut.add(fakeQuestion)
     await sut.add(fakeQuestion)
     const addedQuestion = await sut.add(fakeQuestion)
-    const deleteResponse = await sut.delete({ id: addedQuestion.id })
+    const deleteResponse = await sut.delete(addedQuestion.id)
     expect(deleteResponse).toBeTruthy()
     expect(deleteResponse.questions).toBeTruthy()
     expect(deleteResponse.id).toBeTruthy()

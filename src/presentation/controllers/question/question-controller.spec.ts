@@ -10,7 +10,6 @@ import {
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import {
   DeleteQuestion,
-  DeleteQuestionModel,
   GetQuestionResponseModel,
   ListQuestions,
   ListQuestionsModel,
@@ -58,7 +57,7 @@ const makeListQuestions = (): ListQuestions => {
 
 const makeDeleteQuestion = (): DeleteQuestion => {
   class DeleteQuestionStub implements DeleteQuestion {
-    async delete (deleteQuestionRequest: DeleteQuestionModel): Promise<any> {
+    async delete (id: string): Promise<any> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -305,7 +304,7 @@ describe('Question Controller list method', () => {
 describe('Question Controller delete method', () => {
   test('Should return 400 if no id is provided when delete question', async () => {
     const { sut } = makeSut()
-    const httpResponse = await sut.delete({ body: {} })
+    const httpResponse = await sut.delete({ params: { id: null } })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
   })
 
@@ -314,7 +313,7 @@ describe('Question Controller delete method', () => {
     jest.spyOn(deleteQuestionStub, 'delete').mockImplementationOnce(async () => {
       return await new Promise((resolve, reject) => reject(new Error()))
     })
-    const httpResponse = await sut.delete({ body: { id: '42' } })
+    const httpResponse = await sut.delete({ params: { id: '42' } })
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
