@@ -416,7 +416,8 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
   <details>
 
-#### Requisição sem Parâmetros
+**Exemplo da requisição obter prova.**
+`GET` http://localhost:5050/api/v1/exams
 
 **`200 OK` - Exemplo de resposta da requisição listar provas. Com `SUCESSO`.**
 
@@ -445,7 +446,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 3.4 Atualizar Prova
 
-- `PUT` /api/v1/exam
+- `PUT` /api/v1/exam/{id}
 
   <details>
 
@@ -453,7 +454,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 | Tipo     | Nome                           | Descrição                                       | Schema                  |
 | -------- | ------------------------------ | ----------------------------------------------- | ----------------------- |
-| **Body** | **id** <br>_required_          | O id da Prova.                                  | string                  |
+| **URL param** | **id** <br>_required_          | O id da Prova.                                  | string                  |
 | **Body** | **name** <br>_required_        | O nome da Prova.                                | string                  |
 | **Body** | **description** <br>_required_ | Descrição da Prova.                             | string                  |
 | **Body** | **type** <br>_required_        | Tipo da Prova. Obs.: `"ONLINE"` ou `"OFFLINE"`  | string                  |
@@ -482,10 +483,10 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
   <br />
 
 **Exemplo da requisição para atualização de prova.**
+`PUT` http://localhost:5050/api/v1/exam/6050f9e222a72e7089ed1988
 
 ```json
 {
-  "id": "6050f9e222a72e7089ed1988",
   "name": "Prova AMARELA 2021 ATUALIZADA",
   "description": "Prova completa 2021 ATUALIZADA",
   "type": "ONLINE",
@@ -761,7 +762,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 4.3 Listar Questões da Prova
 
-- `GET` /api/v1/questions
+- `GET` /api/v1/exam/{id}/questions
 
 - **Obs.: `questions`, no plural.**
 
@@ -771,17 +772,13 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 | Tipo     | Nome                      | Descrição                   | Schema |
 | -------- | ------------------------- | --------------------------- | ------ |
-| **Body** | **examId** <br>_required_ | O id da Prova das Questões. | string |
+| **URL param** | **id** <br>_required_ | O id da Prova das Questões. | string |
 
   <br />
 
 **Exemplo da requisição listar questões da prova.**
+`GET` http://localhost:5050/api/v1/exam/60500a71fef08553a78d1948/questions
 
-```json
-{
-  "examId": "60500a71fef08553a78d1948"
-}
-```
 
   <br />
 
