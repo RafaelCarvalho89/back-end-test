@@ -39,8 +39,12 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
+    "@nestjs/common": "^7.6.15",
+    "@nestjs/core": "^7.6.15",
     "express": "^4.17.1",
     "fast-glob": "^3.2.5",
-    "mongodb": "^3.6.4"
+    "mongodb": "^3.6.4",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.6.7"
   }
 }
