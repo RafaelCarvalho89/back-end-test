@@ -60,12 +60,11 @@ export class QuestionMongoRepository implements QuestionRepository {
     })
   }
 
-  async add (questionData: AddQuestionModel): Promise<QuestionModel> {
-    const { examId, statement, options } = questionData
+  async add (examId: string, questionData: AddQuestionModel): Promise<QuestionModel> {
     const examMongoRepository = new ExamMongoRepository()
     const exam = await examMongoRepository.get(examId)
     if (!exam) return null
-    const newQuestion = this.newQuestion(statement, options)
+    const newQuestion = this.newQuestion(questionData.statement, questionData.options)
     const newExam = MongoHelper.insertObjectInDocumentField(
       newQuestion,
       'questions',

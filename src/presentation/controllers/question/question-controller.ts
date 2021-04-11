@@ -22,13 +22,17 @@ export class QuestionController implements Controller {
 
   async add (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields = ['examId', 'statement', 'options']
+      const examId = httpRequest.params.id
+      const question = httpRequest.body
+
+      if (!examId) return badRequest(new MissingParamError('examId'))
+      const requiredFields = ['statement', 'options']
       for (const field of requiredFields) {
-        if (!httpRequest.body[field]) return badRequest(new MissingParamError(field))
+        if (!question[field]) return badRequest(new MissingParamError(field))
       }
 
       const requiredOptionFields = ['key', 'value', 'correct']
-      for (const option of httpRequest.body.options) {
+      for (const option of question.options) {
         for (const field of requiredOptionFields) {
           if (option[field] === null || option[field] === undefined || option[field] === '') {
             return badRequest(new MissingParamError(field))
@@ -36,18 +40,17 @@ export class QuestionController implements Controller {
         }
       }
 
-      if (httpRequest.body.questions && httpRequest.body.questions !== []) {
+      if (question.questions && question.questions !== []) {
         const requiredOptionsFields = ['key', 'value', 'correct']
-        for (const option of httpRequest.body.options) {
+        for (const option of question.options) {
           for (const field of requiredOptionsFields) {
             if (!option[field]) return badRequest(new MissingParamError(field))
           }
         }
       }
 
-      const { examId, statement, options } = httpRequest.body
-      const question = await this.addQuestion.add({ examId, statement, options })
-      return ok(question)
+      const addedQuestion = await this.addQuestion.add(examId, question)
+      return ok(addedQuestion)
     } catch (error) {
       return serverError(error)
     }
