@@ -8,5 +8,5 @@ export default (router: Router): void => {
   router.get('/exam/question/:id', AdaptRoute.get(makeQuestionController()))
   router.get('/exam/:id/questions', AdaptRoute.list(makeQuestionController()))
   router.put('/question/update', AdaptRoute.update(makeQuestionController()))
-  router.delete('/exam/question/delete/:id', AdaptRoute.delete(makeQuestionController()))
+  router.delete('/exam/question/:id', AdaptRoute.delete(makeQuestionController()))
 }
