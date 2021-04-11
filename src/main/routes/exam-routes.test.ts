@@ -20,7 +20,7 @@ describe('Exam Routes', () => {
 
   test('Should return an exam on add exam success', async () => {
     await request(app)
-      .post('/api/v1/exam/new')
+      .post('/api/v1/exam')
       .send({
         name: 'Blue Exam',
         description: 'Blue Exam without questions',
@@ -39,7 +39,7 @@ describe('Exam Routes', () => {
 
   test('Should return an exam id on update exam success', async () => {
     await request(app)
-      .put(`/api/v1/exam/update/${fakeExamId}`)
+      .put(`/api/v1/exam/${fakeExamId}`)
       .send({
         name: 'Blue Exam 2',
         description: 'Blue Exam without questions 2',
@@ -50,7 +50,7 @@ describe('Exam Routes', () => {
 
   test('Should return an response on delete exam success', async () => {
     await request(app)
-      .delete(`/api/v1/exam/delete/${fakeExamId}`)
+      .delete(`/api/v1/exam/${fakeExamId}`)
       .send()
       .expect(200)
   })
