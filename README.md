@@ -956,7 +956,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 4.5 Deletar Questão
 
-- `DELETE` /api/v1/question/delete/{id}
+- `DELETE` /api/v1/exam/question/delete/{id}
 
   <details>
 
@@ -969,7 +969,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
   <br />
 
 **Exemplo da requisição deletar questão.**
-`DELETE` http://localhost:5050/api/v1/question/605112af2a3daa997ee6bb8f
+`DELETE` http://localhost:5050/api/v1/exam/question/605112af2a3daa997ee6bb8f
 
   <br />
 

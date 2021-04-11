@@ -97,7 +97,7 @@ describe('Question Routes', () => {
 
   test('Should return exam without question on delete question success', async () => {
     await request(app)
-      .delete(`/api/v1/question/delete/${fakeQuestionId}`)
+      .delete(`/api/v1/exam/question/delete/${fakeQuestionId}`)
       .send()
       .expect(200)
   })
