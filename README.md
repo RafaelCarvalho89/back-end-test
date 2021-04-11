@@ -604,7 +604,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 4.1 Adicionar Questão
 
-- `POST` /api/v1/question/new
+- `POST` /api/v1/exam/{examId}/question
 
   <details>
 
@@ -612,7 +612,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 | Tipo     | Nome                         | Descrição                                     | Schema              |
 | -------- | ---------------------------- | --------------------------------------------- | ------------------- |
-| **Body** | **examId** <br>_required_    | O id da Prova que a Questão será adicionada.  | string              |
+| **URL param** | **examId** <br>_required_    | O id da Prova que a Questão será adicionada.  | string              |
 | **Body** | **statement** <br>_required_ | O enunciado da Questão.                       | string              |
 | **Body** | **options** <br>_required_   | Opções da Questão. Obs: Um Array de `option`. | [option[]](#option) |
 
@@ -629,10 +629,10 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
   <br />
 
 **Exemplo da requisição adicionar Questão.**
+`POST` http://localhost:5050/api/v1/exam/60500a71fef08553a78d1948/question
 
 ```json
 {
-  "examId": "60500a71fef08553a78d1948",
   "statement": "Qual o sentido da vida, do universo e tudo mais?",
   "options": [
     {
