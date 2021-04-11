@@ -202,143 +202,143 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
   <details>
 
-#### Parâmetros da requisição
+  #### Parâmetros da requisição
 
-| Tipo     | Nome                           | Descrição                                       | Schema                  |
-| -------- | ------------------------------ | ----------------------------------------------- | ----------------------- |
-| **Body** | **name** <br>_required_        | O nome da Prova.                                | string                  |
-| **Body** | **description** <br>_required_ | Descrição da Prova.                             | string                  |
-| **Body** | **type** <br>_required_        | Tipo da Prova. Obs.: `"ONLINE"` ou `"OFFLINE"`  | string                  |
-| **Body** | **questions** <br>_optional_   | Questões da Prova. Obs: Um Array de `question`. | [question[]](#question) |
+  | Tipo     | Nome                           | Descrição                                       | Schema                  |
+  | -------- | ------------------------------ | ----------------------------------------------- | ----------------------- |
+  | **Body** | **name** <br>_required_        | O nome da Prova.                                | string                  |
+  | **Body** | **description** <br>_required_ | Descrição da Prova.                             | string                  |
+  | **Body** | **type** <br>_required_        | Tipo da Prova. Obs.: `"ONLINE"` ou `"OFFLINE"`  | string                  |
+  | **Body** | **questions** <br>_optional_   | Questões da Prova. Obs: Um Array de `question`. | [question[]](#question) |
 
-  <br />
+    <br />
 
-#### Question
+  #### Question
 
-| Tipo     | Nome                         | Descrição                                     | Schema              |
-| -------- | ---------------------------- | --------------------------------------------- | ------------------- |
-| **Body** | **statement** <br>_required_ | O enunciado da Questão.                       | string              |
-| **Body** | **options** <br>_required_   | Opções da Questão. Obs: Um Array de `option`. | [option[]](#option) |
+  | Tipo     | Nome                         | Descrição                                     | Schema              |
+  | -------- | ---------------------------- | --------------------------------------------- | ------------------- |
+  | **Body** | **statement** <br>_required_ | O enunciado da Questão.                       | string              |
+  | **Body** | **options** <br>_required_   | Opções da Questão. Obs: Um Array de `option`. | [option[]](#option) |
 
-  <br />
+    <br />
 
-#### Option
+  #### Option
 
-| Tipo     | Nome                       | Descrição                                                 | Schema  |
-| -------- | -------------------------- | --------------------------------------------------------- | ------- |
-| **Body** | **key** <br>_required_     | A chave da opção.                                         | string  |
-| **Body** | **value** <br>_required_   | O valor da opção.                                         | string  |
-| **Body** | **correct** <br>_required_ | Se a opção é verdadeira ou falsa. Obs.: `true` ou `false` | boolean |
+  | Tipo     | Nome                       | Descrição                                                 | Schema  |
+  | -------- | -------------------------- | --------------------------------------------------------- | ------- |
+  | **Body** | **key** <br>_required_     | A chave da opção.                                         | string  |
+  | **Body** | **value** <br>_required_   | O valor da opção.                                         | string  |
+  | **Body** | **correct** <br>_required_ | Se a opção é verdadeira ou falsa. Obs.: `true` ou `false` | boolean |
 
-  <br />
+    <br />
 
-**Exemplo da requisição passando uma prova `COM QUESTÕES`.**
+  **Exemplo da requisição passando uma prova `COM QUESTÕES`.**
 
-```json
-{
-  "name": "Prova AMARELA",
-  "description": "Prova completa",
-  "type": "ONLINE",
-  "questions": [
-    {
-      "statement": "Qual o sentido da vida, do universo e tudo mais?",
-      "options": [
-        {
-          "key": "a",
-          "value": "viver",
-          "correct": false
-        },
-        {
-          "key": "b",
-          "value": "beber café",
-          "correct": false
-        },
-        {
-          "key": "c",
-          "value": "codar",
-          "correct": false
-        },
-        {
-          "key": "d",
-          "value": "42",
-          "correct": true
-        }
-      ]
-    }
-  ]
-}
-```
+  ```json
+  {
+    "name": "Prova AMARELA",
+    "description": "Prova completa",
+    "type": "ONLINE",
+    "questions": [
+      {
+        "statement": "Qual o sentido da vida, do universo e tudo mais?",
+        "options": [
+          {
+            "key": "a",
+            "value": "viver",
+            "correct": false
+          },
+          {
+            "key": "b",
+            "value": "beber café",
+            "correct": false
+          },
+          {
+            "key": "c",
+            "value": "codar",
+            "correct": false
+          },
+          {
+            "key": "d",
+            "value": "42",
+            "correct": true
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
-  <br />
+    <br />
 
-**`200 OK` - Exemplo de resposta da requisição passando uma prova `COM QUESTÕES`. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição passando uma prova `COM QUESTÕES`. Com `SUCESSO`.**
 
-```json
-{
-  "id": "6050f9e222a72e7089ed1988",
-  "name": "Prova AMARELA",
-  "description": "Prova completa",
-  "type": "ONLINE",
-  "questions": [
-    {
-      "id": "6050f9e222a72e7089ed1987",
-      "statement": "Qual o sentido da vida, do universo e tudo mais?",
-      "options": [
-        {
-          "key": "a",
-          "value": "viver",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1983"
-        },
-        {
-          "key": "b",
-          "value": "beber café",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1984"
-        },
-        {
-          "key": "c",
-          "value": "codar",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1985"
-        },
-        {
-          "key": "d",
-          "value": "42",
-          "correct": true,
-          "id": "6050f9e222a72e7089ed1986"
-        }
-      ]
-    }
-  ]
-}
-```
+  ```json
+  {
+    "id": "6050f9e222a72e7089ed1988",
+    "name": "Prova AMARELA",
+    "description": "Prova completa",
+    "type": "ONLINE",
+    "questions": [
+      {
+        "id": "6050f9e222a72e7089ed1987",
+        "statement": "Qual o sentido da vida, do universo e tudo mais?",
+        "options": [
+          {
+            "key": "a",
+            "value": "viver",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1983"
+          },
+          {
+            "key": "b",
+            "value": "beber café",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1984"
+          },
+          {
+            "key": "c",
+            "value": "codar",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1985"
+          },
+          {
+            "key": "d",
+            "value": "42",
+            "correct": true,
+            "id": "6050f9e222a72e7089ed1986"
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
-  <br />
+    <br />
 
-**Exemplo da requisição passando uma prova `SEM QUESTÕES`.**
+  **Exemplo da requisição passando uma prova `SEM QUESTÕES`.**
 
-```json
-{
-  "name": "Prova AZUL",
-  "description": "Prova sem questões",
-  "type": "ONLINE"
-}
-```
+  ```json
+  {
+    "name": "Prova AZUL",
+    "description": "Prova sem questões",
+    "type": "ONLINE"
+  }
+  ```
 
-  <br />
+    <br />
 
-**`200 OK` - Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES`. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição passando uma prova `SEM QUESTÕES`. Com `SUCESSO`.**
 
-```json
-{
-  "id": "6050f9e222a72e7089ed2021",
-  "name": "Prova AZUL",
-  "description": "Prova sem questões",
-  "type": "ONLINE",
-  "questions": []
-}
-```
+  ```json
+  {
+    "id": "6050f9e222a72e7089ed2021",
+    "name": "Prova AZUL",
+    "description": "Prova sem questões",
+    "type": "ONLINE",
+    "questions": []
+  }
+  ```
 
   </details>
 
@@ -350,61 +350,61 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
   <details>
 
-#### Parâmetros da requisição
+  #### Parâmetros da requisição
 
-| Tipo          | Nome                  | Descrição      | Schema |
-| ------------- | --------------------- | -------------- | ------ |
-| **URL param** | **id** <br>_required_ | O id da Prova. | string |
+  | Tipo          | Nome                  | Descrição      | Schema |
+  | ------------- | --------------------- | -------------- | ------ |
+  | **URL param** | **id** <br>_required_ | O id da Prova. | string |
 
-  <br />
+    <br />
 
-**Exemplo da requisição obter prova.**
-`GET` http://localhost:5050/api/v1/exam/6050f9e222a72e7089ed1988
+  **Exemplo da requisição obter prova.**
+  `GET` http://localhost:5050/api/v1/exam/6050f9e222a72e7089ed1988
 
-  <br />
+    <br />
 
-**`200 OK` - Exemplo de resposta da requisição obter prova. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição obter prova. Com `SUCESSO`.**
 
-```json
-{
-  "id": "6050f9e222a72e7089ed1988",
-  "name": "Prova AMARELA",
-  "description": "Prova completa",
-  "type": "ONLINE",
-  "questions": [
-    {
-      "id": "6050f9e222a72e7089ed1987",
-      "statement": "Qual o sentido da vida, do universo e tudo mais?",
-      "options": [
-        {
-          "key": "a",
-          "value": "viver",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1983"
-        },
-        {
-          "key": "b",
-          "value": "beber café",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1984"
-        },
-        {
-          "key": "c",
-          "value": "codar",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1985"
-        },
-        {
-          "key": "d",
-          "value": "42",
-          "correct": true,
-          "id": "6050f9e222a72e7089ed1986"
-        }
-      ]
-    }
-  ]
-}
-```
+  ```json
+  {
+    "id": "6050f9e222a72e7089ed1988",
+    "name": "Prova AMARELA",
+    "description": "Prova completa",
+    "type": "ONLINE",
+    "questions": [
+      {
+        "id": "6050f9e222a72e7089ed1987",
+        "statement": "Qual o sentido da vida, do universo e tudo mais?",
+        "options": [
+          {
+            "key": "a",
+            "value": "viver",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1983"
+          },
+          {
+            "key": "b",
+            "value": "beber café",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1984"
+          },
+          {
+            "key": "c",
+            "value": "codar",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1985"
+          },
+          {
+            "key": "d",
+            "value": "42",
+            "correct": true,
+            "id": "6050f9e222a72e7089ed1986"
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
   </details>
 
@@ -418,29 +418,29 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
   <details>
 
-**Exemplo da requisição obter prova.**
-`GET` http://localhost:5050/api/v1/exams
+  **Exemplo da requisição obter prova.**
+  `GET` http://localhost:5050/api/v1/exams
 
-**`200 OK` - Exemplo de resposta da requisição listar provas. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição listar provas. Com `SUCESSO`.**
 
-```json
-[
-  {
-    "name": "Prova AMARELA",
-    "description": "Prova sem questões",
-    "type": "OFFLINE",
-    "questions": [],
-    "id": "60500a71fef08553a78d1948"
-  },
-  {
-    "name": "Prova AZUL",
-    "description": "Prova sem questões",
-    "type": "ONLINE",
-    "questions": [],
-    "id": "605104ab28fda7815af489ae"
-  }
-]
-```
+  ```json
+  [
+    {
+      "name": "Prova AMARELA",
+      "description": "Prova sem questões",
+      "type": "OFFLINE",
+      "questions": [],
+      "id": "60500a71fef08553a78d1948"
+    },
+    {
+      "name": "Prova AZUL",
+      "description": "Prova sem questões",
+      "type": "ONLINE",
+      "questions": [],
+      "id": "605104ab28fda7815af489ae"
+    }
+  ]
+  ```
 
   </details>
 
@@ -452,120 +452,120 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
   <details>
 
-#### Parâmetros da requisição
+  #### Parâmetros da requisição
 
-| Tipo     | Nome                           | Descrição                                       | Schema                  |
-| -------- | ------------------------------ | ----------------------------------------------- | ----------------------- |
-| **URL param** | **id** <br>_required_          | O id da Prova.                                  | string                  |
-| **Body** | **name** <br>_required_        | O nome da Prova.                                | string                  |
-| **Body** | **description** <br>_required_ | Descrição da Prova.                             | string                  |
-| **Body** | **type** <br>_required_        | Tipo da Prova. Obs.: `"ONLINE"` ou `"OFFLINE"`  | string                  |
-| **Body** | **questions** <br>_required_   | Questões da Prova. Obs: Um Array de `question`. | [question[]](#question) |
+  | Tipo     | Nome                           | Descrição                                       | Schema                  |
+  | -------- | ------------------------------ | ----------------------------------------------- | ----------------------- |
+  | **URL param** | **id** <br>_required_          | O id da Prova.                                  | string                  |
+  | **Body** | **name** <br>_required_        | O nome da Prova.                                | string                  |
+  | **Body** | **description** <br>_required_ | Descrição da Prova.                             | string                  |
+  | **Body** | **type** <br>_required_        | Tipo da Prova. Obs.: `"ONLINE"` ou `"OFFLINE"`  | string                  |
+  | **Body** | **questions** <br>_required_   | Questões da Prova. Obs: Um Array de `question`. | [question[]](#question) |
 
-  <br />
+    <br />
 
-#### Question
+  #### Question
 
-| Tipo     | Nome                         | Descrição                                     | Schema              |
-| -------- | ---------------------------- | --------------------------------------------- | ------------------- |
-| **Body** | **id** <br>_required_        | O id da Questão.                              | string              |
-| **Body** | **statement** <br>_required_ | O enunciado da Questão.                       | string              |
-| **Body** | **options** <br>_required_   | Opções da Questão. Obs: Um Array de `option`. | [option[]](#option) |
+  | Tipo     | Nome                         | Descrição                                     | Schema              |
+  | -------- | ---------------------------- | --------------------------------------------- | ------------------- |
+  | **Body** | **id** <br>_required_        | O id da Questão.                              | string              |
+  | **Body** | **statement** <br>_required_ | O enunciado da Questão.                       | string              |
+  | **Body** | **options** <br>_required_   | Opções da Questão. Obs: Um Array de `option`. | [option[]](#option) |
 
-  <br />
+    <br />
 
-#### Option
+  #### Option
 
-| Tipo     | Nome                       | Descrição                                                 | Schema  |
-| -------- | -------------------------- | --------------------------------------------------------- | ------- |
-| **Body** | **key** <br>_required_     | A chave da opção.                                         | string  |
-| **Body** | **value** <br>_required_   | O valor da opção.                                         | string  |
-| **Body** | **correct** <br>_required_ | Se a opção é verdadeira ou falsa. Obs.: `true` ou `false` | boolean |
+  | Tipo     | Nome                       | Descrição                                                 | Schema  |
+  | -------- | -------------------------- | --------------------------------------------------------- | ------- |
+  | **Body** | **key** <br>_required_     | A chave da opção.                                         | string  |
+  | **Body** | **value** <br>_required_   | O valor da opção.                                         | string  |
+  | **Body** | **correct** <br>_required_ | Se a opção é verdadeira ou falsa. Obs.: `true` ou `false` | boolean |
 
-  <br />
+    <br />
 
-**Exemplo da requisição para atualização de prova.**
-`PUT` http://localhost:5050/api/v1/exam/6050f9e222a72e7089ed1988
+  **Exemplo da requisição para atualização de prova.**
+  `PUT` http://localhost:5050/api/v1/exam/6050f9e222a72e7089ed1988
 
-```json
-{
-  "name": "Prova AMARELA 2021 ATUALIZADA",
-  "description": "Prova completa 2021 ATUALIZADA",
-  "type": "ONLINE",
-  "questions": [
-    {
-      "statement": "Qual o sentido da vida, do universo e tudo mais? 2021 ATUALIZADO ¯_(ツ)_/¯",
-      "options": [
-        {
-          "key": "a",
-          "value": "viver",
-          "correct": false
-        },
-        {
-          "key": "b",
-          "value": "beber café",
-          "correct": false
-        },
-        {
-          "key": "c",
-          "value": "codar",
-          "correct": false
-        },
-        {
-          "key": "d",
-          "value": "42",
-          "correct": true
-        }
-      ]
-    }
-  ]
-}
-```
+  ```json
+  {
+    "name": "Prova AMARELA 2021 ATUALIZADA",
+    "description": "Prova completa 2021 ATUALIZADA",
+    "type": "ONLINE",
+    "questions": [
+      {
+        "statement": "Qual o sentido da vida, do universo e tudo mais? 2021 ATUALIZADO ¯_(ツ)_/¯",
+        "options": [
+          {
+            "key": "a",
+            "value": "viver",
+            "correct": false
+          },
+          {
+            "key": "b",
+            "value": "beber café",
+            "correct": false
+          },
+          {
+            "key": "c",
+            "value": "codar",
+            "correct": false
+          },
+          {
+            "key": "d",
+            "value": "42",
+            "correct": true
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
-  <br />
+    <br />
 
-**`200 OK` - Exemplo de resposta da requisição para atualização de prova. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição para atualização de prova. Com `SUCESSO`.**
 
-```json
-{
-  "id": "6050f9e222a72e7089ed1988",
-  "name": "Prova AMARELA 2021 ATUALIZADA",
-  "description": "Prova completa 2021 ATUALIZADA",
-  "type": "ONLINE",
-  "questions": [
-    {
-      "id": "6050f9e222a72e7089ed1987",
-      "statement": "Qual o sentido da vida, do universo e tudo mais? 2021 ATUALIZADO ¯_(ツ)_/¯",
-      "options": [
-        {
-          "key": "a",
-          "value": "viver",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1983"
-        },
-        {
-          "key": "b",
-          "value": "beber café",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1984"
-        },
-        {
-          "key": "c",
-          "value": "codar",
-          "correct": false,
-          "id": "6050f9e222a72e7089ed1985"
-        },
-        {
-          "key": "d",
-          "value": "42",
-          "correct": true,
-          "id": "6050f9e222a72e7089ed1986"
-        }
-      ]
-    }
-  ]
-}
-```
+  ```json
+  {
+    "id": "6050f9e222a72e7089ed1988",
+    "name": "Prova AMARELA 2021 ATUALIZADA",
+    "description": "Prova completa 2021 ATUALIZADA",
+    "type": "ONLINE",
+    "questions": [
+      {
+        "id": "6050f9e222a72e7089ed1987",
+        "statement": "Qual o sentido da vida, do universo e tudo mais? 2021 ATUALIZADO ¯_(ツ)_/¯",
+        "options": [
+          {
+            "key": "a",
+            "value": "viver",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1983"
+          },
+          {
+            "key": "b",
+            "value": "beber café",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1984"
+          },
+          {
+            "key": "c",
+            "value": "codar",
+            "correct": false,
+            "id": "6050f9e222a72e7089ed1985"
+          },
+          {
+            "key": "d",
+            "value": "42",
+            "correct": true,
+            "id": "6050f9e222a72e7089ed1986"
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
   </details>
 
@@ -577,26 +577,26 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
   <details>
 
-#### Parâmetros da requisição
+  #### Parâmetros da requisição
 
-| Tipo          | Nome                  | Descrição      | Schema |
-| ------------- | --------------------- | -------------- | ------ |
-| **URL param** | **id** <br>_required_ | O id da Prova. | string |
+  | Tipo          | Nome                  | Descrição      | Schema |
+  | ------------- | --------------------- | -------------- | ------ |
+  | **URL param** | **id** <br>_required_ | O id da Prova. | string |
 
-  <br />
+    <br />
 
-**Exemplo da requisição deletar prova.**
-`DELETE` http://localhost:5050/api/v1/exam/6050f9e222a72e7089ed1988
+  **Exemplo da requisição deletar prova.**
+  `DELETE` http://localhost:5050/api/v1/exam/6050f9e222a72e7089ed1988
 
-  <br />
+    <br />
 
-**`200 OK` - Exemplo de resposta da requisição deletar prova. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição deletar prova. Com `SUCESSO`.**
 
-```json
-{
-  "delete": "ok"
-}
-```
+  ```json
+  {
+    "delete": "ok"
+  }
+  ```
 
   </details>
 
@@ -610,93 +610,93 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
   <details>
 
-#### Parâmetros da requisição
+  #### Parâmetros da requisição
 
-| Tipo     | Nome                         | Descrição                                     | Schema              |
-| -------- | ---------------------------- | --------------------------------------------- | ------------------- |
-| **URL param** | **examId** <br>_required_    | O id da Prova que a Questão será adicionada.  | string              |
-| **Body** | **statement** <br>_required_ | O enunciado da Questão.                       | string              |
-| **Body** | **options** <br>_required_   | Opções da Questão. Obs: Um Array de `option`. | [option[]](#option) |
+  | Tipo     | Nome                         | Descrição                                     | Schema              |
+  | -------- | ---------------------------- | --------------------------------------------- | ------------------- |
+  | **URL param** | **examId** <br>_required_    | O id da Prova que a Questão será adicionada.  | string              |
+  | **Body** | **statement** <br>_required_ | O enunciado da Questão.                       | string              |
+  | **Body** | **options** <br>_required_   | Opções da Questão. Obs: Um Array de `option`. | [option[]](#option) |
 
-  <br />
+    <br />
 
-#### Option
+  #### Option
 
-| Tipo     | Nome                       | Descrição                                                 | Schema  |
-| -------- | -------------------------- | --------------------------------------------------------- | ------- |
-| **Body** | **key** <br>_required_     | A chave da opção.                                         | string  |
-| **Body** | **value** <br>_required_   | O valor da opção.                                         | string  |
-| **Body** | **correct** <br>_required_ | Se a opção é verdadeira ou falsa. Obs.: `true` ou `false` | boolean |
+  | Tipo     | Nome                       | Descrição                                                 | Schema  |
+  | -------- | -------------------------- | --------------------------------------------------------- | ------- |
+  | **Body** | **key** <br>_required_     | A chave da opção.                                         | string  |
+  | **Body** | **value** <br>_required_   | O valor da opção.                                         | string  |
+  | **Body** | **correct** <br>_required_ | Se a opção é verdadeira ou falsa. Obs.: `true` ou `false` | boolean |
 
-  <br />
+    <br />
 
-**Exemplo da requisição adicionar Questão.**
-`POST` http://localhost:5050/api/v1/exam/60500a71fef08553a78d1948/question
+  **Exemplo da requisição adicionar Questão.**
+  `POST` http://localhost:5050/api/v1/exam/60500a71fef08553a78d1948/question
 
-```json
-{
-  "statement": "Qual o sentido da vida, do universo e tudo mais?",
-  "options": [
-    {
-      "key": "a",
-      "value": "viver",
-      "correct": false
-    },
-    {
-      "key": "b",
-      "value": "beber café",
-      "correct": false
-    },
-    {
-      "key": "c",
-      "value": "codar",
-      "correct": false
-    },
-    {
-      "key": "d",
-      "value": "42",
-      "correct": true
-    }
-  ]
-}
-```
+  ```json
+  {
+    "statement": "Qual o sentido da vida, do universo e tudo mais?",
+    "options": [
+      {
+        "key": "a",
+        "value": "viver",
+        "correct": false
+      },
+      {
+        "key": "b",
+        "value": "beber café",
+        "correct": false
+      },
+      {
+        "key": "c",
+        "value": "codar",
+        "correct": false
+      },
+      {
+        "key": "d",
+        "value": "42",
+        "correct": true
+      }
+    ]
+  }
+  ```
 
-  <br />
+    <br />
 
-**`200 OK` - Exemplo de resposta da requisição adicionar Questão. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição adicionar Questão. Com `SUCESSO`.**
 
-```json
-{
-  "id": "605112af2a3daa997ee6bb8f",
-  "statement": "Qual o sentido da vida, do universo e tudo mais?",
-  "options": [
-    {
-      "key": "a",
-      "value": "viver",
-      "correct": false,
-      "id": "605112af2a3daa997ee6bb90"
-    },
-    {
-      "key": "b",
-      "value": "beber café",
-      "correct": false,
-      "id": "605112af2a3daa997ee6bb91"
-    },
-    {
-      "key": "c",
-      "value": "codar",
-      "correct": false,
-      "id": "605112af2a3daa997ee6bb92"
-    },
-    {
-      "key": "d",
-      "value": "42",
-      "correct": true,
-      "id": "605112af2a3daa997ee6bb93"
-    }
-  ]
-}
-```
+  ```json
+  {
+    "id": "605112af2a3daa997ee6bb8f",
+    "statement": "Qual o sentido da vida, do universo e tudo mais?",
+    "options": [
+      {
+        "key": "a",
+        "value": "viver",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb90"
+      },
+      {
+        "key": "b",
+        "value": "beber café",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb91"
+      },
+      {
+        "key": "c",
+        "value": "codar",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb92"
+      },
+      {
+        "key": "d",
+        "value": "42",
+        "correct": true,
+        "id": "605112af2a3daa997ee6bb93"
+      }
+    ]
+  }
+  ```
 
   </details>
 
@@ -708,55 +708,55 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
   <details>
 
-#### Parâmetros da requisição
+  #### Parâmetros da requisição
 
-| Tipo          | Nome                  | Descrição        | Schema |
-| ------------- | --------------------- | ---------------- | ------ |
-| **URL param** | **id** <br>_required_ | O id da Questão. | string |
+  | Tipo          | Nome                  | Descrição        | Schema |
+  | ------------- | --------------------- | ---------------- | ------ |
+  | **URL param** | **id** <br>_required_ | O id da Questão. | string |
 
-  <br />
+    <br />
 
-**Exemplo da requisição obter questão.**
-`GET` http://localhost:5050/api/v1/exam/question/605112af2a3daa997ee6bb8f
+  **Exemplo da requisição obter questão.**
+  `GET` http://localhost:5050/api/v1/exam/question/605112af2a3daa997ee6bb8f
 
-  <br />
+    <br />
 
-**`200 OK` - Exemplo de resposta da requisição obter questão. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição obter questão. Com `SUCESSO`.**
 
-```json
-{
-  "id": "605112af2a3daa997ee6bb8f",
-  "statement": "Qual o sentido da vida, do universo e tudo mais?",
-  "options": [
-    {
-      "key": "a",
-      "value": "viver",
-      "correct": false,
-      "id": "605112af2a3daa997ee6bb90"
-    },
-    {
-      "key": "b",
-      "value": "beber café",
-      "correct": false,
-      "id": "605112af2a3daa997ee6bb91"
-    },
-    {
-      "key": "c",
-      "value": "codar",
-      "correct": false,
-      "id": "605112af2a3daa997ee6bb92"
-    },
-    {
-      "key": "d",
-      "value": "42",
-      "correct": true,
-      "id": "605112af2a3daa997ee6bb93"
-    }
-  ],
-  "examId": "60500a71fef08553a78d1948",
-  "examName": "Prova AMARELA"
-}
-```
+  ```json
+  {
+    "id": "605112af2a3daa997ee6bb8f",
+    "statement": "Qual o sentido da vida, do universo e tudo mais?",
+    "options": [
+      {
+        "key": "a",
+        "value": "viver",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb90"
+      },
+      {
+        "key": "b",
+        "value": "beber café",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb91"
+      },
+      {
+        "key": "c",
+        "value": "codar",
+        "correct": false,
+        "id": "605112af2a3daa997ee6bb92"
+      },
+      {
+        "key": "d",
+        "value": "42",
+        "correct": true,
+        "id": "605112af2a3daa997ee6bb93"
+      }
+    ],
+    "examId": "60500a71fef08553a78d1948",
+    "examName": "Prova AMARELA"
+  }
+  ```
 
   </details>
 
@@ -770,57 +770,156 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
   <details>
 
-#### Parâmetros da requisição
+  #### Parâmetros da requisição
 
-| Tipo     | Nome                      | Descrição                   | Schema |
-| -------- | ------------------------- | --------------------------- | ------ |
-| **URL param** | **id** <br>_required_ | O id da Prova das Questões. | string |
+  | Tipo     | Nome                      | Descrição                   | Schema |
+  | -------- | ------------------------- | --------------------------- | ------ |
+  | **URL param** | **id** <br>_required_ | O id da Prova das Questões. | string |
+
+    <br />
+
+  **Exemplo da requisição listar questões da prova.**
+  `GET` http://localhost:5050/api/v1/exam/60500a71fef08553a78d1948/questions
+
+
+    <br />
+
+  **`200 OK` - Exemplo de resposta da requisição listar questões da prova. Com `SUCESSO`.**
+
+  ```json
+  [
+    {
+      "id": "605112af2a3daa997ee6bb8f",
+      "statement": "Qual o sentido da vida, do universo e tudo mais?",
+      "options": [
+        {
+          "key": "a",
+          "value": "viver",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e2"
+        },
+        {
+          "key": "b",
+          "value": "42",
+          "correct": true,
+          "id": "60511cd1b841c7ac42d626e5"
+        },
+        {
+          "key": "c",
+          "value": "beber café",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e3"
+        },
+        {
+          "key": "d",
+          "value": "codar",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e4"
+        }
+      ]
+    },
+    {
+      "id": "60511cd1b841c7ac42d626e1",
+      "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars?",
+      "options": [
+        {
+          "key": "a",
+          "value": "Lançamento dos Filmes",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e7"
+        },
+        {
+          "key": "b",
+          "value": "Machete",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e9"
+        },
+        {
+          "key": "c",
+          "value": "Cronológica dos Fatos",
+          "correct": false,
+          "id": "60511cd1b841c7ac42d626e6"
+        },
+        {
+          "key": "d",
+          "value": "Ernst Rister",
+          "correct": true,
+          "id": "60511cd1b841c7ac42d626e8"
+        }
+      ]
+    }
+  ]
+  ```
+
+  </details>
 
   <br />
 
-**Exemplo da requisição listar questões da prova.**
-`GET` http://localhost:5050/api/v1/exam/60500a71fef08553a78d1948/questions
+### 4.4 Atualizar Questão
 
+- `PUT` /api/v1/exam/question/{id}
+
+  <details>
+
+  #### Parâmetros da requisição
+
+  | Tipo     | Nome                         | Descrição                                     | Schema              |
+  | -------- | ---------------------------- | --------------------------------------------- | ------------------- |
+  | **URL param** | **id** <br>_required_        | O id da Questão.                              | string              |
+  | **Body** | **statement** <br>_required_ | O enunciado da Questão.                       | string              |
+  | **Body** | **options** <br>_required_   | Opções da Questão. Obs: Um Array de `option`. | [option[]](#option) |
+
+    <br />
+
+  #### Option
+
+  | Tipo     | Nome                       | Descrição                                                 | Schema  |
+  | -------- | -------------------------- | --------------------------------------------------------- | ------- |
+  | **Body** | **key** <br>_required_     | A chave da opção.                                         | string  |
+  | **Body** | **value** <br>_required_   | O valor da opção.                                         | string  |
+  | **Body** | **correct** <br>_required_ | Se a opção é verdadeira ou falsa. Obs.: `true` ou `false` | boolean |
 
   <br />
 
-**`200 OK` - Exemplo de resposta da requisição listar questões da prova. Com `SUCESSO`.**
+  **Exemplo da requisição atualizar Questão.**
+  `PUT` http://localhost:5050/api/v1/exam/question/60511cd1b841c7ac42d626e1
 
-```json
-[
+  ```json
   {
-    "id": "605112af2a3daa997ee6bb8f",
-    "statement": "Qual o sentido da vida, do universo e tudo mais?",
+    "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars? 2021 ATUALIZADO ¯_(ツ)_/¯",
     "options": [
       {
         "key": "a",
-        "value": "viver",
-        "correct": false,
-        "id": "60511cd1b841c7ac42d626e2"
+        "value": "Lançamento dos Filmes",
+        "correct": false
       },
       {
         "key": "b",
-        "value": "42",
-        "correct": true,
-        "id": "60511cd1b841c7ac42d626e5"
+        "value": "Machete",
+        "correct": false
       },
       {
         "key": "c",
-        "value": "beber café",
-        "correct": false,
-        "id": "60511cd1b841c7ac42d626e3"
+        "value": "Cronológica dos Fatos",
+        "correct": false
       },
       {
         "key": "d",
-        "value": "codar",
-        "correct": false,
-        "id": "60511cd1b841c7ac42d626e4"
+        "value": "Ernst Rister ¯_(ツ)_/¯",
+        "correct": true
       }
     ]
-  },
+  }
+  ```
+
+    <br />
+
+  **`200 OK` - Exemplo de resposta da requisição atualizar Questão. Com `SUCESSO`.**
+
+  ```json
   {
     "id": "60511cd1b841c7ac42d626e1",
-    "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars?",
+    "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars? 2021 ATUALIZADO ¯_(ツ)_/¯",
     "options": [
       {
         "key": "a",
@@ -842,112 +941,13 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
       },
       {
         "key": "d",
-        "value": "Ernst Rister",
+        "value": "Ernst Rister ¯_(ツ)_/¯",
         "correct": true,
         "id": "60511cd1b841c7ac42d626e8"
       }
     ]
   }
-]
-```
-
-  </details>
-
-  <br />
-
-### 4.4 Atualizar Questão
-
-- `PUT` /api/v1/exam/question/{id}
-
-  <details>
-
-#### Parâmetros da requisição
-
-| Tipo     | Nome                         | Descrição                                     | Schema              |
-| -------- | ---------------------------- | --------------------------------------------- | ------------------- |
-| **URL param** | **id** <br>_required_        | O id da Questão.                              | string              |
-| **Body** | **statement** <br>_required_ | O enunciado da Questão.                       | string              |
-| **Body** | **options** <br>_required_   | Opções da Questão. Obs: Um Array de `option`. | [option[]](#option) |
-
-  <br />
-
-#### Option
-
-| Tipo     | Nome                       | Descrição                                                 | Schema  |
-| -------- | -------------------------- | --------------------------------------------------------- | ------- |
-| **Body** | **key** <br>_required_     | A chave da opção.                                         | string  |
-| **Body** | **value** <br>_required_   | O valor da opção.                                         | string  |
-| **Body** | **correct** <br>_required_ | Se a opção é verdadeira ou falsa. Obs.: `true` ou `false` | boolean |
-
-<br />
-
-**Exemplo da requisição atualizar Questão.**
-`PUT` http://localhost:5050/api/v1/exam/question/60511cd1b841c7ac42d626e1
-
-```json
-{
-  "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars? 2021 ATUALIZADO ¯_(ツ)_/¯",
-  "options": [
-    {
-      "key": "a",
-      "value": "Lançamento dos Filmes",
-      "correct": false
-    },
-    {
-      "key": "b",
-      "value": "Machete",
-      "correct": false
-    },
-    {
-      "key": "c",
-      "value": "Cronológica dos Fatos",
-      "correct": false
-    },
-    {
-      "key": "d",
-      "value": "Ernst Rister ¯_(ツ)_/¯",
-      "correct": true
-    }
-  ]
-}
-```
-
-  <br />
-
-**`200 OK` - Exemplo de resposta da requisição atualizar Questão. Com `SUCESSO`.**
-
-```json
-{
-  "id": "60511cd1b841c7ac42d626e1",
-  "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars? 2021 ATUALIZADO ¯_(ツ)_/¯",
-  "options": [
-    {
-      "key": "a",
-      "value": "Lançamento dos Filmes",
-      "correct": false,
-      "id": "60511cd1b841c7ac42d626e7"
-    },
-    {
-      "key": "b",
-      "value": "Machete",
-      "correct": false,
-      "id": "60511cd1b841c7ac42d626e9"
-    },
-    {
-      "key": "c",
-      "value": "Cronológica dos Fatos",
-      "correct": false,
-      "id": "60511cd1b841c7ac42d626e6"
-    },
-    {
-      "key": "d",
-      "value": "Ernst Rister ¯_(ツ)_/¯",
-      "correct": true,
-      "id": "60511cd1b841c7ac42d626e8"
-    }
-  ]
-}
-```
+  ```
 
   </details>
 
@@ -959,63 +959,63 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
   <details>
 
-#### Parâmetros da requisição
+  #### Parâmetros da requisição
 
-| Tipo          | Nome                  | Descrição        | Schema |
-| ------------- | --------------------- | ---------------- | ------ |
-| **URL param** | **id** <br>_required_ | O id da Questão. | string |
+  | Tipo          | Nome                  | Descrição        | Schema |
+  | ------------- | --------------------- | ---------------- | ------ |
+  | **URL param** | **id** <br>_required_ | O id da Questão. | string |
 
-  <br />
+    <br />
 
-**Exemplo da requisição deletar questão.**
-`DELETE` http://localhost:5050/api/v1/exam/question/605112af2a3daa997ee6bb8f
+  **Exemplo da requisição deletar questão.**
+  `DELETE` http://localhost:5050/api/v1/exam/question/605112af2a3daa997ee6bb8f
 
-  <br />
+    <br />
 
-**`200 OK` - Exemplo de resposta da requisição deletar questão. Com `SUCESSO`.**
+  **`200 OK` - Exemplo de resposta da requisição deletar questão. Com `SUCESSO`.**
 
-**Obs.: A resposta retorna a Prova no qual a questão pertencia. `Já sem a questão deletada`.**
+  **Obs.: A resposta retorna a Prova no qual a questão pertencia. `Já sem a questão deletada`.**
 
-```json
-{
-  "id": "60500a71fef08553a78d1948",
-  "name": "Prova AMARELA",
-  "description": "Prova sem questões",
-  "type": "OFFLINE",
-  "questions": [
-    {
-      "id": "605125a7abd2a8b71f67381e",
-      "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars?",
-      "options": [
-        {
-          "key": "a",
-          "value": "Cronológica dos Fatos",
-          "correct": false,
-          "id": "605125a7abd2a8b71f673823"
-        },
-        {
-          "key": "b",
-          "value": "Lançamento dos Filmes",
-          "correct": false,
-          "id": "605125a7abd2a8b71f673824"
-        },
-        {
-          "key": "c",
-          "value": "Ernst Rister",
-          "correct": true,
-          "id": "605125a7abd2a8b71f673825"
-        },
-        {
-          "key": "d",
-          "value": "Machete",
-          "correct": false,
-          "id": "605125a7abd2a8b71f673826"
-        }
-      ]
-    }
-  ]
-}
-```
+  ```json
+  {
+    "id": "60500a71fef08553a78d1948",
+    "name": "Prova AMARELA",
+    "description": "Prova sem questões",
+    "type": "OFFLINE",
+    "questions": [
+      {
+        "id": "605125a7abd2a8b71f67381e",
+        "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars?",
+        "options": [
+          {
+            "key": "a",
+            "value": "Cronológica dos Fatos",
+            "correct": false,
+            "id": "605125a7abd2a8b71f673823"
+          },
+          {
+            "key": "b",
+            "value": "Lançamento dos Filmes",
+            "correct": false,
+            "id": "605125a7abd2a8b71f673824"
+          },
+          {
+            "key": "c",
+            "value": "Ernst Rister",
+            "correct": true,
+            "id": "605125a7abd2a8b71f673825"
+          },
+          {
+            "key": "d",
+            "value": "Machete",
+            "correct": false,
+            "id": "605125a7abd2a8b71f673826"
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
   </details>
 
