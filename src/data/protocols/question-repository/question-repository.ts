@@ -5,6 +5,6 @@ export interface QuestionRepository {
   add: (examId: string, questionData: AddQuestionModel) => Promise<QuestionModel>
   get: (id: string) => Promise<GetQuestionResponseModel>
   list: (examId: string) => Promise<QuestionModel[]>
-  update: (questionData: UpdateQuestionModel) => Promise<QuestionModel>
+  update: (id: string, questionData: UpdateQuestionModel) => Promise<QuestionModel>
   delete: (id: string) => Promise<any>
 }

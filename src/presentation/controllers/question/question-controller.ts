@@ -58,19 +58,18 @@ export class QuestionController implements Controller {
 
   async update (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields = ['id', 'statement', 'options']
+      const id = httpRequest.params.id
+      const question = httpRequest.body
+
+      if (!id) return badRequest(new MissingParamError('id'))
+      const requiredFields = ['statement', 'options']
       for (const field of requiredFields) {
-        if (!httpRequest.body[field]) {
+        if (!question[field]) {
           return badRequest(new MissingParamError(field))
         }
       }
-      const { id, statement, options } = httpRequest.body
-      const question = await this.updateQuestion.update({
-        id,
-        statement,
-        options
-      })
-      return ok(question)
+      const updatedQuestion = await this.updateQuestion.update(id, question)
+      return ok(updatedQuestion)
     } catch (error) {
       return serverError(error)
     }

@@ -76,27 +76,28 @@ export class QuestionMongoRepository implements QuestionRepository {
   }
 
   async update (
+    id: string,
     questionData: UpdateQuestionModel
   ): Promise<UpdateQuestionResponseModel> {
     const updateQuestion = this.updateQuestion(
-      questionData.id,
+      id,
       questionData.statement,
       questionData.options
     )
     const result = await MongoHelper.updateOneByFilter(
-      { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } },
+      { questions: { $elemMatch: { id: new ObjectId(id) } } },
       { 'questions.$': updateQuestion },
       this.collectionName
     )
     if (!result.nModified) return null
     const examMongoRepository = new ExamMongoRepository()
     const exam = await examMongoRepository.findOneByFilter(
-      { questions: { $elemMatch: { id: new ObjectId(questionData.id) } } },
+      { questions: { $elemMatch: { id: new ObjectId(id) } } },
       { projection: { _id: 1, name: 1, questions: 1 } }
     )
     const updatedQuestion = exam.questions.find(
       (question: any) =>
-        JSON.stringify(question.id) === JSON.stringify(questionData.id)
+        JSON.stringify(question.id) === JSON.stringify(id)
     )
     return Object.assign({}, updatedQuestion, {
       examId: exam._id,

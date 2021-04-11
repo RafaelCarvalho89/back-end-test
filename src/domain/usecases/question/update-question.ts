@@ -1,7 +1,6 @@
 import { DataOptionModel, QuestionModel } from '../../models/question-model'
 
 export interface UpdateQuestionModel {
-  id: string
   statement: string
   options: DataOptionModel[]
 }
@@ -12,5 +11,5 @@ export interface UpdateQuestionResponseModel extends QuestionModel {
 }
 
 export interface UpdateQuestion {
-  update: (question: UpdateQuestionModel) => Promise<QuestionModel>
+  update: (id: string, question: UpdateQuestionModel) => Promise<QuestionModel>
 }
