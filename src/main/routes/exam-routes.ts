@@ -4,9 +4,9 @@ import { AdaptRoute } from '../adapters/express.route-adapter'
 import { makeExamController } from '../factories/exam-factory'
 
 export default (router: Router): void => {
-  router.post('/exam/new', AdaptRoute.add(makeExamController()))
-  router.put('/exam/update/:id', AdaptRoute.update(makeExamController()))
+  router.post('/exam', AdaptRoute.add(makeExamController()))
+  router.put('/exam/:id', AdaptRoute.update(makeExamController()))
   router.get('/exam/:id', AdaptRoute.get(makeExamController()))
   router.get('/exams', AdaptRoute.list(makeExamController()))
-  router.delete('/exam/delete/:id', AdaptRoute.delete(makeExamController()))
+  router.delete('/exam/:id', AdaptRoute.delete(makeExamController()))
 }

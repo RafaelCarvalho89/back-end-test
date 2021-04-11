@@ -196,7 +196,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 3.1 Adicionar Prova
 
-- `POST` /api/v1/exam/new
+- `POST` /api/v1/exam
 
   <details>
 
@@ -445,7 +445,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 3.4 Atualizar Prova
 
-- `PUT` /api/v1/exam/update
+- `PUT` /api/v1/exam
 
   <details>
 
@@ -570,7 +570,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 3.5 Deletar Prova
 
-- `DELETE` /api/v1/exam/delete/{id}
+- `DELETE` /api/v1/exam/{id}
 
   <details>
 
@@ -583,7 +583,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
   <br />
 
 **Exemplo da requisição deletar prova.**
-`DELETE` http://localhost:5050/api/v1/exam/delete/6050f9e222a72e7089ed1988
+`DELETE` http://localhost:5050/api/v1/exam/6050f9e222a72e7089ed1988
 
   <br />
 
