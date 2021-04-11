@@ -12,8 +12,10 @@
 
 - [x] ~~feat: write documentation~~
 - [x] ~~fix: delete question broken~~
+- [x] ~~feat: change API to REST pattern~~
+- [ ] feat: use Nest.js in API
+- [ ] feat: deploy of API
 - [ ] refactor: extract fields validation out of the controller
-- [ ] refactor: change the request to format with request param
 - [ ] revision: code and organization
 
 <br />
@@ -855,7 +857,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 4.4 Atualizar Questão
 
-- `PUT` /api/v1/question/update
+- `PUT` /api/v1/exam/question/{id}
 
   <details>
 
@@ -863,7 +865,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 | Tipo     | Nome                         | Descrição                                     | Schema              |
 | -------- | ---------------------------- | --------------------------------------------- | ------------------- |
-| **Body** | **id** <br>_required_        | O id da Questão.                              | string              |
+| **URL param** | **id** <br>_required_        | O id da Questão.                              | string              |
 | **Body** | **statement** <br>_required_ | O enunciado da Questão.                       | string              |
 | **Body** | **options** <br>_required_   | Opções da Questão. Obs: Um Array de `option`. | [option[]](#option) |
 
@@ -879,11 +881,11 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 <br />
 
-**Exemplo da requisição adicionar Questão.**
+**Exemplo da requisição atualizar Questão.**
+`PUT` http://localhost:5050/api/v1/exam/question/60511cd1b841c7ac42d626e1
 
 ```json
 {
-  "id": "60511cd1b841c7ac42d626e1",
   "statement": "Qual a ordem mais bacana para assistir os filmes de Star Wars? 2021 ATUALIZADO ¯_(ツ)_/¯",
   "options": [
     {
