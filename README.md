@@ -701,7 +701,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 4.2 Obter Questão
 
-- `GET` /api/v1/question/{id}
+- `GET` /api/v1/exam/question/{id}
 
   <details>
 
@@ -714,7 +714,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
   <br />
 
 **Exemplo da requisição obter questão.**
-`GET` http://localhost:5050/api/v1/question/605112af2a3daa997ee6bb8f
+`GET` http://localhost:5050/api/v1/exam/question/605112af2a3daa997ee6bb8f
 
   <br />
 

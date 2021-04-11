@@ -76,7 +76,7 @@ describe('Question Routes', () => {
 
   test('Should return question on get success', async () => {
     await request(app)
-      .get(`/api/v1/question/${fakeQuestionId}`)
+      .get(`/api/v1/exam/question/${fakeQuestionId}`)
       .send()
       .expect(200)
   })
