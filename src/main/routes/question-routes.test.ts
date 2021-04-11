@@ -47,7 +47,6 @@ const fakeQuestion = {
 }
 
 const fakeUpdateQuestion = {
-  id: fakeQuestionId,
   statement: 'Qual o sentido da vida? - UPDATE',
   options: fakeUpdateOptions
 }
@@ -89,7 +88,7 @@ describe('Question Routes', () => {
 
   test('Should return question on update success', async () => {
     await request(app)
-      .put('/api/v1/question/update')
+      .put(`/api/v1/exam/question/${fakeQuestionId}`)
       .send(fakeUpdateQuestion)
       .expect(200)
   })

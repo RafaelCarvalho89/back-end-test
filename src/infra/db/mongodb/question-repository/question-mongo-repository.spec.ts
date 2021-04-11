@@ -113,11 +113,10 @@ describe('Question Mongo Repository', () => {
     const addedQuestion = await sut.add(fakeExam.id, fakeQuestion)
     const updatedOptions = makeFakeUpdatedOptions()
     const updatedStatement = 'STATEMENT UPDATED'
-    const updatedQuestion = await sut.update({
-      id: addedQuestion.id,
-      statement: updatedStatement,
-      options: updatedOptions
-    })
+    const updatedQuestion = await sut.update(
+      addedQuestion.id,
+      { statement: updatedStatement, options: updatedOptions }
+    )
     expect(updatedQuestion).toBeTruthy()
     expect(updatedQuestion.id).toStrictEqual(addedQuestion.id)
     expect(updatedQuestion.statement).toBe(updatedStatement)

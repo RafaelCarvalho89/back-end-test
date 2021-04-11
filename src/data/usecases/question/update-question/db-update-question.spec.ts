@@ -36,7 +36,7 @@ const makeFakeQuestion = (): any => ({
 
 const makeUpdateQuestionRepository = (): UpdateQuestionRepository => {
   class UpdateQuestionRepositoryStub implements UpdateQuestionRepository {
-    async update (questionData: UpdateQuestionModel): Promise<QuestionModel> {
+    async update (id: string, questionData: UpdateQuestionModel): Promise<QuestionModel> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -58,8 +58,9 @@ describe('DbUpdateQuestion Use case', () => {
   test('Should call UpdateQuestionRepository with correct values', async () => {
     const { sut, updateQuestionRepositoryStub } = makeSut()
     const updateSpy = jest.spyOn(updateQuestionRepositoryStub, 'update')
-    await sut.update(makeFakeQuestion())
-    expect(updateSpy).toHaveBeenCalledWith(makeFakeQuestion())
+    const { id, ...fakeQuestionWithoutId } = makeFakeQuestion()
+    await sut.update(id, fakeQuestionWithoutId)
+    expect(updateSpy).toHaveBeenCalledWith(id, fakeQuestionWithoutId)
   })
 
   test('Should throw if UpdateQuestionRepository throws', async () => {
@@ -69,13 +70,15 @@ describe('DbUpdateQuestion Use case', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )
-    const promise = sut.update(makeFakeQuestion())
+    const { id, ...fakeQuestionWithoutId } = makeFakeQuestion()
+    const promise = sut.update(id, fakeQuestionWithoutId)
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return and Question on success', async () => {
     const { sut } = makeSut()
-    const question = await sut.update(makeFakeQuestion())
+    const { id, ...fakeQuestionWithoutId } = makeFakeQuestion()
+    const question = await sut.update(id, fakeQuestionWithoutId)
     expect(question).toEqual(makeFakeQuestion())
   })
 })

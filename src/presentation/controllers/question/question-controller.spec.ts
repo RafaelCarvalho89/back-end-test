@@ -27,9 +27,7 @@ const makeAddQuestion = (): AddQuestion => {
 
 const makeUpdateQuestion = (): UpdateQuestion => {
   class UpdateQuestionStub implements UpdateQuestion {
-    async update (
-      updateQuestionRequest: UpdateQuestionModel
-    ): Promise<QuestionModel> {
+    async update (id: string, updateQuestionRequest: UpdateQuestionModel): Promise<QuestionModel> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -201,24 +199,24 @@ describe('Question Controller add method', () => {
 describe('Question Controller update method', () => {
   test('Should return 400 if no id is provided when update question', async () => {
     const { sut } = makeSut()
-    const { id, ...fakeQuestionWithoutName } = makeFakeQuestion()
-    const fakeRequest = makeFakeRequest(fakeQuestionWithoutName)
+    const { id, ...fakeQuestionWithoutId } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutId, { id: null })
     const httpResponse = await sut.update(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
   })
 
   test('Should return 400 if no statement is provided when update question', async () => {
     const { sut } = makeSut()
-    const { statement, ...fakeQuestionWithoutName } = makeFakeQuestion()
-    const fakeRequest = makeFakeRequest(fakeQuestionWithoutName)
+    const { id, statement, ...fakeQuestionWithoutStatement } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutStatement, { id })
     const httpResponse = await sut.update(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('statement')))
   })
 
   test('Should return 400 if no options is provided when update question', async () => {
     const { sut } = makeSut()
-    const { options, ...fakeQuestionWithoutDescription } = makeFakeQuestion()
-    const fakeRequest = makeFakeRequest(fakeQuestionWithoutDescription)
+    const { id, options, ...fakeQuestionWithoutOptions } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutOptions, { id })
     const httpResponse = await sut.update(fakeRequest)
     expect(httpResponse).toEqual(
       badRequest(new MissingParamError('options'))
@@ -230,7 +228,8 @@ describe('Question Controller update method', () => {
     jest.spyOn(updateQuestionStub, 'update').mockImplementationOnce(async () => {
       return await new Promise((resolve, reject) => reject(new Error()))
     })
-    const fakeRequest = makeFakeRequest(makeFakeQuestion())
+    const { id, ...fakeQuestionWithoutId } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutId, { id })
     const httpResponse = await sut.update(fakeRequest)
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
@@ -238,15 +237,17 @@ describe('Question Controller update method', () => {
   test('Should call UpdateQuestion with correct values', async () => {
     const { sut, updateQuestionStub } = makeSut()
     const updateSpy = jest.spyOn(updateQuestionStub, 'update')
-    const { examId, ...fakeUpdateRequest } = makeFakeQuestion()
-    const httpRequest = makeFakeRequest(fakeUpdateRequest)
+    const { id, examId, ...fakeUpdateRequest } = makeFakeQuestion()
+    const httpRequest = makeFakeRequest(fakeUpdateRequest, { id })
     await sut.update(httpRequest)
-    expect(updateSpy).toHaveBeenCalledWith(fakeUpdateRequest)
+    expect(updateSpy).toHaveBeenCalledWith(id, fakeUpdateRequest)
   })
 
   test('Should return 200 if valid data is provided when update question', async () => {
     const { sut } = makeSut()
-    const fakeRequest = makeFakeRequest(makeFakeQuestion())
+
+    const { id, ...fakeQuestionWithoutId } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutId, { id })
     const httpResponse = await sut.update(fakeRequest)
     const fakeResponseBody = makeFakeQuestion()
     expect(httpResponse).toEqual(ok(fakeResponseBody))
