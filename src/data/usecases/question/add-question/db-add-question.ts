@@ -8,8 +8,7 @@ import {
 export class DbAddQuestion implements AddQuestion {
   constructor (private readonly addQuestionRepository: AddQuestionRepository) { }
 
-  async add (questionData: AddQuestionModel): Promise<QuestionModel> {
-    const question = await this.addQuestionRepository.add(questionData)
-    return question
+  async add (examId: string, questionData: AddQuestionModel): Promise<QuestionModel> {
+    return await this.addQuestionRepository.add(examId, questionData)
   }
 }

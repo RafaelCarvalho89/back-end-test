@@ -40,8 +40,7 @@ describe('Exam Mongo Repository', () => {
     const sut = makeSut()
     const fakeExam = (makeFakeExam())
     const addedExam = await sut.add(fakeExam)
-    const updatedExam = await sut.update({
-      id: addedExam.id,
+    const updatedExam = await sut.update(addedExam.id, {
       name: 'UPDATED Name',
       description: 'UPDATED description',
       type: 'OFFLINE',
@@ -59,7 +58,7 @@ describe('Exam Mongo Repository', () => {
     const sut = makeSut()
     const fakeExam = (makeFakeExam())
     const addedExam = await sut.add(fakeExam)
-    const examFound = await sut.get({ id: addedExam.id })
+    const examFound = await sut.get(addedExam.id)
     expect(examFound).toBeTruthy()
     expect(examFound.id).toEqual(addedExam.id)
     expect(examFound.name).toBe('name')
@@ -80,7 +79,7 @@ describe('Exam Mongo Repository', () => {
     const sut = makeSut()
     const fakeExam = (makeFakeExam())
     const addedExam = await sut.add(fakeExam)
-    const deleteResponse = await sut.delete({ id: addedExam.id })
+    const deleteResponse = await sut.delete(addedExam.id)
     expect(deleteResponse).toBeTruthy()
     expect(deleteResponse).toEqual({ delete: 'ok' })
   })

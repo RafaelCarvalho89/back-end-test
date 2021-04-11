@@ -1,8 +1,11 @@
-export interface OptionModel {
-  id: string
+export interface DataOptionModel {
   key: string
   value: string
   correct: boolean
+}
+
+export interface OptionModel extends DataOptionModel {
+  id: string
 }
 
 export interface QuestionModel {

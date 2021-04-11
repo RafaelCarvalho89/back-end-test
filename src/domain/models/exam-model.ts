@@ -1,4 +1,4 @@
-import { QuestionModel } from '../question/question-model'
+import { QuestionModel } from './question-model'
 
 export type ExamType = 'ONLINE' | 'OFFLINE'
 

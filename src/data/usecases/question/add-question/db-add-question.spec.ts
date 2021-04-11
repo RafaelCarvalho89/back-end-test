@@ -1,4 +1,4 @@
-import { QuestionModel } from '../../../../domain/models/question/question-model'
+import { QuestionModel } from '../../../../domain/models/question-model'
 import { AddQuestionModel } from '../../../../domain/usecases/question/add-question'
 import { AddQuestionRepository } from '../../../protocols/question-repository/add-question-repository'
 import { DbAddQuestion } from './db-add-question'
@@ -43,7 +43,7 @@ const makeFakeQuestionData = (): AddQuestionModel => {
 
 const makeAddQuestionRepository = (): AddQuestionRepository => {
   class AddQuestionRepositoryStub implements AddQuestionRepository {
-    async add (questionData: AddQuestionModel): Promise<QuestionModel> {
+    async add (examId: string, questionData: AddQuestionModel): Promise<QuestionModel> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -65,8 +65,8 @@ describe('DbAddQuestion Use case', () => {
   test('Should call AddQuestionRepository with correct values', async () => {
     const { sut, addQuestionRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addQuestionRepositoryStub, 'add')
-    await sut.add(makeFakeQuestionData())
-    expect(addSpy).toHaveBeenCalledWith(makeFakeQuestionData())
+    await sut.add(fakeExamId, makeFakeQuestionData())
+    expect(addSpy).toHaveBeenCalledWith(fakeExamId, makeFakeQuestionData())
   })
 
   test('Should throw if AddQuestionRepository throws', async () => {
@@ -76,13 +76,13 @@ describe('DbAddQuestion Use case', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )
-    const promise = sut.add(makeFakeQuestionData())
+    const promise = sut.add(fakeExamId, makeFakeQuestionData())
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return and Question on success', async () => {
     const { sut } = makeSut()
-    const question = await sut.add(makeFakeQuestionData())
+    const question = await sut.add(fakeExamId, makeFakeQuestionData())
     expect(question).toEqual(makeFakeQuestion())
   })
 })

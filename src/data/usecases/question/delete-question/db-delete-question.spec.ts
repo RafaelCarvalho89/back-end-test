@@ -1,5 +1,4 @@
-import { QuestionModel } from '../../../../domain/models/question/question-model'
-import { DeleteQuestionModel } from '../../../../domain/usecases/question/delete-question'
+import { QuestionModel } from '../../../../domain/models/question-model'
 import { DeleteQuestionRepository } from '../../../protocols/question-repository/delete-question-repository'
 import { DbDeleteQuestion } from './db-delete-question'
 
@@ -38,7 +37,7 @@ const makeFakeQuestion = (): QuestionModel => ({
 
 const makeDeleteQuestionRepository = (): DeleteQuestionRepository => {
   class DeleteQuestionRepositoryStub implements DeleteQuestionRepository {
-    async delete (QuestionData: DeleteQuestionModel): Promise<any> {
+    async delete (id: string): Promise<any> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -60,8 +59,8 @@ describe('DbDeleteQuestion Use case', () => {
   test('Should call DeleteQuestionRepository with correct values', async () => {
     const { sut, deleteQuestionRepositoryStub } = makeSut()
     const deleteSpy = jest.spyOn(deleteQuestionRepositoryStub, 'delete')
-    await sut.delete({ id: fakeQuestionId })
-    expect(deleteSpy).toHaveBeenCalledWith({ id: fakeQuestionId })
+    await sut.delete(fakeQuestionId)
+    expect(deleteSpy).toHaveBeenCalledWith(fakeQuestionId)
   })
 
   test('Should throw if DeleteQuestionRepository throws', async () => {
@@ -71,13 +70,13 @@ describe('DbDeleteQuestion Use case', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )
-    const promise = sut.delete({ id: fakeQuestionId })
+    const promise = sut.delete(fakeQuestionId)
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return an Response on success', async () => {
     const { sut } = makeSut()
-    const deleteResponse = await sut.delete({ id: fakeQuestionId })
+    const deleteResponse = await sut.delete(fakeQuestionId)
     expect(deleteResponse).toBeTruthy()
   })
 })

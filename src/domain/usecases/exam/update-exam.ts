@@ -1,14 +1,13 @@
-import { ExamModel, ExamType } from '../../models/exam/exam-model'
-import { UpdateOptionModel } from '../question'
+import { ExamModel, ExamType } from '../../models/exam-model'
+import { DataOptionModel } from '../../models/question-model'
 
 export interface UpdateExamQuestionModel {
   id: string
   statement: string
-  options: UpdateOptionModel[]
+  options: DataOptionModel[]
 }
 
 export interface UpdateExamModel {
-  id: string
   name: string
   description: string
   type: ExamType
@@ -16,5 +15,5 @@ export interface UpdateExamModel {
 }
 
 export interface UpdateExam {
-  update: (exam: UpdateExamModel) => Promise<ExamModel>
+  update: (id: string, exam: UpdateExamModel) => Promise<ExamModel>
 }

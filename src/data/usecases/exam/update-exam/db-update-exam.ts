@@ -8,8 +8,7 @@ import {
 export class DbUpdateExam implements UpdateExam {
   constructor (private readonly updateExamRepository: UpdateExamRepository) { }
 
-  async update (examData: UpdateExamModel): Promise<ExamModel> {
-    const exam = await this.updateExamRepository.update(examData)
-    return exam
+  async update (id: string, examData: UpdateExamModel): Promise<ExamModel> {
+    return await this.updateExamRepository.update(id, examData)
   }
 }

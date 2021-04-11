@@ -4,9 +4,9 @@ import { AdaptRoute } from '../adapters/express.route-adapter'
 import { makeQuestionController } from '../factories/question-factory'
 
 export default (router: Router): void => {
-  router.post('/question/new', AdaptRoute.add(makeQuestionController()))
-  router.get('/question', AdaptRoute.get(makeQuestionController()))
-  router.get('/questions', AdaptRoute.list(makeQuestionController()))
-  router.put('/question/update', AdaptRoute.update(makeQuestionController()))
-  router.delete('/question/delete', AdaptRoute.delete(makeQuestionController()))
+  router.post('/exam/:id/question', AdaptRoute.add(makeQuestionController()))
+  router.get('/exam/question/:id', AdaptRoute.get(makeQuestionController()))
+  router.get('/exam/:id/questions', AdaptRoute.list(makeQuestionController()))
+  router.put('/exam/question/:id', AdaptRoute.update(makeQuestionController()))
+  router.delete('/exam/question/:id', AdaptRoute.delete(makeQuestionController()))
 }

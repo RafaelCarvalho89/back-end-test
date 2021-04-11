@@ -1,4 +1,4 @@
-import { ExamModel } from '../../../domain/models/exam/exam-model'
+import { ExamModel } from '../../../domain/models/exam-model'
 import { AddExamModel } from '../../../domain/usecases/exam/add-exam'
 
 export interface AddExamRepository {

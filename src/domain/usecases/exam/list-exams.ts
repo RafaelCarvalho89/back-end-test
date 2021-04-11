@@ -1,4 +1,4 @@
-import { ExamModel } from '../../models/exam/exam-model'
+import { ExamModel } from '../../models/exam-model'
 
 export interface ListExams {
   list: () => Promise<ExamModel[]>

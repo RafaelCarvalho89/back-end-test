@@ -22,13 +22,17 @@ export class QuestionController implements Controller {
 
   async add (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields = ['examId', 'statement', 'options']
+      const examId = httpRequest.params.id
+      const question = httpRequest.body
+
+      if (!examId) return badRequest(new MissingParamError('examId'))
+      const requiredFields = ['statement', 'options']
       for (const field of requiredFields) {
-        if (!httpRequest.body[field]) return badRequest(new MissingParamError(field))
+        if (!question[field]) return badRequest(new MissingParamError(field))
       }
 
       const requiredOptionFields = ['key', 'value', 'correct']
-      for (const option of httpRequest.body.options) {
+      for (const option of question.options) {
         for (const field of requiredOptionFields) {
           if (option[field] === null || option[field] === undefined || option[field] === '') {
             return badRequest(new MissingParamError(field))
@@ -36,18 +40,17 @@ export class QuestionController implements Controller {
         }
       }
 
-      if (httpRequest.body.questions && httpRequest.body.questions !== []) {
+      if (question.questions && question.questions !== []) {
         const requiredOptionsFields = ['key', 'value', 'correct']
-        for (const option of httpRequest.body.options) {
+        for (const option of question.options) {
           for (const field of requiredOptionsFields) {
             if (!option[field]) return badRequest(new MissingParamError(field))
           }
         }
       }
 
-      const { examId, statement, options } = httpRequest.body
-      const question = await this.addQuestion.add({ examId, statement, options })
-      return ok(question)
+      const addedQuestion = await this.addQuestion.add(examId, question)
+      return ok(addedQuestion)
     } catch (error) {
       return serverError(error)
     }
@@ -55,19 +58,18 @@ export class QuestionController implements Controller {
 
   async update (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields = ['id', 'statement', 'options']
+      const id = httpRequest.params.id
+      const question = httpRequest.body
+
+      if (!id) return badRequest(new MissingParamError('id'))
+      const requiredFields = ['statement', 'options']
       for (const field of requiredFields) {
-        if (!httpRequest.body[field]) {
+        if (!question[field]) {
           return badRequest(new MissingParamError(field))
         }
       }
-      const { id, statement, options } = httpRequest.body
-      const question = await this.updateQuestion.update({
-        id,
-        statement,
-        options
-      })
-      return ok(question)
+      const updatedQuestion = await this.updateQuestion.update(id, question)
+      return ok(updatedQuestion)
     } catch (error) {
       return serverError(error)
     }
@@ -75,8 +77,8 @@ export class QuestionController implements Controller {
 
   async get (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
-      const question = await this.getQuestion.get(httpRequest.body)
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+      const question = await this.getQuestion.get(httpRequest.params.id)
       return ok(question)
     } catch (error) {
       return serverError(error)
@@ -85,7 +87,8 @@ export class QuestionController implements Controller {
 
   async list (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const questionList = await this.listQuestions.list(httpRequest.body)
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+      const questionList = await this.listQuestions.list(httpRequest.params.id)
       return ok(questionList)
     } catch (error) {
       return serverError(error)
@@ -94,8 +97,8 @@ export class QuestionController implements Controller {
 
   async delete (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
-      const deleteResponse = await this.deleteQuestion.delete(httpRequest.body)
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+      const deleteResponse = await this.deleteQuestion.delete(httpRequest.params.id)
       return ok(deleteResponse)
     } catch (error) {
       return serverError(error)

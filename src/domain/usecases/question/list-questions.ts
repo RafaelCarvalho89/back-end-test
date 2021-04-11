@@ -1,9 +1,5 @@
-import { QuestionModel } from '../../models/question/question-model'
-
-export interface ListQuestionsModel {
-  examId: string
-}
+import { QuestionModel } from '../../models/question-model'
 
 export interface ListQuestions {
-  list: (listQuestionsModel: ListQuestionsModel) => Promise<QuestionModel[]>
+  list: (examId: string) => Promise<QuestionModel[]>
 }

@@ -20,7 +20,7 @@ describe('Exam Routes', () => {
 
   test('Should return an exam on add exam success', async () => {
     await request(app)
-      .post('/api/exam/new')
+      .post('/api/v1/exam')
       .send({
         name: 'Blue Exam',
         description: 'Blue Exam without questions',
@@ -29,11 +29,18 @@ describe('Exam Routes', () => {
       .expect(200)
   })
 
+  test('Should return an exam on get exam success', async () => {
+    await request(app).get(`/api/v1/exam/${fakeExamId}`).send().expect(200)
+  })
+
+  test('Should return an exam list on list exam success', async () => {
+    await request(app).get('/api/v1/exams').send().expect(200)
+  })
+
   test('Should return an exam id on update exam success', async () => {
     await request(app)
-      .put('/api/exam/update')
+      .put(`/api/v1/exam/${fakeExamId}`)
       .send({
-        id: fakeExamId,
         name: 'Blue Exam 2',
         description: 'Blue Exam without questions 2',
         type: 'ONLINE'
@@ -41,28 +48,10 @@ describe('Exam Routes', () => {
       .expect(200)
   })
 
-  test('Should return an exam on get exam success', async () => {
-    await request(app)
-      .get('/api/exam')
-      .send({
-        id: fakeExamId
-      })
-      .expect(200)
-  })
-
-  test('Should return an exam list on list exam success', async () => {
-    await request(app)
-      .get('/api/exams')
-      .send()
-      .expect(200)
-  })
-
   test('Should return an response on delete exam success', async () => {
     await request(app)
-      .delete('/api/exam/delete')
-      .send({
-        id: fakeExamId
-      })
+      .delete(`/api/v1/exam/${fakeExamId}`)
+      .send()
       .expect(200)
   })
 })

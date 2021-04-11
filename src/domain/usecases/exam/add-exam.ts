@@ -1,9 +1,9 @@
-import { ExamModel, ExamType } from '../../models/exam/exam-model'
-import { AddOptionModel } from '../question'
+import { ExamModel, ExamType } from '../../models/exam-model'
+import { DataOptionModel } from '../../models/question-model'
 
 export interface AddExamQuestionModel {
   statement: string
-  options: AddOptionModel[]
+  options: DataOptionModel[]
 }
 export interface AddExamModel {
   name: string

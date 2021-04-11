@@ -71,7 +71,9 @@ export class ExamController implements Controller {
 
   async update (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields = ['id', 'name', 'description', 'type']
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+
+      const requiredFields = ['name', 'description', 'type']
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
           return badRequest(new MissingParamError(field))
@@ -102,9 +104,8 @@ export class ExamController implements Controller {
       )
       if (!isExamType) return badRequest(new InvalidParamError('type'))
 
-      const { id, name, description, type, questions } = httpRequest.body
-      const exam = await this.updateExam.update({
-        id,
+      const { name, description, type, questions } = httpRequest.body
+      const exam = await this.updateExam.update(httpRequest.params.id, {
         name,
         description,
         type,
@@ -119,8 +120,8 @@ export class ExamController implements Controller {
 
   async get (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
-      const exam = await this.getExam.get(httpRequest.body)
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+      const exam = await this.getExam.get(httpRequest.params.id)
       return ok(exam)
     } catch (error) {
       return serverError(error)
@@ -138,8 +139,8 @@ export class ExamController implements Controller {
 
   async delete (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!httpRequest.body.id) return badRequest(new MissingParamError('id'))
-      const deleteResponse = await this.deleteExam.delete(httpRequest.body)
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+      const deleteResponse = await this.deleteExam.delete(httpRequest.params.id)
       return ok(deleteResponse)
     } catch (error) {
       return serverError(error)

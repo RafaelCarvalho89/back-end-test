@@ -1,6 +1,5 @@
 import {
   GetQuestion,
-  GetQuestionModel,
   GetQuestionRepository,
   QuestionModel
 } from './db-get-question-protocols'
@@ -8,8 +7,7 @@ import {
 export class DbGetQuestion implements GetQuestion {
   constructor (private readonly getQuestionRepository: GetQuestionRepository) {}
 
-  async get (questionData: GetQuestionModel): Promise<QuestionModel> {
-    const question = await this.getQuestionRepository.get(questionData)
-    return question
+  async get (id: string): Promise<QuestionModel> {
+    return await this.getQuestionRepository.get(id)
   }
 }

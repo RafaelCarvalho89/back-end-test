@@ -5,7 +5,7 @@ import app from '../config/app'
 const fakeExamId = '604de08e5f3e114605efbfec'
 const fakeQuestionId = '604e5be11a78573cb23a01a8'
 
-const makeFakeOptions = (): any => ([
+const fakeOptions = [
   {
     key: 'a',
     value: 'viver',
@@ -26,9 +26,9 @@ const makeFakeOptions = (): any => ([
     value: '42',
     correct: true
   }
-])
+]
 
-const makeFakeUpdateOptions = (): any => ([
+const fakeUpdateOptions = [
   {
     key: 'a',
     value: 'viver - UPDATED',
@@ -39,19 +39,17 @@ const makeFakeUpdateOptions = (): any => ([
     value: '42 - UPDATED',
     correct: true
   }
-])
+]
 
-const makeFakeQuestion = (): any => ({
-  examId: fakeExamId,
+const fakeQuestion = {
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
-  options: makeFakeOptions()
-})
+  options: fakeOptions
+}
 
-const makeFakeUpdateQuestion = (): any => ({
-  id: fakeQuestionId,
+const fakeUpdateQuestion = {
   statement: 'Qual o sentido da vida? - UPDATE',
-  options: makeFakeUpdateOptions()
-})
+  options: fakeUpdateOptions
+}
 
 describe('Question Routes', () => {
   beforeAll(async () => {
@@ -69,36 +67,36 @@ describe('Question Routes', () => {
 
   test('Should return question on add success', async () => {
     await request(app)
-      .post('/api/question/new')
-      .send(makeFakeQuestion())
-      .expect(200)
-  })
-
-  test('Should return questions on list success', async () => {
-    await request(app)
-      .get('/api/questions')
-      .send({ examId: fakeExamId })
+      .post(`/api/v1/exam/${fakeExamId}/question`)
+      .send(fakeQuestion)
       .expect(200)
   })
 
   test('Should return question on get success', async () => {
     await request(app)
-      .get('/api/question')
-      .send({ id: fakeQuestionId })
+      .get(`/api/v1/exam/question/${fakeQuestionId}`)
+      .send()
+      .expect(200)
+  })
+
+  test('Should return questions on list success', async () => {
+    await request(app)
+      .get(`/api/v1/exam/${fakeExamId}/questions`)
+      .send()
       .expect(200)
   })
 
   test('Should return question on update success', async () => {
     await request(app)
-      .put('/api/question/update')
-      .send(makeFakeUpdateQuestion())
+      .put(`/api/v1/exam/question/${fakeQuestionId}`)
+      .send(fakeUpdateQuestion)
       .expect(200)
   })
 
   test('Should return exam without question on delete question success', async () => {
     await request(app)
-      .delete('/api/question/delete')
-      .send({ id: fakeQuestionId })
+      .delete(`/api/v1/exam/question/${fakeQuestionId}`)
+      .send()
       .expect(200)
   })
 })

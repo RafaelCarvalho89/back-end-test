@@ -1,7 +1,3 @@
-export interface DeleteExamModel {
-  id: string
-}
-
 export interface DeleteExam {
-  delete: (exam: DeleteExamModel) => Promise<any>
+  delete: (id: string) => Promise<any>
 }

@@ -10,17 +10,15 @@ import {
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import {
   DeleteQuestion,
-  DeleteQuestionModel,
-  GetQuestionModel,
+  GetQuestionResponseModel,
   ListQuestions,
-  ListQuestionsModel,
   UpdateQuestion,
   UpdateQuestionModel
 } from '../../../domain/usecases/question'
 
 const makeAddQuestion = (): AddQuestion => {
   class AddQuestionStub implements AddQuestion {
-    async add (addQuestionRequest: AddQuestionModel): Promise<QuestionModel> {
+    async add (examId: string, addQuestionRequest: AddQuestionModel): Promise<QuestionModel> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -29,9 +27,7 @@ const makeAddQuestion = (): AddQuestion => {
 
 const makeUpdateQuestion = (): UpdateQuestion => {
   class UpdateQuestionStub implements UpdateQuestion {
-    async update (
-      updateQuestionRequest: UpdateQuestionModel
-    ): Promise<QuestionModel> {
+    async update (id: string, updateQuestionRequest: UpdateQuestionModel): Promise<QuestionModel> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -40,7 +36,7 @@ const makeUpdateQuestion = (): UpdateQuestion => {
 
 const makeGetQuestion = (): GetQuestion => {
   class GetQuestionStub implements GetQuestion {
-    async get (getQuestionRequest: GetQuestionModel): Promise<QuestionModel> {
+    async get (id: string): Promise<GetQuestionResponseModel> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -49,7 +45,7 @@ const makeGetQuestion = (): GetQuestion => {
 
 const makeListQuestions = (): ListQuestions => {
   class ListQuestionsStub implements ListQuestions {
-    async list (ListQuestionsRequest: ListQuestionsModel): Promise<QuestionModel[]> {
+    async list (examId: string): Promise<QuestionModel[]> {
       return await new Promise((resolve) => resolve([makeFakeQuestion()]))
     }
   }
@@ -58,7 +54,7 @@ const makeListQuestions = (): ListQuestions => {
 
 const makeDeleteQuestion = (): DeleteQuestion => {
   class DeleteQuestionStub implements DeleteQuestion {
-    async delete (deleteQuestionRequest: DeleteQuestionModel): Promise<any> {
+    async delete (id: string): Promise<any> {
       return await new Promise((resolve) => resolve(makeFakeQuestion()))
     }
   }
@@ -97,8 +93,10 @@ const makeSut = (): SutTypes => {
   }
 }
 
+const fakeExamId = '607b9974-4914-44df-81e8-d56ec6a589bf'
+
 const makeFakeQuestion = (): any => ({
-  examId: '607b9974-4914-44df-81e8-d56ec6a589bf',
+  examId: fakeExamId,
   id: '607b9974-4914-44df-81e8-d56ec6a58912',
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
   options: [
@@ -129,8 +127,9 @@ const makeFakeQuestion = (): any => ({
   ]
 })
 
-const makeFakeRequest = (body: any): HttpRequest => ({
-  body
+const makeFakeRequest = (body: any, params?: any): HttpRequest => ({
+  body,
+  params
 })
 
 // ------------------------------ADD METHOD TESTS------------------------------
@@ -138,8 +137,8 @@ const makeFakeRequest = (body: any): HttpRequest => ({
 describe('Question Controller add method', () => {
   test('Should return 400 if no examId is provided when add question', async () => {
     const { sut } = makeSut()
-    const { id, examId, ...fakeQuestionWithoutExamId } = makeFakeQuestion()
-    const fakeRequest = makeFakeRequest(fakeQuestionWithoutExamId)
+    const { examId, id, ...fakeQuestionWithoutExamId } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutExamId, { id: null })
     const httpResponse = await sut.add(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('examId')))
   })
@@ -147,19 +146,20 @@ describe('Question Controller add method', () => {
   test('Should return 400 if no statement is provided when add question', async () => {
     const { sut } = makeSut()
     const {
+      examId,
       id,
       statement,
-      ...fakeQuestionWithoutDescription
+      ...fakeQuestionWithoutStatement
     } = makeFakeQuestion()
-    const fakeRequest = makeFakeRequest(fakeQuestionWithoutDescription)
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutStatement, { id: examId })
     const httpResponse = await sut.add(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('statement')))
   })
 
   test('Should return 400 if no options is provided when add question', async () => {
     const { sut } = makeSut()
-    const { id, options, ...fakeQuestionWithoutType } = makeFakeQuestion()
-    const fakeRequest = makeFakeRequest(fakeQuestionWithoutType)
+    const { examId, id, options, ...fakeQuestionWithoutOptions } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutOptions, { id: examId })
     const httpResponse = await sut.add(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('options')))
   })
@@ -169,8 +169,8 @@ describe('Question Controller add method', () => {
     jest.spyOn(addQuestionStub, 'add').mockImplementationOnce(async () => {
       return await new Promise((resolve, reject) => reject(new Error()))
     })
-    const { id, ...fakeQuestion } = makeFakeQuestion()
-    const httpResponse = await sut.add(makeFakeRequest(fakeQuestion))
+    const { examId, id, ...fakeQuestion } = makeFakeQuestion()
+    const httpResponse = await sut.add(makeFakeRequest(fakeQuestion, { id: examId }))
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
@@ -178,16 +178,16 @@ describe('Question Controller add method', () => {
     const { sut, addQuestionStub } = makeSut()
     const addSpy = jest.spyOn(addQuestionStub, 'add')
     const fakeQuestion = makeFakeQuestion()
-    const { id, ...fakeQuestionData } = fakeQuestion
-    const httpRequest = makeFakeRequest(fakeQuestionData)
+    const { examId, id, ...fakeQuestionData } = fakeQuestion
+    const httpRequest = makeFakeRequest(fakeQuestionData, { id: examId })
     await sut.add(httpRequest)
-    expect(addSpy).toHaveBeenCalledWith(fakeQuestionData)
+    expect(addSpy).toHaveBeenCalledWith(examId, fakeQuestionData)
   })
 
   test('Should return 200 if valid data is provided when add question', async () => {
     const { sut } = makeSut()
-    const { id, ...fakeQuestion } = makeFakeQuestion()
-    const fakeRequest = makeFakeRequest(fakeQuestion)
+    const { examId, id, ...fakeQuestion } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestion, { id: examId })
     const httpResponse = await sut.add(fakeRequest)
     const fakeResponseBody = makeFakeQuestion()
     expect(httpResponse).toEqual(ok(fakeResponseBody))
@@ -199,24 +199,24 @@ describe('Question Controller add method', () => {
 describe('Question Controller update method', () => {
   test('Should return 400 if no id is provided when update question', async () => {
     const { sut } = makeSut()
-    const { id, ...fakeQuestionWithoutName } = makeFakeQuestion()
-    const fakeRequest = makeFakeRequest(fakeQuestionWithoutName)
+    const { id, ...fakeQuestionWithoutId } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutId, { id: null })
     const httpResponse = await sut.update(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
   })
 
   test('Should return 400 if no statement is provided when update question', async () => {
     const { sut } = makeSut()
-    const { statement, ...fakeQuestionWithoutName } = makeFakeQuestion()
-    const fakeRequest = makeFakeRequest(fakeQuestionWithoutName)
+    const { id, statement, ...fakeQuestionWithoutStatement } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutStatement, { id })
     const httpResponse = await sut.update(fakeRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('statement')))
   })
 
   test('Should return 400 if no options is provided when update question', async () => {
     const { sut } = makeSut()
-    const { options, ...fakeQuestionWithoutDescription } = makeFakeQuestion()
-    const fakeRequest = makeFakeRequest(fakeQuestionWithoutDescription)
+    const { id, options, ...fakeQuestionWithoutOptions } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutOptions, { id })
     const httpResponse = await sut.update(fakeRequest)
     expect(httpResponse).toEqual(
       badRequest(new MissingParamError('options'))
@@ -228,7 +228,8 @@ describe('Question Controller update method', () => {
     jest.spyOn(updateQuestionStub, 'update').mockImplementationOnce(async () => {
       return await new Promise((resolve, reject) => reject(new Error()))
     })
-    const fakeRequest = makeFakeRequest(makeFakeQuestion())
+    const { id, ...fakeQuestionWithoutId } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutId, { id })
     const httpResponse = await sut.update(fakeRequest)
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
@@ -236,15 +237,17 @@ describe('Question Controller update method', () => {
   test('Should call UpdateQuestion with correct values', async () => {
     const { sut, updateQuestionStub } = makeSut()
     const updateSpy = jest.spyOn(updateQuestionStub, 'update')
-    const { examId, ...fakeUpdateRequest } = makeFakeQuestion()
-    const httpRequest = makeFakeRequest(fakeUpdateRequest)
+    const { id, examId, ...fakeUpdateRequest } = makeFakeQuestion()
+    const httpRequest = makeFakeRequest(fakeUpdateRequest, { id })
     await sut.update(httpRequest)
-    expect(updateSpy).toHaveBeenCalledWith(fakeUpdateRequest)
+    expect(updateSpy).toHaveBeenCalledWith(id, fakeUpdateRequest)
   })
 
   test('Should return 200 if valid data is provided when update question', async () => {
     const { sut } = makeSut()
-    const fakeRequest = makeFakeRequest(makeFakeQuestion())
+
+    const { id, ...fakeQuestionWithoutId } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutId, { id })
     const httpResponse = await sut.update(fakeRequest)
     const fakeResponseBody = makeFakeQuestion()
     expect(httpResponse).toEqual(ok(fakeResponseBody))
@@ -256,8 +259,7 @@ describe('Question Controller update method', () => {
 describe('Question Controller get method', () => {
   test('Should return 400 if no id is provided when get question', async () => {
     const { sut } = makeSut()
-    const fakeRequest = makeFakeRequest({})
-    const httpResponse = await sut.get(fakeRequest)
+    const httpResponse = await sut.get({ params: { id: null } })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
   })
 
@@ -272,11 +274,11 @@ describe('Question Controller get method', () => {
 
   test('Should return 200 if valid data is provided when get question', async () => {
     const { sut } = makeSut()
-    const addedQuestionResponse = await sut.add(
-      makeFakeRequest(makeFakeQuestion())
-    )
+    const { examId, ...fakeQuestionWithoutExamId } = makeFakeQuestion()
+    const fakeRequest = makeFakeRequest(fakeQuestionWithoutExamId, { id: examId })
+    const addedQuestionResponse = await sut.add(fakeRequest)
     const getQuestionResponse = await sut.get({
-      body: { id: addedQuestionResponse.body.id }
+      params: { id: addedQuestionResponse.body.id }
     })
     expect(getQuestionResponse).toEqual(ok(makeFakeQuestion()))
   })
@@ -296,7 +298,7 @@ describe('Question Controller list method', () => {
 
   test('Should return 200 if valid data is provided when list questions', async () => {
     const { sut } = makeSut()
-    const questionList = await sut.list(makeFakeQuestion().examId)
+    const questionList = await sut.list({ params: { id: fakeExamId } })
     expect(questionList).toEqual(ok([makeFakeQuestion()]))
   })
 })
@@ -306,7 +308,7 @@ describe('Question Controller list method', () => {
 describe('Question Controller delete method', () => {
   test('Should return 400 if no id is provided when delete question', async () => {
     const { sut } = makeSut()
-    const httpResponse = await sut.delete({ body: {} })
+    const httpResponse = await sut.delete({ params: { id: null } })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('id')))
   })
 
@@ -315,7 +317,7 @@ describe('Question Controller delete method', () => {
     jest.spyOn(deleteQuestionStub, 'delete').mockImplementationOnce(async () => {
       return await new Promise((resolve, reject) => reject(new Error()))
     })
-    const httpResponse = await sut.delete({ body: { id: '42' } })
+    const httpResponse = await sut.delete({ params: { id: '42' } })
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })

@@ -8,8 +8,7 @@ import {
 export class DbUpdateQuestion implements UpdateQuestion {
   constructor (private readonly updateQuestionRepository: UpdateQuestionRepository) { }
 
-  async update (questionData: UpdateQuestionModel): Promise<QuestionModel> {
-    const question = await this.updateQuestionRepository.update(questionData)
-    return question
+  async update (id: string, questionData: UpdateQuestionModel): Promise<QuestionModel> {
+    return await this.updateQuestionRepository.update(id, questionData)
   }
 }

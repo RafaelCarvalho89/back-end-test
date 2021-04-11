@@ -1,6 +1,5 @@
-import { QuestionModel } from '../../../domain/models/question/question-model'
-import { ListQuestionsModel } from '../../../domain/usecases/question'
+import { QuestionModel } from '../../../domain/models/question-model'
 
 export interface ListQuestionsRepository {
-  list: (questionData: ListQuestionsModel) => Promise<QuestionModel[]>
+  list: (examId: string) => Promise<QuestionModel[]>
 }
