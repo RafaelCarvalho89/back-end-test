@@ -12,7 +12,6 @@ import {
   DeleteQuestion,
   GetQuestionResponseModel,
   ListQuestions,
-  ListQuestionsModel,
   UpdateQuestion,
   UpdateQuestionModel
 } from '../../../domain/usecases/question'
@@ -48,7 +47,7 @@ const makeGetQuestion = (): GetQuestion => {
 
 const makeListQuestions = (): ListQuestions => {
   class ListQuestionsStub implements ListQuestions {
-    async list (ListQuestionsRequest: ListQuestionsModel): Promise<QuestionModel[]> {
+    async list (examId: string): Promise<QuestionModel[]> {
       return await new Promise((resolve) => resolve([makeFakeQuestion()]))
     }
   }
@@ -96,8 +95,10 @@ const makeSut = (): SutTypes => {
   }
 }
 
+const fakeExamId = '607b9974-4914-44df-81e8-d56ec6a589bf'
+
 const makeFakeQuestion = (): any => ({
-  examId: '607b9974-4914-44df-81e8-d56ec6a589bf',
+  examId: fakeExamId,
   id: '607b9974-4914-44df-81e8-d56ec6a58912',
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
   options: [
@@ -294,7 +295,7 @@ describe('Question Controller list method', () => {
 
   test('Should return 200 if valid data is provided when list questions', async () => {
     const { sut } = makeSut()
-    const questionList = await sut.list(makeFakeQuestion().examId)
+    const questionList = await sut.list({ params: { id: fakeExamId } })
     expect(questionList).toEqual(ok([makeFakeQuestion()]))
   })
 })

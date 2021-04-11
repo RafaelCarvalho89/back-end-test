@@ -99,7 +99,7 @@ describe('Question Mongo Repository', () => {
     const fakeExam = await examRepositoryStub.add(makeFakeExam())
     const fakeQuestion = makeFakeQuestionWithoutId(fakeExam.id)
     const question = await sut.add(fakeQuestion)
-    const questions = await sut.list(fakeQuestion)
+    const questions = await sut.list(fakeExam.id)
     expect(questions).toBeTruthy()
     expect(questions.length).toBe(1)
     expect(questions[0].statement).toBe(question.statement)

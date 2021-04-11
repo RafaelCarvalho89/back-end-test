@@ -1,7 +1,6 @@
 import { QuestionModel } from '../../../../domain/models/question-model'
 import { ListQuestionsRepository } from '../../../protocols/question-repository/list-questions-repository'
 import { DbListQuestions } from './db-list-questions'
-import { ListQuestionsModel } from './db-list-questions-protocols'
 
 const fakeExamId = '607b9974-4914-44df-81e8-d56ec6a589bf'
 
@@ -39,7 +38,7 @@ const makeFakeQuestion = (): any => ({
 
 const makeListQuestionsRepository = (): ListQuestionsRepository => {
   class ListQuestionsRepositoryStub implements ListQuestionsRepository {
-    async list (questionData: ListQuestionsModel): Promise<QuestionModel[]> {
+    async list (examId: string): Promise<QuestionModel[]> {
       return await new Promise((resolve) => resolve([makeFakeQuestion()]))
     }
   }
@@ -65,13 +64,13 @@ describe('DbListQuestions Use case', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )
-    const promise = sut.list({ examId: fakeExamId })
+    const promise = sut.list(fakeExamId)
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return and Question List on success', async () => {
     const { sut } = makeSut()
-    const question = await sut.list({ examId: fakeExamId })
+    const question = await sut.list(fakeExamId)
     expect(question).toEqual([makeFakeQuestion()])
   })
 })

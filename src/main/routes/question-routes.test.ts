@@ -83,8 +83,8 @@ describe('Question Routes', () => {
 
   test('Should return questions on list success', async () => {
     await request(app)
-      .get('/api/v1/questions')
-      .send({ examId: fakeExamId })
+      .get(`/api/v1/exam/${fakeExamId}/questions`)
+      .send()
       .expect(200)
   })
 
