@@ -5,7 +5,7 @@ import app from '../config/app'
 const fakeExamId = '604de08e5f3e114605efbfec'
 const fakeQuestionId = '604e5be11a78573cb23a01a8'
 
-const makeFakeOptions = (): any => [
+const fakeOptions = [
   {
     key: 'a',
     value: 'viver',
@@ -28,7 +28,7 @@ const makeFakeOptions = (): any => [
   }
 ]
 
-const makeFakeUpdateOptions = (): any => [
+const fakeUpdateOptions = [
   {
     key: 'a',
     value: 'viver - UPDATED',
@@ -41,17 +41,16 @@ const makeFakeUpdateOptions = (): any => [
   }
 ]
 
-const makeFakeQuestion = (): any => ({
-  examId: fakeExamId,
+const fakeQuestion = {
   statement: 'Qual o sentido da vida, do universo e de tudo mais?',
-  options: makeFakeOptions()
-})
+  options: fakeOptions
+}
 
-const makeFakeUpdateQuestion = (): any => ({
+const fakeUpdateQuestion = {
   id: fakeQuestionId,
   statement: 'Qual o sentido da vida? - UPDATE',
-  options: makeFakeUpdateOptions()
-})
+  options: fakeUpdateOptions
+}
 
 describe('Question Routes', () => {
   beforeAll(async () => {
@@ -69,8 +68,8 @@ describe('Question Routes', () => {
 
   test('Should return question on add success', async () => {
     await request(app)
-      .post('/api/v1/question/new')
-      .send(makeFakeQuestion())
+      .post(`/api/v1/exam/${fakeExamId}/question`)
+      .send(fakeQuestion)
       .expect(200)
   })
 
@@ -91,7 +90,7 @@ describe('Question Routes', () => {
   test('Should return question on update success', async () => {
     await request(app)
       .put('/api/v1/question/update')
-      .send(makeFakeUpdateQuestion())
+      .send(fakeUpdateQuestion)
       .expect(200)
   })
 
