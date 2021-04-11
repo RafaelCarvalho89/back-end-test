@@ -85,7 +85,8 @@ export class QuestionController implements Controller {
 
   async list (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const questionList = await this.listQuestions.list(httpRequest.body)
+      if (!httpRequest.params.id) return badRequest(new MissingParamError('id'))
+      const questionList = await this.listQuestions.list(httpRequest.params.id)
       return ok(questionList)
     } catch (error) {
       return serverError(error)

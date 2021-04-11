@@ -2,7 +2,6 @@ import { QuestionRepository } from '../../../../data/protocols/question-reposito
 import {
   AddQuestionModel,
   GetQuestionResponseModel,
-  ListQuestionsModel,
   UpdateQuestionModel,
   UpdateQuestionResponseModel
 } from '../../../../domain/usecases/question'
@@ -123,9 +122,9 @@ export class QuestionMongoRepository implements QuestionRepository {
     })
   }
 
-  async list (questionData: ListQuestionsModel): Promise<QuestionModel[]> {
+  async list (examId: string): Promise<QuestionModel[]> {
     const examMongoRepository = new ExamMongoRepository()
-    const exam = await examMongoRepository.get(questionData.examId)
+    const exam = await examMongoRepository.get(examId)
 
     if (!exam) return null
     const questionsWithRandomOptions: QuestionModel[] = []
