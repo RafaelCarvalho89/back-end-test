@@ -5,7 +5,7 @@ import app from '../config/app'
 const fakeExamId = '604de08e5f3e114605efbfec'
 const fakeQuestionId = '604e5be11a78573cb23a01a8'
 
-const makeFakeOptions = (): any => ([
+const makeFakeOptions = (): any => [
   {
     key: 'a',
     value: 'viver',
@@ -26,9 +26,9 @@ const makeFakeOptions = (): any => ([
     value: '42',
     correct: true
   }
-])
+]
 
-const makeFakeUpdateOptions = (): any => ([
+const makeFakeUpdateOptions = (): any => [
   {
     key: 'a',
     value: 'viver - UPDATED',
@@ -39,7 +39,7 @@ const makeFakeUpdateOptions = (): any => ([
     value: '42 - UPDATED',
     correct: true
   }
-])
+]
 
 const makeFakeQuestion = (): any => ({
   examId: fakeExamId,
@@ -69,35 +69,35 @@ describe('Question Routes', () => {
 
   test('Should return question on add success', async () => {
     await request(app)
-      .post('/api/question/new')
+      .post('/api/v1/question/new')
       .send(makeFakeQuestion())
       .expect(200)
   })
 
   test('Should return question on get success', async () => {
     await request(app)
-      .get(`/api/question/${fakeQuestionId}`)
+      .get(`/api/v1/question/${fakeQuestionId}`)
       .send()
       .expect(200)
   })
 
   test('Should return questions on list success', async () => {
     await request(app)
-      .get('/api/questions')
+      .get('/api/v1/questions')
       .send({ examId: fakeExamId })
       .expect(200)
   })
 
   test('Should return question on update success', async () => {
     await request(app)
-      .put('/api/question/update')
+      .put('/api/v1/question/update')
       .send(makeFakeUpdateQuestion())
       .expect(200)
   })
 
   test('Should return exam without question on delete question success', async () => {
     await request(app)
-      .delete(`/api/question/delete/${fakeQuestionId}`)
+      .delete(`/api/v1/question/delete/${fakeQuestionId}`)
       .send()
       .expect(200)
   })
