@@ -196,7 +196,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 3.1 Adicionar Prova
 
-- `POST` /api/exam/new
+- `POST` /api/v1/exam/new
 
   <details>
 
@@ -344,7 +344,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 3.2 Obter Prova
 
-- `GET` /api/exam/{id}
+- `GET` /api/v1/exam/{id}
 
   <details>
 
@@ -357,7 +357,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
   <br />
 
 **Exemplo da requisição obter prova.**
-`GET` http://localhost:5050/api/exam/6050f9e222a72e7089ed1988
+`GET` http://localhost:5050/api/v1/exam/6050f9e222a72e7089ed1988
 
   <br />
 
@@ -410,7 +410,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 3.3 Listar Provas
 
-- `GET` /api/exams
+- `GET` /api/v1/exams
 
 - **Obs.: `exams`, no plural.**
 
@@ -445,7 +445,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 3.4 Atualizar Prova
 
-- `PUT` /api/exam/update
+- `PUT` /api/v1/exam/update
 
   <details>
 
@@ -570,7 +570,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 3.5 Deletar Prova
 
-- `DELETE` /api/exam/delete/{id}
+- `DELETE` /api/v1/exam/delete/{id}
 
   <details>
 
@@ -583,7 +583,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
   <br />
 
 **Exemplo da requisição deletar prova.**
-`DELETE` http://localhost:5050/api/exam/delete/6050f9e222a72e7089ed1988
+`DELETE` http://localhost:5050/api/v1/exam/delete/6050f9e222a72e7089ed1988
 
   <br />
 
@@ -603,7 +603,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 4.1 Adicionar Questão
 
-- `POST` /api/question/new
+- `POST` /api/v1/question/new
 
   <details>
 
@@ -701,7 +701,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 4.2 Obter Questão
 
-- `GET` /api/question/{id}
+- `GET` /api/v1/question/{id}
 
   <details>
 
@@ -714,7 +714,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
   <br />
 
 **Exemplo da requisição obter questão.**
-`GET` http://localhost:5050/api/question/605112af2a3daa997ee6bb8f
+`GET` http://localhost:5050/api/v1/question/605112af2a3daa997ee6bb8f
 
   <br />
 
@@ -761,7 +761,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 4.3 Listar Questões da Prova
 
-- `GET` /api/questions
+- `GET` /api/v1/questions
 
 - **Obs.: `questions`, no plural.**
 
@@ -858,7 +858,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 4.4 Atualizar Questão
 
-- `PUT` /api/question/update
+- `PUT` /api/v1/question/update
 
   <details>
 
@@ -956,7 +956,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
 
 ### 4.5 Deletar Questão
 
-- `DELETE` /api/question/delete/{id}
+- `DELETE` /api/v1/question/delete/{id}
 
   <details>
 
@@ -969,7 +969,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
   <br />
 
 **Exemplo da requisição deletar questão.**
-`DELETE` http://localhost:5050/api/question/605112af2a3daa997ee6bb8f
+`DELETE` http://localhost:5050/api/v1/question/605112af2a3daa997ee6bb8f
 
   <br />
 
