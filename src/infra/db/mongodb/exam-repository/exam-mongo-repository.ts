@@ -8,7 +8,6 @@ import { ExamModel } from '../../../../domain/models/exam-model'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { QuestionModel } from '../../../../domain/models/question-model'
 import { ObjectId } from 'mongodb'
-import { UpdateQuestionModel } from '../../../../domain/usecases/question'
 
 export class ExamMongoRepository implements ExamRepository {
   private readonly collectionName = 'exams'
@@ -21,7 +20,7 @@ export class ExamMongoRepository implements ExamRepository {
     })
   }
 
-  private makeUpdateQuestion (question: UpdateQuestionModel): any {
+  private makeUpdateQuestion (question: QuestionModel): any {
     const { id, statement, options } = question
     return ({
       id: new ObjectId(id),
