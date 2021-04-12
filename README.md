@@ -4,7 +4,7 @@
 
 <p>Ele se resume basicamente em uma API de provas, mantendo o gerenciamento de Provas (Exams), e de Questões da Prova (Questions).</p>
 
-<p>A API está hospedada no Heroku, e endereço para é `https://test-back-end-meritt.herokuapp.com/api/v1`</p>
+<p>A API está hospedada no Heroku, e o endereço para consumi-lá é `https://test-back-end-meritt.herokuapp.com/api/v1`</p>
 
 <p>A seguir, se encontram as instruções de instalação do projeto, e de como consumir a API.</p>
 
@@ -124,13 +124,13 @@ npm run dev
 
 ## 2 API
 
-Rota de servidor local
+Rota de desenvolvimento
 
-`HOST` http://localhost:5050
+http://localhost:5050/api/v1
 
-Rota de servidor de Produção
+Rota de produção
 
-`HOST` https://test-back-end-meritt.herokuapp.com
+https://test-back-end-meritt.herokuapp.com/api/v1
 
   <br />
 
@@ -495,6 +495,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
     <br />
 
   **Exemplo da requisição para atualização de prova.**
+  <br />
   `PUT` https://test-back-end-meritt.herokuapp.com/api/v1/exam/6050f9e222a72e7089ed1988
 
   ```json
@@ -596,6 +597,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
     <br />
 
   **Exemplo da requisição deletar prova.**
+  <br />
   `DELETE` https://test-back-end-meritt.herokuapp.com/api/v1/exam/6050f9e222a72e7089ed1988
 
     <br />
@@ -641,6 +643,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
     <br />
 
   **Exemplo da requisição adicionar Questão.**
+  <br />
   `POST` https://test-back-end-meritt.herokuapp.com/api/v1/exam/60500a71fef08553a78d1948/question
 
   ```json
@@ -727,6 +730,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
     <br />
 
   **Exemplo da requisição obter questão.**
+  <br />
   `GET` https://test-back-end-meritt.herokuapp.com/api/v1/exam/question/605112af2a3daa997ee6bb8f
 
     <br />
@@ -789,6 +793,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
     <br />
 
   **Exemplo da requisição listar questões da prova.**
+  <br />
   `GET` https://test-back-end-meritt.herokuapp.com/api/v1/exam/60500a71fef08553a78d1948/questions
 
 
@@ -892,6 +897,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
   <br />
 
   **Exemplo da requisição atualizar Questão.**
+  <br />
   `PUT` https://test-back-end-meritt.herokuapp.com/api/v1/exam/question/60511cd1b841c7ac42d626e1
 
   ```json
@@ -978,6 +984,7 @@ E a resposta `500 Server error` é retornada quando ocorre algum erro no serviç
     <br />
 
   **Exemplo da requisição deletar questão.**
+  <br />
   `DELETE` https://test-back-end-meritt.herokuapp.com/api/v1/exam/question/605112af2a3daa997ee6bb8f
 
     <br />
